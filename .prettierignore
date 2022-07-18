@@ -1,0 +1,5 @@
+.editorconfig
+.eslintrc.json
+*.md
+*.min.js
+*.min.css

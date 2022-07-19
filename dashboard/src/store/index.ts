@@ -1,5 +1,6 @@
-import http from '../http'
+import ApiClient from '../http-client/server.json'
 import IUsers from '@/interfaces/IUser'
+import axios from 'axios'
 import { createStore, Store, useStore } from 'vuex'
 
 export interface EstadoStore {
@@ -14,7 +15,9 @@ export const store = createStore<EstadoStore>({
     mutations: {},
     actions: {
         REGISTER_USER({ commit }, user: IUsers) {
-            return http.
+            return axios.get(ApiClient.user.create).then((res) => {
+                console.log(res)
+            })
         },
     },
     modules: {},

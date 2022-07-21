@@ -1,7 +1,7 @@
 {
     "user": {
         "login": "http://localhost:3000/auth/login",
-        "create": "http://localhost:3000/auth/register",
+        "register": "http://localhost:3000/auth/register",
         "show": "http://localhost:3000/users/me",
         "apiKeyExists": "http://localhost:3000/apikey/exists?apikey=",
         "newApiKey": "http://localhost:3000/users/me/apikey"

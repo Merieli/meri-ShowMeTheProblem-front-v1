@@ -7,22 +7,26 @@
                 <BaseButton @click="handleLogin"> Entrar </BaseButton>
             </nav>
         </header>
+        <PartModal state.props.modalType="create" v-if="isShow" @close="!isShow" />
     </div>
 </template>
 
 <script lang="ts">
 import BaseButton from '../components/BaseButton.vue'
 import PartModal from '../components/Modal/index.vue'
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
     name: 'GeralHeader',
     components: {
         BaseButton,
+        PartModal,
     },
     setup(props, { emit }) {
         const router = useRouter()
+
+        const isShow = ref(false)
 
         onMounted(() => {
             const token = window.localStorage.getItem('token')
@@ -36,12 +40,13 @@ export default defineComponent({
             return
         }
 
-        const handleAccountCreate = () => {
-            return
+        function handleAccountCreate() {
+            isShow.value = true
         }
 
         return {
             handleLogin,
+            isShow,
             handleAccountCreate,
         }
     },

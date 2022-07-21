@@ -1,21 +1,22 @@
 <template>
     <teleport to="body">
         <div
-            v-if="state.show"
             class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
-            @click="handleModalToogle({ status: false })"
+            @click="close"
         >
             <div class="fixed mx-10">
                 <div
                     class="modal flex flex-col overflow-hidden bg-white rounded-lg .animate__animated animate__faster animate__fadeInDown"
                 >
                     <div class="flex flex-col px-12 py-10 bg-white">
-                        <label v-if="modalType === 'create'" for="">Nome</label>
-                        <input v-if="modalType === 'create'" type="text" placeholder="Seu Nome Aqui" />
+                        <label for="">Nome</label>
+                        <input type="text" placeholder="Seu Nome Aqui" />
                         <label for="">E-mail</label>
                         <input type="email" placeholder="email@exemplo.com" />
+                        <br />
                         <label for="">Senha</label>
                         <input type="password" placeholder="******" />
+                        <BaseButton typeButton="dark">Create Account</BaseButton>
                     </div>
                 </div>
             </div>
@@ -24,15 +25,19 @@
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import BaseButton from '../BaseButton.vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 const DEFAULT_WIDTH = 'w-3/4 lg:w-1/3'
 
-export default {
+export default defineComponent({
     name: 'PartModal',
-    setup() {
+    components: {
+        BaseButton,
+    },
+    emits: ['close'],
+    setup(props, { emit }) {
         const state = reactive({
-            show: false,
             props: {
                 modalType: {
                     type: String,
@@ -41,17 +46,15 @@ export default {
             },
             width: DEFAULT_WIDTH,
         })
-
-        function handleModalToogle(status: boolean) {
-            state.show = status
+        const close = () => {
+            return false
         }
-
         return {
             state,
-            handleModalToogle,
+            close,
         }
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

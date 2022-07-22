@@ -7,7 +7,7 @@
                 <BaseButton @click="handleLogin"> Entrar </BaseButton>
             </nav>
         </header>
-        <PartModal state.props.modalType="create" v-if="isShow" @close="!isShow" />
+        <PartModal state.props.modalType="create" v-if="isShow" @close="isShow = false" />
     </div>
 </template>
 

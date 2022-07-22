@@ -1,8 +1,8 @@
 <template>
     <teleport to="body">
         <div
-            class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
-            @click="close"
+            class="overlay fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
+            @click="closeModal"
         >
             <div class="fixed mx-10">
                 <div
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import BaseButton from '../BaseButton.vue'
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, reactive } from 'vue'
 
 const DEFAULT_WIDTH = 'w-3/4 lg:w-1/3'
 
@@ -46,12 +46,13 @@ export default defineComponent({
             },
             width: DEFAULT_WIDTH,
         })
-        const close = () => {
-            return false
+
+        const closeModal = () => {
+            return emit('close')
         }
         return {
             state,
-            close,
+            closeModal,
         }
     },
 })
@@ -59,5 +60,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .modal {
+    z-index: 1;
+}
+.overlay {
+    z-index: 0;
 }
 </style>

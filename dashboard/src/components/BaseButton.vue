@@ -1,5 +1,5 @@
 <template>
-    <button class="base-button rounded-full font-bold" :class="classByType">
+    <button class="base-button rounded-full font-bold" :class="classByType" :type="typeButton">
         <slot />
     </button>
 </template>
@@ -10,14 +10,18 @@ import { defineComponent, computed, ComputedRef } from 'vue'
 export default defineComponent({
     name: 'BaseButton',
     props: {
-        typeButton: {
+        color: {
             type: String,
             required: true,
+        },
+        typeButton: {
+            type: String,
+            default: 'button',
         },
     },
     setup(props) {
         const classByType: ComputedRef<string> = computed(() => {
-            return props.typeButton === 'dark' ? 'base-button_dark' : 'base-button_light'
+            return props.color === 'dark' ? 'base-button_dark' : 'base-button_light'
         })
 
         return {

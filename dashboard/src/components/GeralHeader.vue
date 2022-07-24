@@ -7,7 +7,8 @@
                 <BaseButton @click="handleLogin"> Entrar </BaseButton>
             </nav>
         </header>
-        <PartModal state.props.modalType="create" v-if="isShow" @close="isShow = false" />
+        <PartModal modalType="create" v-if="isShow" @close="isShow = false" />
+        <PartModal modalType="login" v-if="isShow" @close="isShow = false" />
     </div>
 </template>
 
@@ -23,7 +24,7 @@ export default defineComponent({
         BaseButton,
         PartModal,
     },
-    setup(props, { emit }) {
+    setup() {
         const router = useRouter()
 
         const isShow = ref(false)
@@ -37,7 +38,7 @@ export default defineComponent({
         })
 
         const handleLogin = () => {
-            return
+            isShow.value = true
         }
 
         function handleAccountCreate() {

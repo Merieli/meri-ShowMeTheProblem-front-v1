@@ -10,13 +10,13 @@
                 <p class="home__text home__text_light">
                     Receba ideias, reclamações e feedbacks com um simples widget na página.
                 </p>
-                <BaseButton typeButton="light"> Crie uma conta grátis </BaseButton>
+                <BaseButton color="light"> Crie uma conta grátis </BaseButton>
             </div>
         </section>
         <section class="home__contact">
             <h3 class="home__title home__title_dark">Alguma dúvida?</h3>
             <p class="home__text">Quer saber melhor como funciona e quais são os preços?</p>
-            <BaseButton typeButton="dark">
+            <BaseButton color="dark">
                 <a href="mailto:merieli.dev@gmail.com">Nos mande um e-mail</a>
             </BaseButton>
         </section>

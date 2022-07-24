@@ -3,7 +3,7 @@
 ## Briefing
 
 Os usuários devem ser capazes de:
-- [ ] Criar conta de usuário
+- [X] Criar conta de usuário
     - [ ] Visualizar o status da criação
 - [ ] Efetuar Login
     - [ ] Visualizar se login estiver incorreto
@@ -21,6 +21,7 @@ Os usuários devem ser capazes de:
     - [X] Usar Vue-router
 - [X] TypeScript
 - [ ] Testes com Jest e Cypress
+- [ ] Testes de snapshot
 - [ ] Utilizar conceitos de SOLID e clean Code
 - [ ] Consumir API
     - [ ] Tratar Dados da API

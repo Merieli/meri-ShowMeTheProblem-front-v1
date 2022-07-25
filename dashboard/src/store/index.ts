@@ -19,7 +19,13 @@ export const store = createStore<EstadoStore>({
     getters: {},
     mutations: {
         [Mutations.NOTIFY](state, actualNotification: INotification) {
+            actualNotification.id = new Date().getTime()
             state.notifications.push(actualNotification)
+
+            // setTimeout(() => {}, 3000)
+            setTimeout(() => {
+                state.notifications = state.notifications.filter((not) => not.id != actualNotification.id)
+            }, 3000)
         },
         [Mutations.ADD_USER](state, user: IUsers) {
             state.users.push(user)

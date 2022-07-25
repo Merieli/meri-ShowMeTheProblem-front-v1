@@ -1,5 +1,5 @@
 <template>
-    <button class="base-button rounded-full font-bold" :class="classByType" :type="typeButton">
+    <button class="base-button rounded-full font-bold text-xl" :class="classByColor" :type="typeButton">
         <slot />
     </button>
 </template>
@@ -12,7 +12,7 @@ export default defineComponent({
     props: {
         color: {
             type: String,
-            required: true,
+            default: 'light',
         },
         typeButton: {
             type: String,
@@ -20,12 +20,12 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const classByType: ComputedRef<string> = computed(() => {
+        const classByColor: ComputedRef<string> = computed(() => {
             return props.color === 'dark' ? 'base-button_dark' : 'base-button_light'
         })
 
         return {
-            classByType,
+            classByColor,
         }
     },
 })

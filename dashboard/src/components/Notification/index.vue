@@ -1,11 +1,13 @@
 <template>
-    <div class="notification" :class="classNotification[notication.tipo]">
-        <p class="notification__header">
-            {{ notification.titulo }}
-        </p>
-        <p class="notification__body">
-            {{ notication.texto }}
-        </p>
+    <div class="notification">
+        <div :class="classNotification[notication.tipo]" v-for="notification in notifications" :key="notification.id">
+            <p class="notification__header">
+                {{ notification.titulo }}
+            </p>
+            <p class="notification__body">
+                {{ notication.texto }}
+            </p>
+        </div>
     </div>
 </template>
 

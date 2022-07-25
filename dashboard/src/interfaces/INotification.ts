@@ -5,7 +5,14 @@ export enum TypeOfNotification {
 }
 
 export interface INotification {
-    tipo: TypeOfNotification
-    titulo: string
+    tipo: {
+        type: TypeOfNotification
+        required: true
+    }
+    titulo: {
+        type: string
+        required: true
+    }
     texto: string
+    id: number
 }

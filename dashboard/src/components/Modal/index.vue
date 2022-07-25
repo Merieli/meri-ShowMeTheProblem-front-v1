@@ -18,33 +18,38 @@
                     </button>
                     <form class="px-12 py-10 bg-white" @submit.prevent="createUser">
                         <fieldset class="flex flex-col">
-                            <legend>Crie uma conta</legend>
-                            <label for="name">Nome</label>
+                            <legend class="font-black text-3xl mb-8">Crie uma conta</legend>
+                            <label for="name" class="font-bold text-lg"> Nome </label>
                             <input
                                 class="bg-slate-50 mb-6 p-3"
                                 type="text"
                                 name="name"
                                 placeholder="Seu Nome Aqui"
                                 v-model="name"
+                                autocomplete="on"
+                                required
                             />
-                            <label for="email">E-mail</label>
+                            <label for="email" class="font-bold text-lg">E-mail</label>
                             <input
                                 class="bg-slate-50 mb-6 p-3"
                                 type="email"
                                 name="email"
                                 placeholder="email@exemplo.com"
                                 v-model="email"
+                                autocomplete="on"
+                                required
                             />
-                            <label for="password">Senha</label>
+                            <label for="password" class="font-bold text-lg">Senha</label>
                             <input
                                 class="bg-slate-50 mb-6 p-3"
                                 type="password"
                                 name="password"
                                 placeholder="******"
                                 v-model="password"
+                                required
                             />
                         </fieldset>
-                        <BaseButton color="dark" typeButton="submit">Criar Conta</BaseButton>
+                        <BaseButton color="dark" type-button="submit">Criar conta</BaseButton>
                     </form>
                 </div>
             </div>
@@ -92,6 +97,9 @@ export default defineComponent({
                         password: password.value,
                     })
                     .then(() => cleanAndNotify())
+            } else {
+                console.log('Erro')
+                notify(TypeOfNotification.FALHA, 'Preencha todos os campos', 'Erro na tentativa de criar uma conta.')
             }
         }
 

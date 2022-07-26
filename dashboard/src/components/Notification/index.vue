@@ -1,6 +1,6 @@
 <template>
-    <div class="notification">
-        <div :class="classNotification[notication.tipo]" v-for="notification in notifications" :key="notification.id">
+    <div class="notification bg-white w-80 h-80">
+        <div :class="classNotification[notication.tipo]">
             <p class="notification__header">
                 {{ notification.titulo }}
             </p>

@@ -54,7 +54,6 @@
                 </div>
             </div>
         </div>
-        <PartNotification />
     </teleport>
 </template>
 
@@ -63,7 +62,6 @@ import useNotifier from '../../hooks/notification'
 import { TypeOfNotification } from '../../interfaces/INotification'
 import { Actions } from '../../store/type-actions'
 import BaseButton from '../BaseButton.vue'
-import PartNotification from '../Notification/index.vue'
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 
@@ -71,7 +69,6 @@ export default defineComponent({
     name: 'PartModal',
     components: {
         BaseButton,
-        PartNotification,
     },
     props: {
         modalType: {
@@ -85,6 +82,8 @@ export default defineComponent({
         const name = ref('')
         const email = ref('')
         const password = ref('')
+
+        const showAlert = ref(false)
 
         const { notify } = useNotifier()
 
@@ -108,6 +107,7 @@ export default defineComponent({
             email.value = ''
             password.value = ''
             notify(TypeOfNotification.SUCESSO, 'Conta Registrada', 'Sua conta foi criada com sucesso, efetue login.')
+            showAlert.value = true
         }
 
         const closeModal = () => {

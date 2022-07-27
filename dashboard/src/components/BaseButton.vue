@@ -34,7 +34,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .base-button {
     padding: 7px 22px;
-    max-width: 230px;
+    max-width: 250px;
 
     &_dark {
         background-color: theme('colors.brand.main');

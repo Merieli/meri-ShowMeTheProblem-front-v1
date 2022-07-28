@@ -1,19 +1,12 @@
 export enum TypeOfNotification {
-    SUCESSO = 'sucesso',
-    FALHA = 'falha',
-    ATENCAO = 'atencao',
+    SUCESSO,
+    FALHA,
+    ATENCAO,
 }
 
 export interface INotification {
-    tipo: {
-        type: TypeOfNotification
-        required: true
-        default: TypeOfNotification.SUCESSO
-    }
-    titulo: {
-        type: string
-        required: true
-    }
-    texto: string
+    type: TypeOfNotification
+    title: string
+    text: string
     id: number
 }

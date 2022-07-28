@@ -1,8 +1,13 @@
 <template>
-    <div class="notification bg-white w-80 h-40 bg-green-100 rounded-md">
-        <div>
-            <h6 class="notification__header text-lime-900 font-bold">Atenção</h6>
-            <p class="notification__body text-lime-900 font-normal">Texto de notificação</p>
+    <div class="notification w-80 h-40 rounded-md">
+        <div
+            class="rounded-md p-4 m-4"
+            v-for="notication in notifications"
+            :key="notication.id"
+            :class="classNotification[notication.type]"
+        >
+            <h6 class="notification__header font-bold">{{ notication.title }}</h6>
+            <p class="notification__body font-normal">{{ notication.text }}</p>
         </div>
     </div>
 </template>
@@ -20,17 +25,27 @@ export default defineComponent({
             default: false,
         },
     },
+    data() {
+        return {
+            classAlert: {
+                [TypeOfNotification.SUCESSO]: 'notification__success',
+                [TypeOfNotification.ATENCAO]: 'notification__warning',
+                [TypeOfNotification.FALHA]: 'notification__danger',
+            },
+        }
+    },
     setup() {
         const store = useStore()
+
         const classNotification = computed(() => ({
-            'is-sucess': [TypeOfNotification.SUCESSO],
-            'is-warning': [TypeOfNotification.ATENCAO],
-            'is-danger': [TypeOfNotification.FALHA],
+            //notification__success: notifications.value.type == [TypeOfNotification.SUCESSO],
+            notification__warning: [TypeOfNotification.ATENCAO],
+            notification__danger: [TypeOfNotification.FALHA],
         }))
 
         return {
             classNotification,
-            notification: computed(() => store.state.notifications),
+            notifications: computed(() => store.state.notifications),
         }
     },
 })
@@ -44,5 +59,20 @@ export default defineComponent({
     padding: 8px;
     z-index: 105;
     top: 0;
+
+    &__success {
+        background-color: rgb(247 254 231);
+        color: rgb(77 124 15);
+    }
+
+    &__warning {
+        color: rgb(234 88 12);
+        background-color: rgb(255 237 213);
+    }
+
+    &__danger {
+        color: rgb(220 38 38);
+        background-color: rgb(254 226 226);
+    }
 }
 </style>

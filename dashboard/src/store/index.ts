@@ -1,7 +1,7 @@
 import ApiClient from '../http-client/server.json'
 import { Actions } from './type-actions'
 import { Mutations } from './type-mutations'
-import { INotification } from '@/interfaces/INotification'
+import { INotification, TypeOfNotification } from '@/interfaces/INotification'
 import IUsers from '@/interfaces/IUser'
 import axios from 'axios'
 import { createStore } from 'vuex'
@@ -14,7 +14,26 @@ export interface EstadoStore {
 export const store = createStore<EstadoStore>({
     state: {
         users: [],
-        notifications: [],
+        notifications: [
+            {
+                id: 1,
+                title: 'Sucesso',
+                text: 'Uma notificação de sucesso',
+                type: TypeOfNotification.SUCESSO,
+            },
+            {
+                id: 2,
+                title: 'Atenção',
+                text: 'Uma notificação de atenção',
+                type: TypeOfNotification.ATENCAO,
+            },
+            {
+                id: 3,
+                title: 'Falha',
+                text: 'Uma notificação de falha',
+                type: TypeOfNotification.FALHA,
+            },
+        ],
     },
     getters: {},
     mutations: {

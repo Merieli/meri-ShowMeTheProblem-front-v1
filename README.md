@@ -4,7 +4,7 @@
 
 Os usuários devem ser capazes de:
 - [X] Criar conta de usuário
-    - [ ] Visualizar o status da criação
+    - [X] Visualizar o status da criação
 - [ ] Efetuar Login
     - [ ] Visualizar se login estiver incorreto
     - [ ] Visualizar dados do usuário logado

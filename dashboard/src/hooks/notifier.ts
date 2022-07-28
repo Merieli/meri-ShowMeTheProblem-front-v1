@@ -7,11 +7,11 @@ type Notifier = {
 }
 
 export default (): Notifier => {
-    const notify = (tipo: TypeOfNotification, titulo: string, texto: string): void => {
+    const notify = (type: TypeOfNotification, title: string, text: string): void => {
         store.commit(Mutations.NOTIFY, {
-            tipo,
-            titulo,
-            texto,
+            type,
+            title,
+            text,
         })
     }
     return {

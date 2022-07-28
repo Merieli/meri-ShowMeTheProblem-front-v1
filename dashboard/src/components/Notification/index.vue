@@ -4,7 +4,7 @@
             class="rounded-md p-4 m-4"
             v-for="notication in notifications"
             :key="notication.id"
-            :class="classNotification[notication.type]"
+            :class="classAlert[notication.type]"
         >
             <h6 class="notification__header font-bold">{{ notication.title }}</h6>
             <p class="notification__body font-normal">{{ notication.text }}</p>
@@ -37,14 +37,7 @@ export default defineComponent({
     setup() {
         const store = useStore()
 
-        const classNotification = computed(() => ({
-            //notification__success: notifications.value.type == [TypeOfNotification.SUCESSO],
-            notification__warning: [TypeOfNotification.ATENCAO],
-            notification__danger: [TypeOfNotification.FALHA],
-        }))
-
         return {
-            classNotification,
             notifications: computed(() => store.state.notifications),
         }
     },

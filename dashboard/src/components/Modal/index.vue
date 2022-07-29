@@ -16,7 +16,9 @@
                             />
                         </svg>
                     </button>
-                    <slot name="content" />
+                    <div>
+                        <slot name="content"></slot>
+                    </div>
                 </div>
             </div>
         </div>

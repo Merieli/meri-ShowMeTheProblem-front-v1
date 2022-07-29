@@ -7,7 +7,7 @@
                 <BaseButton @click="handleLogin"> Entrar </BaseButton>
             </nav>
         </header>
-        <PartModal modalType="create" v-if="isShow" @close="!isShow">
+        <PartModal modalType="create" v-if="isShow" @close="handleLogin">
             <template v-slot:content>
                 <form class="px-12 py-10" @submit.prevent="createUser">
                     <fieldset class="flex flex-col">
@@ -47,7 +47,7 @@
                 </form>
             </template>
         </PartModal>
-        <PartModal modalType="login" v-if="isShow" @close="!isShow" />
+        <!-- <PartModal modalType="login" v-if="isShow" @close="handleAccountCreate"> </PartModal> -->
     </div>
 </template>
 

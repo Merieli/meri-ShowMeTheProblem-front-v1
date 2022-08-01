@@ -10,7 +10,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ComputedRef } from 'vue'
+import { ButtonTypes, ITypeButton } from './module'
+import { defineComponent, computed, ComputedRef, PropType } from 'vue'
 
 export default defineComponent({
     name: 'BaseButton',
@@ -20,8 +21,8 @@ export default defineComponent({
             default: 'light',
         },
         typeButton: {
-            type: String,
-            default: 'button',
+            type: String as PropType<ITypeButton>,
+            default: ButtonTypes.BUTTON,
         },
     },
     setup(props) {

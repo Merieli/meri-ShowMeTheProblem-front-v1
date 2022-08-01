@@ -1,5 +1,5 @@
 <template>
-    <div class="notification w-80 h-40 rounded-md">
+    <div class="notification w-80 h-40 rounded-md" id="notification" :style="{ display: displayComp }">
         <div
             class="rounded-md p-4 m-4"
             v-for="notication in notifications"
@@ -14,17 +14,11 @@
 
 <script lang="ts">
 import { TypeOfNotification } from '../../interfaces/INotification'
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref, onUpdated } from 'vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
     name: 'PartNotification',
-    props: {
-        showAlert: {
-            type: Boolean,
-            default: false,
-        },
-    },
     data() {
         return {
             classAlert: {
@@ -34,10 +28,19 @@ export default defineComponent({
             },
         }
     },
+
     setup() {
         const store = useStore()
 
+        const displayComp = ref()
+
+        onUpdated(() => {
+            displayComp.value = 'block'
+        })
+
         return {
+            onUpdated,
+            displayComp,
             notifications: computed(() => store.state.notifications),
         }
     },
@@ -50,8 +53,9 @@ export default defineComponent({
     right: 0;
     width: 300px;
     padding: 8px;
-    z-index: 105;
+    z-index: 10;
     top: 0;
+    display: none;
 
     &__success {
         background-color: rgb(247 254 231);

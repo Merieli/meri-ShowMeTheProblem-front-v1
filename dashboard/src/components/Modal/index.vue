@@ -7,17 +7,18 @@
                 <div
                     class="modal w-96 flex flex-col overflow-hidden bg-white rounded-lg .animate__animated animate__faster animate__fadeInDown"
                 >
-                    <button @click.prevent="closeModal">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path
-                                fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                clip-rule="evenodd"
-                            />
-                        </svg>
-                    </button>
-                    <div>
-                        <slot name="content"></slot>
+                    <div class="modal__header mx-8 my-8">
+                        <slot name="title" />
+                        <button @click.prevent="closeModal" class="modal__button">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+                                <path
+                                    d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal__content">
+                        <slot name="content" />
                     </div>
                 </div>
             </div>
@@ -30,12 +31,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'PartModal',
-    props: {
-        modalType: {
-            type: String,
-            required: true,
-        },
-    },
     emits: ['close'],
     setup(props, { emit }) {
         const closeModal = () => {
@@ -50,7 +45,27 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .modal {
-    z-index: 4;
+    z-index: 2;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__button {
+        transition: all 200ms ease;
+        padding: 0.4rem;
+
+        &:hover {
+            background-color: gray;
+            transform: rotate(-180deg);
+
+            svg {
+                fill: white;
+            }
+        }
+    }
 }
 .overlay {
     z-index: 0;

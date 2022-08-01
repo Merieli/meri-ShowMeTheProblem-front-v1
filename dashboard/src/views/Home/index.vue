@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import BaseButton from '../../components/BaseButton.vue'
+import BaseButton from '../../components/BaseButton/index.vue'
 import GeralHeader from '../../components/GeralHeader.vue'
 import { defineComponent } from 'vue'
 

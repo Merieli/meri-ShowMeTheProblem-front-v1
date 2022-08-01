@@ -10,7 +10,8 @@ describe('BaseButton', () => {
                 default: 'Ação X',
             },
             props: {
-                color: 'dark',
+                color: '',
+                typeButton: '',
             },
         })
     })
@@ -30,8 +31,16 @@ describe('BaseButton', () => {
             expect(button.html()).toContain('Ação X')
         })
 
-        test.only('Dado a prop color quando definida como "dark" deve retornar a classe "base-button_dark"', async () => {
-            expect(wrapper.find('.base-button_dark')).toBeTruthy()
+        test('Dado a prop color quando definida como "dark" deve retornar a classe "base-button_dark"', async () => {
+            await wrapper.setProps({ color: 'dark' })
+
+            expect(wrapper.classes()).toContain('base-button_dark')
+        })
+
+        test('Dado a prop color quando definida como "light" deve retornar a classe "base-button_light"', async () => {
+            await wrapper.setProps({ color: 'light' })
+
+            expect(wrapper.classes()).toContain('base-button_light')
         })
     })
 })

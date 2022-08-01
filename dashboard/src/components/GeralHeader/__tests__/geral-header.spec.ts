@@ -30,14 +30,12 @@ describe('GeralHeader', () => {
         wrapper.unmount()
     })
 
-    /* it('deveria exibir um modal quando clicar em "Crie uma conta"', () => {
-        const button = wrapper.find('[data-create]')
+    it('deveria exibir um modal quando clicar em "Crie uma conta"', async () => {
+        await wrapper.get('[data-create]').trigger('click')
 
-        button.trigger('click')
-
-        //expect().toBe(true)
+        expect(wrapper.emitted().click).toBeTruthy()
+        expect(wrapper.findAll('.modal')).toHaveLength(1)
     })
-    */
 
     //Testes de Unidade:
     describe('Unidade', () => {

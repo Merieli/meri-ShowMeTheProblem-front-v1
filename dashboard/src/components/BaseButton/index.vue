@@ -1,5 +1,10 @@
 <template>
-    <button class="base-button rounded-full font-bold text-xl" :class="classByColor" :type="typeButton">
+    <button
+        class="base-button rounded-full font-bold text-xl"
+        :class="classByColor"
+        :type="typeButton"
+        data-button="base"
+    >
         <slot />
     </button>
 </template>

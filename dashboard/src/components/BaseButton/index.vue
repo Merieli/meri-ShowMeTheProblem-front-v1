@@ -10,15 +10,15 @@
 </template>
 
 <script lang="ts">
-import { ButtonTypes, ITypeButton } from './module'
+import { ButtonColorTypes, ButtonTypes, IColorButton, ITypeButton } from './module'
 import { defineComponent, computed, ComputedRef, PropType } from 'vue'
 
 export default defineComponent({
     name: 'BaseButton',
     props: {
         color: {
-            type: String,
-            default: 'light',
+            type: String as PropType<IColorButton>,
+            default: ButtonColorTypes.LIGHT,
         },
         typeButton: {
             type: String as PropType<ITypeButton>,
@@ -27,7 +27,11 @@ export default defineComponent({
     },
     setup(props) {
         const classByColor: ComputedRef<string> = computed(() => {
-            return props.color === 'dark' ? 'base-button_dark' : 'base-button_light'
+            return props.color === ButtonColorTypes.DARK
+                ? 'base-button_dark'
+                : ButtonColorTypes.LIGHT
+                ? 'base-button_light'
+                : 'base-button_dark'
         })
 
         return {

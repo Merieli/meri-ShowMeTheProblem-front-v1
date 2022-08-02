@@ -1,27 +1,16 @@
 import BaseButton from '@/components/BaseButton/index.vue'
-import { ButtonTypes, ButtonColorTypes } from '@/components/BaseButton/module'
+import { ButtonColorTypes } from '@/components/BaseButton/module'
 import { mount, VueWrapper } from '@vue/test-utils'
 
 describe('BaseButton', () => {
     let wrapper: VueWrapper
-
-    interface Props {
-        color: ButtonColorTypes
-        typeButton: ButtonTypes
-    }
 
     beforeEach(() => {
         wrapper = mount(BaseButton, {
             slots: {
                 default: 'Ação X',
             },
-            props: {
-                color: {
-                    type: ButtonColorTypes,
-                    default: '',
-                },
-                typeButton: '',
-            },
+            props: {},
         })
     })
 

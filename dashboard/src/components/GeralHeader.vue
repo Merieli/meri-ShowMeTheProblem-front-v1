@@ -25,6 +25,7 @@
                             v-model="name"
                             autocomplete="on"
                             required
+                            data-form-name
                         />
                         <label for="email" class="font-bold text-lg">E-mail</label>
                         <input
@@ -56,7 +57,7 @@
                 <legend class="font-black text-3xl">Entre na sua conta</legend>
             </template>
             <template v-slot:content>
-                <form class="mx-12 my-10 mt-0" @submit.prevent="loginUser">
+                <form class="modal__form mx-12 my-10 mt-0" @submit.prevent="loginUser" data-modal-form>
                     <fieldset class="flex flex-col">
                         <label for="email" class="font-bold text-lg">E-mail</label>
                         <input
@@ -102,7 +103,7 @@ export default defineComponent({
         BaseButton,
         PartModal,
     },
-    setup(props) {
+    setup() {
         const router = useRouter()
 
         const isShow = ref(false)
@@ -172,7 +173,6 @@ export default defineComponent({
         }
         return {
             closeModal,
-            props,
             name,
             email,
             password,

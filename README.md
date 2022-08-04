@@ -29,7 +29,8 @@ Os usuários devem ser capazes de:
     - [X] Usar Vuex
     - [X] Usar Vue-router
 - [X] TypeScript
-- [ ] Testes com Jest e Cypress
+- [X] Testes com Jest
+- [ ] Testes com Cypress
 - [ ] Testes de snapshot
 - [ ] Utilizar conceitos de SOLID e clean Code
 - [ ] Consumir API

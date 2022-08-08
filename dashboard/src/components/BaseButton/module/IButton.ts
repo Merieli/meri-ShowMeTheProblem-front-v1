@@ -1,7 +1,7 @@
-import { ButtonTypes } from './ButonTypes.enum'
-import { ButtonColorTypes } from './ButtonColorTypes.enum'
+import { TButton } from './ButonTypes.enum'
+import { TColorsButton } from './ButtonColorTypes.enum'
 
-export interface BaseButton {
-    color: ButtonColorTypes
-    type: ButtonTypes
+export interface IBaseButton {
+    color: TColorsButton
+    type: TButton
 }

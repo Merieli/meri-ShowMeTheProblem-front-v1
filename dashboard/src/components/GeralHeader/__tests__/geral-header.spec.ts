@@ -29,10 +29,10 @@ describe('GeralHeader', () => {
             },
         })
     })
-    /*
+
     afterEach(() => {
         wrapper.unmount()
-    })*/
+    })
 
     it('deveria exibir um modal quando clicar em "Crie uma conta"', async () => {
         await wrapper.get('[data-create]').trigger('click')
@@ -43,18 +43,14 @@ describe('GeralHeader', () => {
 
     //Testes de Unidade:
     describe('Unidade', () => {
-        test('Dado o componente quando for montado deve ser uma instancia vue', () => {
-            expect(wrapper.vm).toBeDefined()
-        })
-
         test.only('Dado um campo de nome quando preenchido deve emitir o evento de input', async () => {
-            //expect(wrapper.findAll('[data-form-name]')).toHaveLength(1)
-            await wrapper.find('[data-modal-form]')
+            await wrapper.find('[data-create]').trigger('click')
 
-            //find('[data-form-name]').setValue('Teste')
-
-            expect(wrapper.emitted().input).toBeTruthy()
-            expect(wrapper.emitted().input[0]).toEqual('Merieli')
+            console.log(wrapper.find('[data-form-name]').setValue('Merieli'))
+            //find('input[data-form-name]').setValue('Merieli')
+            expect(wrapper.findComponent(PartModal).exists()).toBeTruthy()
+            //expect(wrapper.emitted().input).toBeTruthy()
+            //expect(wrapper.emitted().input[0]).toEqual('Merieli')
         })
 
         test('Dado o preenchimento do formulário para criar conta quando clicar em "Criar conta" deve criar um usuário e retornar uma notificação', async () => {
@@ -62,6 +58,24 @@ describe('GeralHeader', () => {
             // Simular execuçao de createUser() com dados mock
             // Validar retorno da execuçao
             // Validar retorno da notificação
+        })
+    })
+
+    describe('Componente', () => {
+        describe('Renderização', () => {
+            test('Dado o componente quando for montado deve ser uma instancia vue', () => {
+                expect(wrapper.vm).toBeDefined()
+            })
+        })
+        describe('Comportamento', () => {
+            it('deveria exibir uma notificação ao efetuar login', () => {
+                return
+            })
+        })
+        describe('Navegação', () => {
+            it('deveria abrir a rota "Credentials" ao efetuar login', () => {
+                return
+            })
         })
     })
 
@@ -74,14 +88,6 @@ describe('GeralHeader', () => {
     })
 
     it('deveria efetuar login ao submeter o formulário clicando em "Entrar"', () => {
-        return
-    })
-
-    it('deveria abrir a rota "Credentials" ao efetuar login', () => {
-        return
-    })
-
-    it('deveria exibir uma notificação ao efetuar login', () => {
         return
     })
 })

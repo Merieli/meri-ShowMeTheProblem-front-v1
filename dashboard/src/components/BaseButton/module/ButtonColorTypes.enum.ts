@@ -1,6 +1,6 @@
-export enum ButtonColorTypes {
+export enum ButtonColors {
     LIGHT = 'light',
     DARK = 'dark',
 }
 
-export type IColorButton = ButtonColorTypes.LIGHT | ButtonColorTypes.DARK
+export type TColorsButton = ButtonColors.LIGHT | ButtonColors.DARK

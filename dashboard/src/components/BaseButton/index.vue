@@ -10,26 +10,26 @@
 </template>
 
 <script lang="ts">
-import { ButtonColorTypes, ButtonTypes, IColorButton, ITypeButton } from './module'
+import { ButtonColors, ButtonTypes, TColorsButton, TButton } from './module'
 import { defineComponent, computed, ComputedRef, PropType } from 'vue'
 
 export default defineComponent({
     name: 'BaseButton',
     props: {
         color: {
-            type: String as PropType<IColorButton>,
-            default: ButtonColorTypes.LIGHT,
+            type: String as PropType<TColorsButton>,
+            default: ButtonColors.LIGHT,
         },
         typeButton: {
-            type: String as PropType<ITypeButton>,
+            type: String as PropType<TButton>,
             default: ButtonTypes.BUTTON,
         },
     },
     setup(props) {
         const classByColor: ComputedRef<string> = computed(() => {
-            return props.color === ButtonColorTypes.DARK
+            return props.color === ButtonColors.DARK
                 ? 'base-button_dark'
-                : ButtonColorTypes.LIGHT
+                : ButtonColors.LIGHT
                 ? 'base-button_light'
                 : 'base-button_dark'
         })

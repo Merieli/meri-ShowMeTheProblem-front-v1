@@ -14,7 +14,7 @@
                 <legend class="font-black text-3xl">Crie uma conta</legend>
             </template>
             <template v-slot:content>
-                <form class="mx-12 my-10 mt-0" @submit.prevent="createUser">
+                <form class="modal__form mx-12 my-10 mt-0" @submit.prevent="createUser">
                     <fieldset class="flex flex-col">
                         <label for="name" class="font-bold text-lg" id="create-name"> Nome </label>
                         <input

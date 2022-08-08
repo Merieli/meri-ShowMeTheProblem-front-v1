@@ -21,17 +21,16 @@ describe('GeralHeader', () => {
 
     beforeAll(() => {
         wrapper = mount(GeralHeader, {
+            attachTo: document.body,
             global: {
                 plugins: [store],
-            },
-            components: {
-                PartModal,
             },
         })
     })
 
     afterEach(() => {
         wrapper.unmount()
+        document.body.outerHTML = ''
     })
 
     it('deveria exibir um modal quando clicar em "Crie uma conta"', async () => {
@@ -46,9 +45,12 @@ describe('GeralHeader', () => {
         test.only('Dado um campo de nome quando preenchido deve emitir o evento de input', async () => {
             await wrapper.find('[data-create]').trigger('click')
 
-            console.log(wrapper.find('[data-form-name]').setValue('Merieli'))
-            //find('input[data-form-name]').setValue('Merieli')
-            expect(wrapper.findComponent(PartModal).exists()).toBeTruthy()
+            const modal = wrapper.getComponent(PartModal)
+            await modal.get('input').setValue('Merieli')
+            //const inputName = wrapper.get('[data-form-name]')
+            //await inputName.setValue('Merieli')
+            //find('input[data-form-name]').setValue('Merieli')d
+            expect(modal.emitted().input[0]).toBeTruthy()
             //expect(wrapper.emitted().input).toBeTruthy()
             //expect(wrapper.emitted().input[0]).toEqual('Merieli')
         })

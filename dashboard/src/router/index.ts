@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 const Home = () => import('../views/Home/index.vue')
 const Feedbacks = () => import('../views/Feedbacks/index.vue')
-const Credencials = () => import('../views/Credentials/index.vue')
+const Credentials = () => import('../views/Credentials/index.vue')
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -19,9 +19,9 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        path: '/credencials',
-        name: 'Credencials',
-        component: Credencials,
+        path: '/Credentials',
+        name: 'Credentials',
+        component: Credentials,
         meta: {
             hasAuth: true,
         },

@@ -67,6 +67,7 @@ export const store = createStore<EstadoStore>({
                     commit(Mutations.LOGIN_USER, response.data.token)
                     router.push('/feedbacks')
                 })
+                .catch((e) => console.log(e))
                 .then(() => {
                     dispatch(Actions.GET_USER, state.userLogged.token)
                 })

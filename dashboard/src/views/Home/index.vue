@@ -10,7 +10,7 @@
                 <p class="home__text home__text_light">
                     Receba ideias, reclamações e feedbacks com um simples widget na página.
                 </p>
-                <BaseButton color="light"> Crie uma conta grátis </BaseButton>
+                <BaseButton color="light" @click="toggleModalCreate"> Crie uma conta grátis </BaseButton>
             </div>
         </section>
         <section class="home__contact">
@@ -23,19 +23,34 @@
         <footer class="home__footer">
             <p class="home__text">ShowMeTheProblem © 2022</p>
         </footer>
+        <PartModal type-modal="create" :open="openCreateModal" @close="toggleModalCreate" />
     </div>
 </template>
 
 <script lang="ts">
 import BaseButton from '../../components/BaseButton/index.vue'
 import GeralHeader from '../../components/GeralHeader.vue'
-import { defineComponent } from 'vue'
+import PartModal from '../../components/Modal/index.vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
     name: 'PageHome',
     components: {
         GeralHeader,
         BaseButton,
+        PartModal,
+    },
+    setup() {
+        const openCreateModal = ref(false)
+
+        const toggleModalCreate = () => {
+            openCreateModal.value = !openCreateModal.value
+        }
+
+        return {
+            openCreateModal,
+            toggleModalCreate,
+        }
     },
 })
 </script>

@@ -3,9 +3,10 @@
         <div
             class="overlay fixed top-0 left-0 z-1 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
             v-show="open"
+            @click="closeModal"
         >
             <transition name="moda-animation-inner">
-                <div class="fixed mx-10">
+                <div class="fixed mx-10" @click.stop>
                     <div
                         class="modal w-96 z-10 flex flex-col overflow-hidden bg-white rounded-lg .animate__animated animate__faster animate__fadeInDown"
                     >
@@ -160,7 +161,14 @@ export default defineComponent({
                     email: email.value,
                     password: password.value,
                 })
-                .then(() => cleanAndNotify('', 'Login efetuado com sucesso'))
+                .catch((e) => {
+                    notify(
+                        TypeOfNotification.FALHA,
+                        'Preencha todos os campos',
+                        'Erro na tentativa de criar uma conta.'
+                    )
+                })
+            //.then(() => cleanAndNotify('', 'Login efetuado com sucesso'))
         }
 
         const showModal = (active: boolean) => {

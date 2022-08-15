@@ -9,7 +9,7 @@ Os usuários devem ser capazes de:
     - [X] Visualizar o status da criação
 - [ ] Efetuar Login
     - [ ] Visualizar se login estiver incorreto
-    - [ ] Visualizar dados do usuário logado
+    - [X] Visualizar dados do usuário logado
 - [ ] Cadastrar feedback
     - [ ] Visualizar o status do cadastro
     - [ ] Criar, ler, atualizar e excluir solicitações de feedback do produto
@@ -35,7 +35,7 @@ Os usuários devem ser capazes de:
 - [ ] Utilizar conceitos de SOLID e clean Code
 - [ ] Consumir API
     - [ ] Tratar Dados da API
-- [X] Usar Framework CSS
+- [X] Usar Framework CSS Tailwind
 - [X] SASS
 - [X] Prettier
 - [ ] Docker para ambiente Dev

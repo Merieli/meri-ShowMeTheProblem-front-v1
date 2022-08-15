@@ -30,7 +30,10 @@
                                 <fieldset class="flex flex-col">
                                     <label for="name" class="font-bold text-lg" id="create-name"> Nome </label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3"
+                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
+                                        :class="{
+                                            'border-brand-danger': !!state.email.errorMessage,
+                                        }"
                                         type="text"
                                         name="name"
                                         placeholder="Seu Nome Aqui"
@@ -41,7 +44,7 @@
                                     />
                                     <label for="email" class="font-bold text-lg">E-mail</label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3"
+                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
                                         type="email"
                                         name="email"
                                         placeholder="email@exemplo.com"
@@ -49,9 +52,12 @@
                                         autocomplete="on"
                                         required
                                     />
+                                    <span v-if="!!state.email.errorMessage" class="block font-medium text-brand-danger">
+                                        {{ state.email.errorMessage }}
+                                    </span>
                                     <label for="password" class="font-bold text-lg">Senha</label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3"
+                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
                                         type="password"
                                         name="password"
                                         placeholder="******"
@@ -71,7 +77,7 @@
                                 <fieldset class="flex flex-col">
                                     <label for="email" class="font-bold text-lg">E-mail</label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3"
+                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
                                         type="email"
                                         name="email"
                                         placeholder="email@exemplo.com"
@@ -81,7 +87,7 @@
                                     />
                                     <label for="password" class="font-bold text-lg">Senha</label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3"
+                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
                                         type="password"
                                         name="password"
                                         placeholder="******"
@@ -90,7 +96,9 @@
                                     />
                                 </fieldset>
 
-                                <BaseButton color="dark" type-button="submit">Entrar</BaseButton>
+                                <BaseButton color="dark" type-button="submit" :disabled="state.isLoading">
+                                    Entrar
+                                </BaseButton>
                             </form>
                         </div>
                     </div>

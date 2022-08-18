@@ -109,6 +109,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * Um Modal Factory que pode ser usado de acordo com a necessidade.
+ * @version 1.0.0
+ */
 import useNotifier from '../../hooks/notifier'
 import { TypeOfNotification } from '../../interfaces/INotification'
 import { Actions } from '../../store/type-actions'
@@ -123,10 +127,18 @@ export default defineComponent({
         BaseButton,
     },
     props: {
+        /**
+         * Define o tipo do modal a ser usado
+         * @values create, login
+         */
         typeModal: {
             type: String,
             default: 'create',
         },
+        /**
+         * Define se o modal está sendo exibido ou não.
+         * @values true, false
+         */
         open: {
             type: Boolean,
             default: false,
@@ -141,6 +153,9 @@ export default defineComponent({
 
         const { notify } = useNotifier()
 
+        /** Limpa os campos do modal e Notifica em caso de sucesso
+         * @event success
+         */
         const cleanAndNotify = (title: string, text: string) => {
             name.value = ''
             email.value = ''
@@ -169,7 +184,7 @@ export default defineComponent({
                     email: email.value,
                     password: password.value,
                 })
-                .catch((e) => {
+                .catch(() => {
                     notify(
                         TypeOfNotification.FALHA,
                         'Preencha todos os campos',
@@ -179,11 +194,19 @@ export default defineComponent({
             //.then(() => cleanAndNotify('', 'Login efetuado com sucesso'))
         }
 
+        /** Acionado quando o modal tiver o valor true.
+         * @event open
+         * @type {Event}
+         */
         const showModal = (active: boolean) => {
             isActive.value = active
             emit('open', active)
         }
 
+        /** Acionado quando o botão de fechar do modal for clicado.
+         * @event open
+         * @type {Event}
+         */
         const closeModal = () => {
             emit('close')
         }
@@ -230,3 +253,15 @@ export default defineComponent({
     z-index: 0;
 }
 </style>
+
+<docs lang="md">
+Modal que pode ser utilizado para login ou criação de conta de usuário.
+
+## Exemplo
+
+Modal de Login:
+
+```vue
+<PartModal typeModal="login" @open="true" />
+```
+</docs>

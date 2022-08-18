@@ -32,10 +32,11 @@ Os usuários devem ser capazes de:
 - [X] Testes com Jest
 - [ ] Testes com Cypress
 - [ ] Testes de snapshot
-- [ ] Utilizar conceitos de SOLID e clean Code
+- [ ] Utilizar conceitos de SOLID e clean Codde
 - [ ] Consumir API
     - [ ] Tratar Dados da API
 - [X] Usar Framework CSS Tailwind
 - [X] SASS
 - [X] Prettier
 - [ ] Docker para ambiente Dev
+- [ ] Documentar com JS Docs e Vue Styleguidist

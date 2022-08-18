@@ -20,6 +20,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * Cabeçalho para todas as páginas da aplicação.
+ * @displayName Geral Header
+ */
 import PartModal from '../components/Modal/index.vue'
 import router from '../router/index'
 import BaseButton from './BaseButton/index.vue'
@@ -36,15 +40,26 @@ export default defineComponent({
         const openCreateModal = ref(false)
         const openLoginModal = ref(false)
 
+        /**
+         * Alterna o modal de criação de conta para ser oculto ou visivel
+         */
         const toggleModalCreate = () => {
             openCreateModal.value = !openCreateModal.value
         }
 
+        /**
+         * Alterna o modal de login para ser oculto ou visivel
+         */
         const toggleModalLogin = () => {
             openLoginModal.value = !openLoginModal.value
         }
         const store = useStore()
 
+        /**
+         * Alterna a página atual
+         * @param {string} rota caminho da página que será aberta ao clicar nos
+         * botões do menu.
+         */
         const changePage = (rota: string): void => {
             router.push(rota)
         }
@@ -79,3 +94,10 @@ export default defineComponent({
     }
 }
 </style>
+<docs lang="md">
+## Examples
+
+```jsx
+<GeralHeader />
+```
+</docs>

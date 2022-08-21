@@ -52,6 +52,8 @@
     "tailwindcss": "^3.1.6",
     "ts-jest": "^27.0.4",
     "typescript": "~4.5.5",
-    "vue-cli-plugin-styleguidist": "~4.45.1"
+    "vee-validate": "^4.6.6",
+    "vue-cli-plugin-styleguidist": "~4.45.1",
+    "yup": "^0.32.11"
   }
 }

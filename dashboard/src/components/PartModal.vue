@@ -30,43 +30,68 @@
                                 <fieldset class="flex flex-col">
                                     <label for="name" class="font-bold text-lg" id="create-name"> Nome </label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
+                                        class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
                                         :class="{
-                                            'border-brand-danger': !!state.email.errorMessage,
+                                            'border-brand-danger': !!state.name.errorMessage,
                                         }"
                                         type="text"
                                         name="name"
                                         placeholder="Seu Nome Aqui"
-                                        v-model="name"
+                                        v-model="state.name.value"
                                         autocomplete="on"
                                         required
                                         data-form-name
                                     />
-                                    <label for="email" class="font-bold text-lg">E-mail</label>
+                                    <span v-if="!!state.name.errorMessage" class="block font-medium text-brand-danger">
+                                        {{ state.name.errorMessage }}
+                                    </span>
+                                    <label for="email" class="font-bold text-lg mt-6">E-mail</label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
+                                        class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
+                                        :class="{
+                                            'border-brand-danger': !!state.email.errorMessage,
+                                        }"
                                         type="email"
                                         name="email"
                                         placeholder="email@exemplo.com"
-                                        v-model="email"
+                                        v-model="state.email.value"
                                         autocomplete="on"
                                         required
                                     />
                                     <span v-if="!!state.email.errorMessage" class="block font-medium text-brand-danger">
                                         {{ state.email.errorMessage }}
                                     </span>
-                                    <label for="password" class="font-bold text-lg">Senha</label>
+                                    <label for="password" class="font-bold text-lg mt-6">Senha</label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
+                                        class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
+                                        :class="{
+                                            'border-brand-danger': !!state.password.errorMessage,
+                                        }"
                                         type="password"
                                         name="password"
                                         placeholder="******"
-                                        v-model="password"
+                                        v-model="state.password.value"
                                         required
                                     />
+                                    <span
+                                        v-if="!!state.password.errorMessage"
+                                        class="block font-medium text-brand-danger"
+                                    >
+                                        {{ state.password.errorMessage }}
+                                    </span>
                                 </fieldset>
 
-                                <BaseButton color="dark" type-button="submit">Criar conta</BaseButton>
+                                <BaseButton
+                                    color="dark"
+                                    type-button="submit"
+                                    :disabled="state.isLoading"
+                                    class="mt-6"
+                                    :class="{
+                                        'opacity-50': state.isLoading,
+                                    }"
+                                >
+                                    Criar conta
+                                </BaseButton>
                             </form>
                             <form
                                 v-else
@@ -77,26 +102,41 @@
                                 <fieldset class="flex flex-col">
                                     <label for="email" class="font-bold text-lg">E-mail</label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
+                                        class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
+                                        :class="{
+                                            'border-brand-danger': !!state.email.errorMessage,
+                                        }"
                                         type="email"
                                         name="email"
                                         placeholder="email@exemplo.com"
-                                        v-model="email"
+                                        v-model="state.email.value"
                                         autocomplete="on"
                                         required
                                     />
-                                    <label for="password" class="font-bold text-lg">Senha</label>
+                                    <span v-if="!!state.email.errorMessage" class="block font-medium text-brand-danger">
+                                        {{ state.email.errorMessage }}
+                                    </span>
+                                    <label for="password" class="font-bold text-lg mt-6">Senha</label>
                                     <input
-                                        class="bg-slate-50 mb-6 p-3 text-lg border-2 border-transparent rounded"
+                                        class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
+                                        :class="{
+                                            'border-brand-danger': !!state.password.errorMessage,
+                                        }"
                                         type="password"
                                         name="password"
                                         placeholder="******"
-                                        v-model="password"
+                                        v-model="state.password.value"
                                         required
                                     />
+                                    <span
+                                        v-if="!!state.password.errorMessage"
+                                        class="block font-medium text-brand-danger"
+                                    >
+                                        {{ state.password.errorMessage }}
+                                    </span>
                                 </fieldset>
 
-                                <BaseButton color="dark" type-button="submit" :disabled="state.isLoading">
+                                <BaseButton color="dark" type-button="submit" :disabled="state.isLoading" class="mt-6">
                                     Entrar
                                 </BaseButton>
                             </form>
@@ -109,16 +149,18 @@
 </template>
 
 <script lang="ts">
-/**
- * Um Modal Factory que pode ser usado de acordo com a necessidade.
- * @version 1.0.0
+/** @version 1.0.0
  */
-import useNotifier from '../../hooks/notifier'
-import { TypeOfNotification } from '../../interfaces/INotification'
-import { Actions } from '../../store/type-actions'
-import BaseButton from '../BaseButton/index.vue'
-import { defineComponent, ref } from 'vue'
+import useNotifier from '../hooks/notifier'
+import { IAccount } from '../interfaces/IAccount'
+import { TypeOfNotification } from '../interfaces/INotification'
+import { Actions } from '../store/type-actions'
+import { validateEmptyAndLenght6, validateEmptyAndEmail } from '../utils/validators'
+import BaseButton from './BaseButton/index.vue'
+import { useField } from 'vee-validate'
+import { defineComponent, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import * as yup from 'yup'
 
 export default defineComponent({
     name: 'PartModal',
@@ -147,9 +189,35 @@ export default defineComponent({
     setup(props, { emit }) {
         const store = useStore()
         const isActive = ref(true)
-        const name = ref('')
-        const email = ref('')
-        const password = ref('')
+
+        const { value: nameValue, errorMessage: nameErrorMessage } = useField<string>(
+            'name',
+            yup.string().required().min(6)
+        )
+
+        const { errorMessage: emailErrorMessage, value: emailValue } = useField<string>('email', validateEmptyAndEmail)
+
+        const { errorMessage: passwordErrorMessage, value: passwordValue } = useField<string>(
+            'password',
+            validateEmptyAndLenght6
+        )
+
+        const state: IAccount = reactive({
+            hasErrors: false,
+            isLoading: false,
+            name: {
+                value: nameValue,
+                errorMessage: nameErrorMessage,
+            },
+            email: {
+                value: emailValue,
+                errorMessage: emailErrorMessage,
+            },
+            password: {
+                value: passwordValue,
+                errorMessage: passwordErrorMessage,
+            },
+        })
 
         const { notify } = useNotifier()
 
@@ -157,20 +225,20 @@ export default defineComponent({
          * @event success
          */
         const cleanAndNotify = (title: string, text: string) => {
-            name.value = ''
-            email.value = ''
-            password.value = ''
+            state.name.value = ''
+            state.email.value = ''
+            state.password.value = ''
 
             notify(TypeOfNotification.SUCESSO, title, text)
         }
 
         const createUser = () => {
-            if (name.value != '' && email.value != '' && password.value != '') {
+            if (state.name.value != '' && state.email.value != '' && state.password.value != '') {
                 store
                     .dispatch(Actions.REGISTER_USER, {
-                        name: name.value,
-                        email: email.value,
-                        password: password.value,
+                        name: state.name.value,
+                        email: state.email.value,
+                        password: state.password.value,
                     })
                     .then(() => cleanAndNotify('Conta Registrada', 'Sua conta foi criada com sucesso, efetue login.'))
             } else {
@@ -181,8 +249,8 @@ export default defineComponent({
         const loginUser = () => {
             store
                 .dispatch(Actions.LOGIN_USER, {
-                    email: email.value,
-                    password: password.value,
+                    email: state.email.value,
+                    password: state.password.value,
                 })
                 .catch(() => {
                     notify(
@@ -211,10 +279,8 @@ export default defineComponent({
             emit('close')
         }
         return {
+            state,
             isActive,
-            name,
-            email,
-            password,
             createUser,
             loginUser,
             notify,

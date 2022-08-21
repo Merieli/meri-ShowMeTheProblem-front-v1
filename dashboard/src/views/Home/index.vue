@@ -30,7 +30,7 @@
 <script lang="ts">
 import BaseButton from '../../components/BaseButton/index.vue'
 import GeralHeader from '../../components/GeralHeader.vue'
-import PartModal from '../../components/Modal/index.vue'
+import PartModal from '../../components/PartModal.vue'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({

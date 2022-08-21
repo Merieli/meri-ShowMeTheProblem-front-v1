@@ -6,7 +6,7 @@ module.exports = {
     sections: [
         {
             name: 'First Section',
-            components: 'src/components/**/[A-Z]*.vue',
+            components: 'src/components/**/[a-zA-Z]*.vue',
         },
     ],
     webpackConfig: {

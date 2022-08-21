@@ -11,7 +11,7 @@
             <nav class="geral-header__navigation" v-else>
                 <button class="geral-header__link font-bold" @click="changePage('/credentials')">Credenciais</button>
                 <button class="geral-header__link font-bold" @click="changePage('/feedbacks')">Feedbacks</button>
-                <BaseButton>{{ nameUser }} (sair)</BaseButton>
+                <BaseButton @click="changePage('/')">{{ nameUser }} (sair)</BaseButton>
             </nav>
         </header>
         <PartModal type-modal="create" :open="openCreateModal" @close="toggleModalCreate" />
@@ -24,9 +24,9 @@
  * Cabeçalho para todas as páginas da aplicação.
  * @displayName Geral Header
  */
-import PartModal from '../components/Modal/index.vue'
 import router from '../router/index'
 import BaseButton from './BaseButton/index.vue'
+import PartModal from './PartModal.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 

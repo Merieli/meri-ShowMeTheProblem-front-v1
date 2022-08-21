@@ -1,20 +1,17 @@
 <template>
     <button
-        class="base-button rounded-full font-bold text-xl"
+        class="base-button rounded-full font-bold text-xl transition-all duration-150"
         :class="classByColor"
         :type="typeButton"
         data-button="base"
     >
-        <!-- @slot texto para o botão -->
+        <!-- @slot Texto de conteúdo do botão -->
         <slot />
     </button>
 </template>
 
 <script lang="ts">
-/**
- * Botão base que pode ser utilizado em qualquer parte do projeto.
- * @displayName Base Button
- * @author Merieli Manzano
+/** @author Merieli Manzano
  * @version 1.0.0
  */
 import { ButtonColors, ButtonTypes, TColorsButton, TButton } from './module'

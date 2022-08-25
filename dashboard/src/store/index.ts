@@ -1,15 +1,16 @@
-import ApiClient from '../http-client/server.json'
+import useNotifier from '../hooks/notifier'
 import router from '../router/index'
 import { Actions } from './type-actions'
 import { Mutations } from './type-mutations'
+import callApiClient from '@/http-client/index'
+import { TypeOfNotification } from '@/interfaces/INotification'
 import { INotification } from '@/interfaces/INotification'
-import IUsers from '@/interfaces/IUser'
+import IUser from '@/interfaces/IUser'
 import IUserLogged from '@/interfaces/IUserLogged'
-import axios from 'axios'
 import { createStore } from 'vuex'
 
 export interface EstadoStore {
-    users: IUsers[]
+    users: IUser[]
     notifications: INotification[]
     isLogged: boolean
     userLogged: IUserLogged
@@ -35,7 +36,7 @@ export const store = createStore<EstadoStore>({
                 state.notifications = state.notifications.filter((notif) => notif.id != newNotification.id)
             }, 5000)
         },
-        [Mutations.ADD_USER](state, user: IUsers) {
+        [Mutations.ADD_USER](state, user: IUser) {
             state.users.push(user)
         },
         [Mutations.LOGIN_USER](state, token) {
@@ -48,38 +49,52 @@ export const store = createStore<EstadoStore>({
         },
     },
     actions: {
-        [Actions.REGISTER_USER]({ commit }, user: IUsers) {
-            return axios
-                .post(ApiClient.user.register, {
-                    name: user.name,
-                    email: user.email,
-                    password: user.password,
-                })
-                .then((response) => commit(Mutations.ADD_USER, response.data))
+        /**
+         * @name REGISTER_USER
+         * @descripton efetua o registro do usuário e o adiciona a store
+         * @param {IUser} user usuário com name, email e password
+         */
+        async [Actions.REGISTER_USER]({ commit }, user: IUser) {
+            try {
+                const response = await callApiClient.user.register(user.name, user.email, user.password)
+                commit(Mutations.ADD_USER, response)
+            } catch (e) {
+                throw new Error(`Não foi possível efetuar cadastro. Confira os dados informados`)
+            }
         },
-        [Actions.LOGIN_USER]({ commit, dispatch, state }, user: IUsers) {
-            return axios
-                .post(ApiClient.user.login, {
-                    email: user.email,
-                    password: user.password,
-                })
-                .then((response) => {
-                    commit(Mutations.LOGIN_USER, response.data.token)
-                    router.push('/feedbacks')
-                })
-                .catch((e) => console.log(e))
-                .then(() => {
-                    dispatch(Actions.GET_USER, state.userLogged.token)
-                })
+
+        /**
+         * @name LOGIN_USER
+         * @description Efetua login do usuário, salva o token na store,
+         * redireciona para a página de 'feedbacks' e aciona a action
+         * para pegar os dados do usuário logado.
+         * @param {IUser} user usuário com name, email e password
+         */
+        async [Actions.LOGIN_USER]({ commit, dispatch, state }, user: IUser) {
+            try {
+                const response = await callApiClient.user.login(user.email, user.password)
+                commit(Mutations.LOGIN_USER, response.token)
+                router.push('/feedbacks')
+                dispatch(Actions.GET_USER, state.userLogged.token)
+            } catch (e) {
+                const { notify } = useNotifier()
+                notify(TypeOfNotification.FALHA, 'Não foi possível efetuar login', 'Confira os dados informados.')
+                throw new Error(`Não foi possível efetuar login. Confira os dados informados`)
+            }
         },
-        [Actions.GET_USER]({ commit }, token) {
-            return axios
-                .get(ApiClient.user.show, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .then((response) => commit(Mutations.USER_LOGGED, response.data))
+
+        /**
+         * @name GET_USER
+         * @descripton Captura os dados do usuários e salva na store
+         * @param token chave de acesso do usuário
+         */
+        async [Actions.GET_USER]({ commit }, token) {
+            try {
+                const response = await callApiClient.user.show(token)
+                commit(Mutations.USER_LOGGED, response)
+            } catch (e) {
+                throw new Error(`Não foi possível capturar os dados do usuário.`)
+            }
         },
     },
     modules: {},

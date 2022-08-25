@@ -252,14 +252,7 @@ export default defineComponent({
                     email: state.email.value,
                     password: state.password.value,
                 })
-                .catch(() => {
-                    notify(
-                        TypeOfNotification.FALHA,
-                        'Preencha todos os campos',
-                        'Erro na tentativa de criar uma conta.'
-                    )
-                })
-            //.then(() => cleanAndNotify('', 'Login efetuado com sucesso'))
+                .then(() => cleanAndNotify('', 'Login efetuado com sucesso'))
         }
 
         /** Acionado quando o modal tiver o valor true.

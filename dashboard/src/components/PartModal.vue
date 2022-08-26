@@ -159,7 +159,7 @@ import { validateEmptyAndLenght6, validateEmptyAndEmail } from '../utils/validat
 import BaseButton from './BaseButton/index.vue'
 import { useField } from 'vee-validate'
 import { defineComponent, reactive, ref } from 'vue'
-import { useStore } from 'vuex'
+import { mapActions, useStore } from 'vuex'
 import * as yup from 'yup'
 
 export default defineComponent({
@@ -186,8 +186,12 @@ export default defineComponent({
             default: false,
         },
     },
+    methods: {
+        ...mapActions([Actions.REGISTER_USER]),
+    },
     setup(props, { emit }) {
         const store = useStore()
+        const { notify } = useNotifier()
         const isActive = ref(true)
 
         const { value: nameValue, errorMessage: nameErrorMessage } = useField<string>(
@@ -218,8 +222,6 @@ export default defineComponent({
                 errorMessage: passwordErrorMessage,
             },
         })
-
-        const { notify } = useNotifier()
 
         /** Limpa os campos do modal e Notifica em caso de sucesso
          * @event success

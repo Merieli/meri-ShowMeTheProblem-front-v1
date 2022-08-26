@@ -7,8 +7,8 @@ Os usuários devem ser capazes de:
 - [ ] Ver os estados de foco para todos os elementos interativos na página
 - [X] Criar conta de usuário
     - [X] Visualizar o status da criação
-- [ ] Efetuar Login
-    - [ ] Visualizar se login estiver incorreto
+- [X] Efetuar Login
+    - [X] Visualizar se login estiver incorreto
     - [X] Visualizar dados do usuário logado
 - [ ] Cadastrar feedback
     - [ ] Visualizar o status do cadastro
@@ -39,4 +39,4 @@ Os usuários devem ser capazes de:
 - [X] SASS
 - [X] Prettier
 - [ ] Docker para ambiente Dev
-- [ ] Documentar com JS Docs e Vue Styleguidist
+- [X] Documentar com JS Docs e Vue Styleguidist

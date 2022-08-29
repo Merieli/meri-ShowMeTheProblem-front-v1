@@ -1,6 +1,4 @@
 export interface IAccount {
-    hasErrors: boolean
-    isLoading: boolean
     name: {
         value?: string
         errorMessage?: string

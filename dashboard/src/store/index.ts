@@ -14,6 +14,8 @@ export interface EstadoStore {
     notifications: INotification[]
     isLogged: boolean
     userLogged: IUserLogged
+    isLoading: boolean
+    hasErrors: boolean
 }
 
 export const store = createStore<EstadoStore>({
@@ -26,6 +28,8 @@ export const store = createStore<EstadoStore>({
             token: '',
             apiKey: '',
         },
+        isLoading: false,
+        hasErrors: false,
     },
     getters: {},
     mutations: {

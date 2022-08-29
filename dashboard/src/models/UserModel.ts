@@ -1,5 +1,5 @@
+import httpClient from '@/http-client/services/index'
 import { IUserApiClientUrls } from '@/interfaces/IUserApiClientUrls'
-import axios from 'axios'
 
 export class UserModel {
     constructor(private readonly url: IUserApiClientUrls) {}
@@ -12,7 +12,7 @@ export class UserModel {
      * @param password password do usuário
      * @returns
      */
-    register(name: string, email: string, password: string) {
+    async register(name: string, email: string, password: string) {
         const params = {
             url: this.url.register,
             payload: {
@@ -21,7 +21,10 @@ export class UserModel {
                 password,
             },
         }
-        return axios.post(params.url, params.payload).then((response) => response.data)
+        return httpClient
+            .post(params.url, params.payload)
+            .then((response) => response.data)
+            .catch((e) => console.error(e))
     }
 
     /**
@@ -31,7 +34,7 @@ export class UserModel {
      * @param email do usuário que deseja efetuar login
      * @param password do usuário que deseja efetuar login
      */
-    login(email: string, password: string) {
+    async login(email: string, password: string) {
         const params = {
             url: this.url.login,
             payload: {
@@ -39,7 +42,10 @@ export class UserModel {
                 password,
             },
         }
-        return axios.post(params.url, params.payload).then((response) => response.data)
+        return httpClient
+            .post(params.url, params.payload)
+            .then((response) => response.data)
+            .catch((e) => console.error(e))
     }
 
     /**
@@ -48,15 +54,18 @@ export class UserModel {
      * @param token chave de acesso do usuário
      * @returns name e apiKey do usuário
      */
-    show(token: string) {
+    async show(token: string) {
         const params = {
-            url: this.url.login,
+            url: this.url.show,
             payload: {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             },
         }
-        return axios.get(params.url, params.payload).then((response) => response.data)
+        return httpClient
+            .get(params.url, params.payload)
+            .then((response) => response.data)
+            .catch((e) => console.error(e))
     }
 }

@@ -84,10 +84,10 @@
                                 <BaseButton
                                     color="dark"
                                     type-button="submit"
-                                    :disabled="state.isLoading"
+                                    :disabled="store.state.isLoading"
                                     class="mt-6"
                                     :class="{
-                                        'opacity-50': state.isLoading,
+                                        'opacity-50': store.state.isLoading,
                                     }"
                                 >
                                     Criar conta
@@ -136,7 +136,12 @@
                                     </span>
                                 </fieldset>
 
-                                <BaseButton color="dark" type-button="submit" :disabled="state.isLoading" class="mt-6">
+                                <BaseButton
+                                    color="dark"
+                                    type-button="submit"
+                                    :disabled="store.state.isLoading"
+                                    class="mt-6"
+                                >
                                     Entrar
                                 </BaseButton>
                             </form>
@@ -207,8 +212,6 @@ export default defineComponent({
         )
 
         const state: IAccount = reactive({
-            hasErrors: false,
-            isLoading: false,
             name: {
                 value: nameValue,
                 errorMessage: nameErrorMessage,

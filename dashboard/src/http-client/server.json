@@ -1,19 +1,19 @@
 {
     "user": {
-        "login": "http://localhost:3000/auth/login",
-        "register": "http://localhost:3000/auth/register",
-        "show": "http://localhost:3000/users/me",
-        "apiKeyExists": "http://localhost:3000/apikey/exists?apikey=",
-        "newApiKey": "http://localhost:3000/users/me/apikey"
+        "login": "/auth/login",
+        "register": "/auth/register",
+        "show": "/users/me",
+        "apiKeyExists": "/apikey/exists?apikey=",
+        "newApiKey": "/users/me/apikey"
     },
     "feedback": {
-        "create": "http://localhost:3000/feedbacks",
-        "showAll": "http://localhost:3000/feedbacks",
-        "getIndex": "http://localhost:3000/feedbacks/summary",
+        "create": "/feedbacks",
+        "showAll": "/feedbacks",
+        "getIndex": "/feedbacks/summary",
         "type": {
-            "idea": "http://localhost:3000/feedbacks?type=idea",
-            "issue": "http://localhost:3000/feedbacks?type=issue",
-            "other": "http://localhost:3000/feedbacks?type=other"
+            "idea": "/feedbacks?type=idea",
+            "issue": "/feedbacks?type=issue",
+            "other": "/feedbacks?type=other"
         }
     }
 }

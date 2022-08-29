@@ -2,11 +2,11 @@ import useNotifier from '../hooks/notifier'
 import router from '../router/index'
 import { Actions } from './type-actions'
 import { Mutations } from './type-mutations'
-import callApiClient from '@/http-client/index'
 import { TypeOfNotification } from '@/interfaces/INotification'
 import { INotification } from '@/interfaces/INotification'
 import IUser from '@/interfaces/IUser'
 import IUserLogged from '@/interfaces/IUserLogged'
+import callApiClient from '@/services/callApiClient'
 import { createStore } from 'vuex'
 
 export interface EstadoStore {
@@ -58,11 +58,15 @@ export const store = createStore<EstadoStore>({
          * @descripton efetua o registro do usuário e o adiciona a store
          * @param {IUser} user usuário com name, email e password
          */
-        async [Actions.REGISTER_USER]({ commit }, user: IUser) {
+        async [Actions.REGISTER_USER]({ commit, state }, user: IUser) {
             try {
+                state.isLoading = true
                 const response = await callApiClient.user.register(user.name, user.email, user.password)
                 commit(Mutations.ADD_USER, response)
-            } catch (e) {
+                state.isLoading = false
+            } catch (error) {
+                state.isLoading = false
+                state.hasErrors = !!error
                 throw new Error(`Não foi possível efetuar cadastro. Confira os dados informados`)
             }
         },
@@ -76,11 +80,19 @@ export const store = createStore<EstadoStore>({
          */
         async [Actions.LOGIN_USER]({ commit, dispatch, state }, user: IUser) {
             try {
-                const response = await callApiClient.user.login(user.email, user.password)
+                state.isLoading = true
+                const { response, errors } = await callApiClient.user.login(user.email, user.password)
+
                 commit(Mutations.LOGIN_USER, response.token)
-                router.push('/feedbacks')
                 dispatch(Actions.GET_USER, state.userLogged.token)
-            } catch (e) {
+
+                if (!errors) {
+                    window.localStorage.setItem('token', response.token)
+                    router.push('/feedbacks')
+                }
+            } catch (error) {
+                state.isLoading = false
+                state.hasErrors = !!error
                 const { notify } = useNotifier()
                 notify(TypeOfNotification.FALHA, 'Não foi possível efetuar login', 'Confira os dados informados.')
                 throw new Error(`Não foi possível efetuar login. Confira os dados informados`)

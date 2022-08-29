@@ -1,5 +1,5 @@
-import httpClient from '@/http-client/services/index'
 import { IUserApiClientUrls } from '@/interfaces/IUserApiClientUrls'
+import httpClient from '@/services/index'
 
 export class UserModel {
     constructor(private readonly url: IUserApiClientUrls) {}
@@ -45,7 +45,7 @@ export class UserModel {
         return httpClient
             .post(params.url, params.payload)
             .then((response) => response.data)
-            .catch((e) => console.error(e))
+            .catch((error) => console.error(error))
     }
 
     /**

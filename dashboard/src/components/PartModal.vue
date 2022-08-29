@@ -84,10 +84,10 @@
                                 <BaseButton
                                     color="dark"
                                     type-button="submit"
-                                    :disabled="store.state.isLoading"
+                                    :disabled="isLoading"
                                     class="mt-6"
                                     :class="{
-                                        'opacity-50': store.state.isLoading,
+                                        'opacity-50': isLoading,
                                     }"
                                 >
                                     Criar conta
@@ -136,12 +136,7 @@
                                     </span>
                                 </fieldset>
 
-                                <BaseButton
-                                    color="dark"
-                                    type-button="submit"
-                                    :disabled="store.state.isLoading"
-                                    class="mt-6"
-                                >
+                                <BaseButton color="dark" type-button="submit" :disabled="isLoading" class="mt-6">
                                     Entrar
                                 </BaseButton>
                             </form>
@@ -163,7 +158,7 @@ import { Actions } from '../store/type-actions'
 import { validateEmptyAndLenght6, validateEmptyAndEmail } from '../utils/validators'
 import BaseButton from './BaseButton/index.vue'
 import { useField } from 'vee-validate'
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, computed, reactive, ref } from 'vue'
 import { mapActions, useStore } from 'vuex'
 import * as yup from 'yup'
 
@@ -199,6 +194,8 @@ export default defineComponent({
         const { notify } = useNotifier()
         const isActive = ref(true)
 
+        const isLoading = computed(() => store.state.isLoading)
+
         const { value: nameValue, errorMessage: nameErrorMessage } = useField<string>(
             'name',
             yup.string().required().min(6)
@@ -226,14 +223,35 @@ export default defineComponent({
             },
         })
 
+        /** Acionado quando o modal tiver o valor true.
+         * @event open
+         * @type {Event}
+         */
+        const showModal = (active: boolean) => {
+            isActive.value = active
+            emit('open', active)
+        }
+
+        /** Acionado para fechar o modal.
+         * @event open
+         * @type {Event}
+         */
+        const closeModal = () => {
+            emit('close')
+        }
+
         /** Limpa os campos do modal e Notifica em caso de sucesso
          * @event success
          */
         const cleanAndNotify = (title: string, text: string) => {
             state.name.value = ''
-            state.email.value = ''
-            state.password.value = ''
+            // state.name.errorMessage = ''
 
+            state.email.value = ''
+            // state.email.errorMessage = ''
+
+            state.password.value = ''
+            // state.password.errorMessage =
             notify(TypeOfNotification.SUCESSO, title, text)
         }
 
@@ -245,7 +263,10 @@ export default defineComponent({
                         email: state.email.value,
                         password: state.password.value,
                     })
-                    .then(() => cleanAndNotify('Conta Registrada', 'Sua conta foi criada com sucesso, efetue login.'))
+                    .then(() => {
+                        cleanAndNotify('Conta Registrada', 'Sua conta foi criada com sucesso, efetue login.')
+                        closeModal()
+                    })
             } else {
                 notify(TypeOfNotification.FALHA, 'Preencha todos os campos', 'Erro na tentativa de criar uma conta.')
             }
@@ -257,28 +278,16 @@ export default defineComponent({
                     email: state.email.value,
                     password: state.password.value,
                 })
-                .then(() => cleanAndNotify('', 'Login efetuado com sucesso'))
+                .then(() => {
+                    cleanAndNotify('', 'Login efetuado com sucesso')
+                    closeModal()
+                })
         }
 
-        /** Acionado quando o modal tiver o valor true.
-         * @event open
-         * @type {Event}
-         */
-        const showModal = (active: boolean) => {
-            isActive.value = active
-            emit('open', active)
-        }
-
-        /** Acionado quando o botão de fechar do modal for clicado.
-         * @event open
-         * @type {Event}
-         */
-        const closeModal = () => {
-            emit('close')
-        }
         return {
             state,
             isActive,
+            isLoading,
             createUser,
             loginUser,
             notify,

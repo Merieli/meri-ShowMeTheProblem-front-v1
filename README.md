@@ -30,11 +30,13 @@ Os usuários devem ser capazes de:
     - [X] Usar Vue-router
 - [X] TypeScript
 - [X] Testes com Jest
+    - [ ] Testes unitários
+    - [ ] Testes de integração
+    - [ ] Testes de snapshot
 - [ ] Testes com Cypress
-- [ ] Testes de snapshot
 - [ ] Utilizar conceitos de SOLID e clean Codde
-- [ ] Consumir API
-    - [ ] Tratar Dados da API
+- [X] Consumir API
+    - [X] Tratar Dados da API
 - [X] Usar Framework CSS Tailwind
 - [X] SASS
 - [X] Prettier

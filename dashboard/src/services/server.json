@@ -8,12 +8,7 @@
     },
     "feedback": {
         "create": "/feedbacks",
-        "showAll": "/feedbacks",
-        "getIndex": "/feedbacks/summary",
-        "type": {
-            "idea": "/feedbacks?type=idea",
-            "issue": "/feedbacks?type=issue",
-            "other": "/feedbacks?type=other"
-        }
+        "show": "/feedbacks",
+        "getIndex": "/feedbacks/summary"
     }
 }

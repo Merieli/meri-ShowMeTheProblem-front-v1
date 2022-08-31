@@ -112,6 +112,15 @@ export const store = createStore<EstadoStore>({
                 throw new Error(`Não foi possível capturar os dados do usuário.`)
             }
         },
+
+        async [Actions.GET_ALL_FEEDBACKS](context, { type, limit, offset }) {
+            try {
+                const query = { limit, offset }
+                if (type) {
+                    query.type
+                }
+            } catch (e) {}
+        },
     },
     modules: {},
 })

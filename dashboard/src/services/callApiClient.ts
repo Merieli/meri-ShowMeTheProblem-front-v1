@@ -1,13 +1,16 @@
 import apiClient from './server.json'
-import { IUserApiClientUrls } from '@/interfaces/IUserApiClientUrls'
-import { UserModel } from '@/models/UserModel'
+import { IFeedbackApiClientUrls, IUserApiClientUrls } from '@/interfaces'
+import { UserModel, FeedbackModel } from '@/models'
 
-const url: IUserApiClientUrls = apiClient.user
-const userApiClient = new UserModel(url)
+const urlUser: IUserApiClientUrls = apiClient.user
+const userApiClient = new UserModel(urlUser)
+
+const urlFeedback: IFeedbackApiClientUrls = apiClient.feedback
+const feedbackApiClient = new FeedbackModel(urlFeedback)
 
 const callApiClient = {
     user: userApiClient,
-    feedback: apiClient.feedback,
+    feedback: feedbackApiClient,
 }
 
 export default callApiClient

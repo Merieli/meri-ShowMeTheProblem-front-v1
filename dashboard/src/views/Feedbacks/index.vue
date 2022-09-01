@@ -62,11 +62,22 @@
 
 <script lang="ts">
 import GeralHeader from '../../components/GeralHeader.vue'
+import { Actions } from '../../store/type-actions'
+import { defineComponent } from '@vue/runtime-core'
+import { mapActions } from 'vuex'
 
-export default {
+export default defineComponent({
     components: { GeralHeader },
     name: 'PageFeedbacks',
-}
+    methods: {
+        ...mapActions({
+            getFeedback: Actions.GET_ALL_FEEDBACKS,
+        }),
+    },
+    mounted() {
+        this.getFeedback('idea', 5, 0)
+    },
+})
 </script>
 
 <style lang="scss" scoped>

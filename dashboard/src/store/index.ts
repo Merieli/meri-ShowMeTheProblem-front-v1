@@ -81,15 +81,16 @@ export const store = createStore<EstadoStore>({
         async [Actions.LOGIN_USER]({ commit, dispatch, state }, user: IUser) {
             try {
                 state.isLoading = true
-                const { response, errors } = await callApiClient.user.login(user.email, user.password)
+                const response = await callApiClient.user.login(user.email, user.password)
+                console.log(response)
 
                 commit(Mutations.LOGIN_USER, response.token)
                 dispatch(Actions.GET_USER, state.userLogged.token)
 
-                if (!errors) {
-                    window.localStorage.setItem('token', response.token)
-                    router.push('/feedbacks')
-                }
+                // if (!errors) {
+                // }
+                window.localStorage.setItem('token', response.token)
+                router.push('/feedbacks')
             } catch (error) {
                 state.isLoading = false
                 state.hasErrors = !!error
@@ -104,7 +105,7 @@ export const store = createStore<EstadoStore>({
          * @descripton Captura os dados do usuários e salva na store
          * @param token chave de acesso do usuário
          */
-        async [Actions.GET_USER]({ commit }, token) {
+        async [Actions.GET_USER]({ commit }, token: string) {
             try {
                 const response = await callApiClient.user.show(token)
                 commit(Mutations.USER_LOGGED, response)
@@ -115,11 +116,11 @@ export const store = createStore<EstadoStore>({
 
         async [Actions.GET_ALL_FEEDBACKS](context, { type, limit, offset }) {
             try {
-                const query = { limit, offset }
-                if (type) {
-                    query.type
-                }
-            } catch (e) {}
+                const response = await callApiClient.feedback.show()
+                console.log(response)
+            } catch (e) {
+                throw new Error(`Não foi possível capturar os feedbacks.`)
+            }
         },
     },
     modules: {},

@@ -1,18 +1,18 @@
 <template>
     <div id="app">
-        <PartNotification />
+        <BaseNotification />
         <router-view />
     </div>
 </template>
 
 <script lang="ts">
-import PartNotification from './components/Notification/index.vue'
+import BaseNotification from './components/BaseNotification.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'App',
     components: {
-        PartNotification,
+        BaseNotification,
     },
 })
 </script>

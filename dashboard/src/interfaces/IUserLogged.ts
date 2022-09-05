@@ -1,6 +1,6 @@
-import IUser from './IUser'
+import { IUser } from './'
 
-export default interface IUserLogged extends Pick<IUser, 'name'> {
+export interface IUserLogged extends Pick<IUser, 'name'> {
     token: string
     apiKey: string
 }

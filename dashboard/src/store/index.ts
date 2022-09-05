@@ -2,23 +2,14 @@ import useNotifier from '../hooks/notifier'
 import router from '../router/index'
 import { Actions } from './type-actions'
 import { Mutations } from './type-mutations'
-import { TypeOfNotification } from '@/interfaces/INotification'
-import { INotification } from '@/interfaces/INotification'
-import IUser from '@/interfaces/IUser'
-import IUserLogged from '@/interfaces/IUserLogged'
+import { IEstadoStore, IUser, INotification, TypeOfNotification } from '@/interfaces'
 import callApiClient from '@/services/callApiClient'
-import { createStore } from 'vuex'
+import { InjectionKey } from 'vue'
+import { createStore, Store, useStore as baseUseStore } from 'vuex'
 
-export interface EstadoStore {
-    users: IUser[]
-    notifications: INotification[]
-    isLogged: boolean
-    userLogged: IUserLogged
-    isLoading: boolean
-    hasErrors: boolean
-}
+export const key: InjectionKey<Store<IEstadoStore>> = Symbol()
 
-export const store = createStore<EstadoStore>({
+export const store = createStore<IEstadoStore>({
     state: {
         users: [],
         notifications: [],
@@ -31,7 +22,11 @@ export const store = createStore<EstadoStore>({
         isLoading: false,
         hasErrors: false,
     },
-    getters: {},
+    getters: {
+        notifications(state) {
+            return state.notifications
+        },
+    },
     mutations: {
         [Mutations.NOTIFY](state, newNotification: INotification) {
             newNotification.id = new Date().getTime()
@@ -59,14 +54,23 @@ export const store = createStore<EstadoStore>({
          * @param {IUser} user usuário com name, email e password
          */
         async [Actions.REGISTER_USER]({ commit, state }, user: IUser) {
+            const { notify } = useNotifier()
             try {
                 state.isLoading = true
-                const response = await callApiClient.user.register(user.name, user.email, user.password)
-                commit(Mutations.ADD_USER, response)
+                if (user.name != '' && user.email != '' && user.password != '') {
+                    const response = await callApiClient.user.register(user.name, user.email, user.password)
+                    commit(Mutations.ADD_USER, response)
+                }
                 state.isLoading = false
+                notify(
+                    TypeOfNotification.SUCESSO,
+                    'Conta Registrada',
+                    'Sua conta foi criada com sucesso, efetue login.'
+                )
             } catch (error) {
                 state.isLoading = false
                 state.hasErrors = !!error
+                notify(TypeOfNotification.FALHA, 'Preencha todos os campos', 'Erro na tentativa de criar uma conta.')
                 throw new Error(`Não foi possível efetuar cadastro. Confira os dados informados`)
             }
         },
@@ -79,6 +83,7 @@ export const store = createStore<EstadoStore>({
          * @param {IUser} user usuário com name, email e password
          */
         async [Actions.LOGIN_USER]({ commit, dispatch, state }, user: IUser) {
+            const { notify } = useNotifier()
             try {
                 state.isLoading = true
                 const response = await callApiClient.user.login(user.email, user.password)
@@ -91,10 +96,11 @@ export const store = createStore<EstadoStore>({
                 // }
                 window.localStorage.setItem('token', response.token)
                 router.push('/feedbacks')
+
+                notify(TypeOfNotification.SUCESSO, '', 'Login efetuado com sucesso.')
             } catch (error) {
                 state.isLoading = false
                 state.hasErrors = !!error
-                const { notify } = useNotifier()
                 notify(TypeOfNotification.FALHA, 'Não foi possível efetuar login', 'Confira os dados informados.')
                 throw new Error(`Não foi possível efetuar login. Confira os dados informados`)
             }
@@ -125,3 +131,7 @@ export const store = createStore<EstadoStore>({
     },
     modules: {},
 })
+
+export function useStore(): Store<IEstadoStore> {
+    return baseUseStore(key)
+}

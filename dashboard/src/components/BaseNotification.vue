@@ -13,12 +13,12 @@
 </template>
 
 <script lang="ts">
-import { TypeOfNotification } from '../../interfaces/INotification'
+import { TypeOfNotification } from '../interfaces'
+import { useStore } from '../store'
 import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
 
 export default defineComponent({
-    name: 'PartNotification',
+    name: 'BaseNotification',
     data() {
         return {
             classAlert: {
@@ -33,7 +33,7 @@ export default defineComponent({
         const store = useStore()
 
         return {
-            notifications: computed(() => store.state.notifications),
+            notifications: computed(() => store.getters.notifications),
         }
     },
 })

@@ -82,6 +82,7 @@
                                 </fieldset>
 
                                 <BaseButton
+                                    data-button="createAccount"
                                     color="dark"
                                     type-button="submit"
                                     :disabled="isLoading"
@@ -151,15 +152,13 @@
 <script lang="ts">
 /** @version 1.0.0
  */
-import useNotifier from '../hooks/notifier'
-import { IAccount } from '../interfaces/IAccount'
-import { TypeOfNotification } from '../interfaces/INotification'
+import { IAccount } from '../interfaces'
+import { useStore } from '../store'
 import { Actions } from '../store/type-actions'
 import { validateEmptyAndLenght6, validateEmptyAndEmail } from '../utils/validators'
 import BaseButton from './BaseButton/index.vue'
 import { useField } from 'vee-validate'
 import { defineComponent, computed, reactive, ref } from 'vue'
-import { mapActions, useStore } from 'vuex'
 import * as yup from 'yup'
 
 export default defineComponent({
@@ -186,15 +185,9 @@ export default defineComponent({
             default: false,
         },
     },
-    methods: {
-        ...mapActions([Actions.REGISTER_USER]),
-    },
     setup(props, { emit }) {
         const store = useStore()
-        const { notify } = useNotifier()
         const isActive = ref(true)
-
-        const isLoading = computed(() => store.state.isLoading)
 
         const { value: nameValue, errorMessage: nameErrorMessage } = useField<string>(
             'name',
@@ -240,10 +233,10 @@ export default defineComponent({
             emit('close')
         }
 
-        /** Limpa os campos do modal e Notifica em caso de sucesso
+        /** Limpa os campos do modal
          * @event success
          */
-        const cleanAndNotify = (title: string, text: string) => {
+        const cleanAll = () => {
             state.name.value = ''
             // state.name.errorMessage = ''
 
@@ -252,24 +245,19 @@ export default defineComponent({
 
             state.password.value = ''
             // state.password.errorMessage =
-            notify(TypeOfNotification.SUCESSO, title, text)
         }
 
         const createUser = () => {
-            if (state.name.value != '' && state.email.value != '' && state.password.value != '') {
-                store
-                    .dispatch(Actions.REGISTER_USER, {
-                        name: state.name.value,
-                        email: state.email.value,
-                        password: state.password.value,
-                    })
-                    .then(() => {
-                        cleanAndNotify('Conta Registrada', 'Sua conta foi criada com sucesso, efetue login.')
-                        closeModal()
-                    })
-            } else {
-                notify(TypeOfNotification.FALHA, 'Preencha todos os campos', 'Erro na tentativa de criar uma conta.')
-            }
+            store
+                .dispatch(Actions.REGISTER_USER, {
+                    name: state.name.value,
+                    email: state.email.value,
+                    password: state.password.value,
+                })
+                .then(() => {
+                    cleanAll()
+                    closeModal()
+                })
         }
 
         const loginUser = () => {
@@ -279,7 +267,7 @@ export default defineComponent({
                     password: state.password.value,
                 })
                 .then(() => {
-                    cleanAndNotify('', 'Login efetuado com sucesso')
+                    cleanAll()
                     closeModal()
                 })
         }
@@ -287,10 +275,9 @@ export default defineComponent({
         return {
             state,
             isActive,
-            isLoading,
+            isLoading: computed(() => store.state.isLoading),
             createUser,
             loginUser,
-            notify,
             showModal,
             closeModal,
         }

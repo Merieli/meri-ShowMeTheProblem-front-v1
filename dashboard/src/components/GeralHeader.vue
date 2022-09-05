@@ -25,10 +25,10 @@
  * @displayName Geral Header
  */
 import router from '../router/index'
+import { useStore } from '../store'
 import BaseButton from './BaseButton/index.vue'
 import PartModal from './PartModal.vue'
 import { computed, defineComponent, ref } from 'vue'
-import { useStore } from 'vuex'
 
 export default defineComponent({
     name: 'GeralHeader',
@@ -37,6 +37,7 @@ export default defineComponent({
         PartModal,
     },
     setup() {
+        const store = useStore()
         const openCreateModal = ref(false)
         const openLoginModal = ref(false)
 
@@ -53,7 +54,6 @@ export default defineComponent({
         const toggleModalLogin = () => {
             openLoginModal.value = !openLoginModal.value
         }
-        const store = useStore()
 
         /**
          * Alterna a página atual

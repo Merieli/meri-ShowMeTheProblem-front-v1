@@ -57,10 +57,18 @@ describe('PartModal', () => {
     test('Store foi carregada', async () => {
         const storeMock = createMockVuexStore()
         const wrapper = factory(storeMock)
+        await console.log(`>>>>>>>>`, wrapper.html())
 
         const button = wrapper.find('[data-button="createAccount"]')
         await button.trigger('submit')
 
         expect(registerMock).toHaveBeenCalled()
+    })
+
+    test('Store foi carregada', async () => {
+        const storeMock = createMockVuexStore()
+        const wrapper = factory(storeMock)
+
+        expect(wrapper.html()).toContain('Merieli')
     })
 })

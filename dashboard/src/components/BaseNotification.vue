@@ -6,7 +6,7 @@
             :key="notication.id"
             :class="classAlert[notication.type]"
         >
-            <h6 class="notification__header font-bold">{{ notication.title }}</h6>
+            <h6 class="notification__header font-bold" data-test="title">{{ notication.title }}</h6>
             <p class="notification__body font-normal">{{ notication.text }}</p>
         </div>
     </div>

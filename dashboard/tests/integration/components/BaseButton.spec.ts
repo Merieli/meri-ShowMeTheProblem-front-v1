@@ -20,6 +20,10 @@ describe('BaseButton', () => {
 
     describe('Integração/Componente', () => {
         describe('Renderização:', () => {
+            test('Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado', () => {
+                expect(wrapper.html()).toMatchSnapshot()
+            })
+
             test('Dado o componente quando for montado então deve ser uma instancia vue', async () => {
                 expect(wrapper.vm).toBeDefined()
             })

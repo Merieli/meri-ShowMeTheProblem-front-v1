@@ -4,24 +4,25 @@ import { mount } from '@vue/test-utils'
 import { createStore } from 'vuex'
 
 describe('BaseNotification', () => {
-    // const mockNotifications = (state) => state.notifications
+    const mockNotifications = () => mockState.notifications
     const mockState = {
         notifications: [
             {
                 type: 'SUCESSO',
                 title: 'Teste',
-                text: 'blabla',
+                text: 'Uma notificação exibida',
                 id: 12,
             },
         ],
     }
+    let mockVuexStore: any
 
-    const createMockVuexStore = () => {
-        return createStore({
+    beforeEach(() => {
+        mockVuexStore = createStore({
             state: mockState,
-            getters: { notifications: (state) => state.notifications },
+            getters: { notifications: mockNotifications },
         })
-    }
+    })
 
     function factory(storeMock: any) {
         return mount(BaseNotification, {
@@ -32,33 +33,22 @@ describe('BaseNotification', () => {
     }
 
     describe('Integração/Componente', () => {
-        // describe('Renderização:', () => {
-        //     return
-        // })
-        describe('Comportamento:', () => {
-            test('Chama o getter de notifications da store', async () => {
-                const storeMock = createMockVuexStore()
-                const wrapper = factory(storeMock)
-                await wrapper.find('.notification').trigger('click')
-
-                expect(jest.spyOn(storeMock.getters.notifications)).toHaveBeenCalled()
+        describe('Renderização:', () => {
+            test('Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado', () => {
+                const wrapper = factory(mockVuexStore)
+                expect(wrapper.html()).toMatchSnapshot()
             })
 
-            test('Dado a store quando tiver dados no state de notifications então o title deve ser "Teste"', async () => {
-                const storeMock = createMockVuexStore()
-                const wrapper = factory(storeMock)
-                // expect(storeMock.state.notifications[0].title).toContain('Teste')
+            test('Dado a store quando tiver dados no state de notifications então o título da notificação deve ser "Teste"', async () => {
+                const wrapper = factory(mockVuexStore)
+
+                expect(wrapper.find('[data-test="title"]').text().trim()).toEqual('Teste')
                 expect(wrapper.html()).toContain('Teste')
             })
         })
-        // describe('Navegação:', () => {
-        //     return
-        // })
+
+        describe('Comportamento:', () => {
+            return
+        })
     })
 })
-
-// describe('função', () => {
-//     describe('Unidade', () => {
-//         return
-//     })
-// })

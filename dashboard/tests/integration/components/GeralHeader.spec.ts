@@ -1,5 +1,6 @@
 // import GeralHeader from '@/components/GeralHeader.vue'
 // import PartModal from '@/components/Modal/index.vue'
+// import { key } from '@/store'
 // import { mount, VueWrapper } from '@vue/test-utils'
 // import { createStore } from 'vuex'
 
@@ -23,7 +24,7 @@
 //         wrapper = mount(GeralHeader, {
 //             attachTo: document.body,
 //             global: {
-//                 plugins: [store],
+//                 plugins: [[store, key]],
 //                 components: {
 //                     PartModal,
 //                 },

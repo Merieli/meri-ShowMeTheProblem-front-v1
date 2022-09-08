@@ -18,6 +18,7 @@ Os usuários devem ser capazes de:
 - [ ] Filtrar Feedbacks por categoria
 
 **Bonus**
+https://thirsty-clarke-9a6686.netlify.app/
 - [ ] Classificar as sugestões por mais/menos votos positivos e mais/menos comentários
 - [ ] Adicionar comentários e respostas a uma solicitação de feedback do produto
 - [ ] Aprovar solicitações de feedback do produto
@@ -30,8 +31,8 @@ Os usuários devem ser capazes de:
     - [X] Usar Vue-router
 - [X] TypeScript
 - [X] Testes com Jest
-    - [ ] Testes unitários
-    - [ ] Testes de integração
+    - [X] Testes unitários
+    - [X] Testes de integração
     - [ ] Testes de snapshot
 - [ ] Testes com Cypress
 - [ ] Utilizar conceitos de SOLID e clean Codde

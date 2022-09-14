@@ -18,6 +18,7 @@ export const store = createStore<IEstadoStore>({
             name: '',
             token: '',
             apiKey: '',
+            feedbacks: [],
         },
         isLoading: false,
         hasErrors: false,
@@ -45,6 +46,9 @@ export const store = createStore<IEstadoStore>({
         [Mutations.USER_LOGGED](state, data) {
             state.userLogged.name = data.name
             state.userLogged.apiKey = data.apiKey
+        },
+        [Mutations.ADD_FEEDBACKS](state, data) {
+            state.userLogged.feedbacks = data
         },
     },
     actions: {
@@ -120,10 +124,30 @@ export const store = createStore<IEstadoStore>({
             }
         },
 
+        async [Actions.GET_INDEX_FEEDBACK]({ commit }) {
+            try {
+                const response = await callApiClient.feedback.showFilters(
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVhYjc1OWY4LWYyMzgtNGZmOS1hZTkxLWVlMTU1ODk4MjMyOSIsImVtYWlsIjoiaWdvckBpZ29yLm1lIiwibmFtZSI6Iklnb3IgSGFsZmVsZCIsImlhdCI6MTYxMDc0MzgyNn0.2R-hm8yCSAtpcvniI1R9CNF_ZzguRaMZoU2pTrwijds'
+                )
+                commit(Mutations.ADD_FEEDBACKS, response)
+                console.log(`get index>`, response)
+            } catch (e) {
+                throw new Error(`Não foi possível capturar os feedbacks.`)
+            }
+        },
+
         async [Actions.GET_ALL_FEEDBACKS](context, { type, limit, offset }) {
             try {
-                const response = await callApiClient.feedback.show()
-                console.log(response)
+                const response = await callApiClient.feedback.show(
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVhYjc1OWY4LWYyMzgtNGZmOS1hZTkxLWVlMTU1ODk4MjMyOSIsImVtYWlsIjoiaWdvckBpZ29yLm1lIiwibmFtZSI6Iklnb3IgSGFsZmVsZCIsImlhdCI6MTYxMDc0MzgyNn0.2R-hm8yCSAtpcvniI1R9CNF_ZzguRaMZoU2pTrwijds',
+                    type,
+                    limit,
+                    offset
+                )
+                // const response = await callApiClient.feedback.show(
+                //     this.state.userLogged.token, type, limit, offset
+                // )
+                console.log(response.results)
             } catch (e) {
                 throw new Error(`Não foi possível capturar os feedbacks.`)
             }

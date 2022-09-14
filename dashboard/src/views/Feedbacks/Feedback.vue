@@ -8,21 +8,7 @@
         <div class="feedbacks__all mt-8 mx-8">
             <aside class="feedbacks__listing mr-16 min-w-[20%]">
                 <h4 class="text-4xl font-black mb-9">Listagem</h4>
-                <h5 class="font-bold mb-5 text-2xl">Filtros</h5>
-                <ul class="feedbacks__filters">
-                    <li class="feedbacks__filter feedbacks__filter--selected">
-                        <span><i></i> Todos</span><span>300</span>
-                    </li>
-                    <li class="feedbacks__filter">
-                        <span><i></i>Problemas</span><span>150</span>
-                    </li>
-                    <li class="feedbacks__filter">
-                        <span><i></i>Ideias</span><span>50</span>
-                    </li>
-                    <li class="feedbacks__filter">
-                        <span><i></i>Outros</span><span>100</span>
-                    </li>
-                </ul>
+                <FeedbackFilters />
             </aside>
             <section class="feedbacks__cards mt-12">
                 <ul class="feedbacks__received">
@@ -63,11 +49,12 @@
 <script lang="ts">
 import GeralHeader from '../../components/GeralHeader.vue'
 import { Actions } from '../../store/type-actions'
+import FeedbackFilters from './FeedbackFilters.vue'
 import { defineComponent } from '@vue/runtime-core'
 import { mapActions } from 'vuex'
 
 export default defineComponent({
-    components: { GeralHeader },
+    components: { GeralHeader, FeedbackFilters },
     name: 'PageFeedbacks',
     methods: {
         ...mapActions({
@@ -75,7 +62,7 @@ export default defineComponent({
         }),
     },
     mounted() {
-        this.getFeedback('idea', 5, 0)
+        this.getFeedback('', '', '')
     },
 })
 </script>
@@ -94,23 +81,6 @@ export default defineComponent({
     &__listing {
         width: 300px;
         height: 100%;
-    }
-
-    &__filter {
-        border-radius: 0.25rem;
-        display: flex;
-        justify-content: space-between;
-        padding: 0.5rem;
-        margin-bottom: 0.1rem;
-        cursor: pointer;
-
-        &--selected {
-            background-color: #c4c4c452;
-        }
-
-        &:hover {
-            background-color: #c4c4c41f;
-        }
     }
 
     &__item {

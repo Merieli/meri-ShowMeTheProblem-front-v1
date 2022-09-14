@@ -27,34 +27,38 @@ export class FeedbackModel {
         return httpClient.post(params.url)
     }
 
-    async show() {
-        //const hasType = () => (type ? type : '')
+    async showFilters(token: string) {
+        const params = {
+            url: this.url.getFilters,
+            payload: {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        }
+        return httpClient
+            .get(params.url, params.payload)
+            .then((response) => response.data)
+            .catch((e) => console.error(e))
+    }
 
-        //const query = { type, limit, offset }
-
+    async show(token: string, type: string, limit: string, offset: string) {
         const params = {
             url: this.url.show,
             payload: {
                 headers: {
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVhYjc1OWY4LWYyMzgtNGZmOS1hZTkxLWVlMTU1ODk4MjMyOSIsImVtYWlsIjoiaWdvckBpZ29yLm1lIiwibmFtZSI6Iklnb3IgSGFsZmVsZCIsImlhdCI6MTYxMDc0MzgyNn0.2R-hm8yCSAtpcvniI1R9CNF_ZzguRaMZoU2pTrwijds`,
+                    Authorization: `Bearer ${token}`,
                 },
                 params: {
-                    type: 'idea',
-                    limit: 5,
-                    offset: 0,
+                    type,
+                    limit,
+                    offset,
                 },
             },
         }
-        console.log(
-            this.url.show,
-            params.payload.params.limit,
-            params.payload.params.type,
-            params.payload.params.offset
-        )
         return httpClient
-            .post(params.url, params.payload)
+            .get(params.url, params.payload)
             .then((response) => {
-                console.log(response)
                 return response.data
             })
             .catch((e) => console.error(e))

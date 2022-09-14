@@ -9,6 +9,6 @@
     "feedback": {
         "create": "/feedbacks",
         "show": "/feedbacks",
-        "getIndex": "/feedbacks/summary"
+        "getFilters": "/feedbacks/summary"
     }
 }

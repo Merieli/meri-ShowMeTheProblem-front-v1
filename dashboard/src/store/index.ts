@@ -4,10 +4,14 @@ import { Actions } from './type-actions'
 import { Mutations } from './type-mutations'
 import { IEstadoStore, IUser, INotification, TypeOfNotification } from '@/interfaces'
 import callApiClient from '@/services/callApiClient'
+import { applyFiltersStructure } from '@/views/Feedbacks/module'
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
 
 export const key: InjectionKey<Store<IEstadoStore>> = Symbol()
+
+const tokenTesteApi =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVhYjc1OWY4LWYyMzgtNGZmOS1hZTkxLWVlMTU1ODk4MjMyOSIsImVtYWlsIjoiaWdvckBpZ29yLm1lIiwibmFtZSI6Iklnb3IgSGFsZmVsZCIsImlhdCI6MTYxMDc0MzgyNn0.2R-hm8yCSAtpcvniI1R9CNF_ZzguRaMZoU2pTrwijds'
 
 export const store = createStore<IEstadoStore>({
     state: {
@@ -18,6 +22,7 @@ export const store = createStore<IEstadoStore>({
             name: '',
             token: '',
             apiKey: '',
+            filters: [],
             feedbacks: [],
         },
         isLoading: false,
@@ -26,6 +31,12 @@ export const store = createStore<IEstadoStore>({
     getters: {
         notifications(state) {
             return state.notifications
+        },
+        feedbacks(state) {
+            return state.userLogged.feedbacks
+        },
+        feedbackFilters(state) {
+            return state.userLogged.filters
         },
     },
     mutations: {
@@ -46,6 +57,9 @@ export const store = createStore<IEstadoStore>({
         [Mutations.USER_LOGGED](state, data) {
             state.userLogged.name = data.name
             state.userLogged.apiKey = data.apiKey
+        },
+        [Mutations.ADD_FILTERS](state, data) {
+            state.userLogged.filters = applyFiltersStructure(data)
         },
         [Mutations.ADD_FEEDBACKS](state, data) {
             state.userLogged.feedbacks = data
@@ -123,33 +137,29 @@ export const store = createStore<IEstadoStore>({
                 throw new Error(`Não foi possível capturar os dados do usuário.`)
             }
         },
-
-        async [Actions.GET_INDEX_FEEDBACK]({ commit }) {
+        // Substituir o tokenTesteApi pelo token do usuario logado depois
+        async [Actions.GET_INDEX_FEEDBACK]({ commit, state }) {
             try {
-                const response = await callApiClient.feedback.showFilters(
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVhYjc1OWY4LWYyMzgtNGZmOS1hZTkxLWVlMTU1ODk4MjMyOSIsImVtYWlsIjoiaWdvckBpZ29yLm1lIiwibmFtZSI6Iklnb3IgSGFsZmVsZCIsImlhdCI6MTYxMDc0MzgyNn0.2R-hm8yCSAtpcvniI1R9CNF_ZzguRaMZoU2pTrwijds'
-                )
-                commit(Mutations.ADD_FEEDBACKS, response)
-                console.log(`get index>`, response)
-            } catch (e) {
-                throw new Error(`Não foi possível capturar os feedbacks.`)
+                const response = await callApiClient.feedback.showFilters(tokenTesteApi)
+                commit(Mutations.ADD_FILTERS, response)
+            } catch (error) {
+                state.hasErrors = !!error
+                commit(Mutations.ADD_FILTERS, { all: 0, issue: 0, idea: 0, other: 0 })
+                throw new Error(`Não foi possível capturar os filtros dos feedbacks do usuário atual.`)
             }
         },
 
-        async [Actions.GET_ALL_FEEDBACKS](context, { type, limit, offset }) {
+        async [Actions.GET_ALL_FEEDBACKS]({ commit, state }, { type, limit, offset }) {
             try {
-                const response = await callApiClient.feedback.show(
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVhYjc1OWY4LWYyMzgtNGZmOS1hZTkxLWVlMTU1ODk4MjMyOSIsImVtYWlsIjoiaWdvckBpZ29yLm1lIiwibmFtZSI6Iklnb3IgSGFsZmVsZCIsImlhdCI6MTYxMDc0MzgyNn0.2R-hm8yCSAtpcvniI1R9CNF_ZzguRaMZoU2pTrwijds',
-                    type,
-                    limit,
-                    offset
-                )
+                const response = await callApiClient.feedback.show(tokenTesteApi, type, limit, offset)
                 // const response = await callApiClient.feedback.show(
                 //     this.state.userLogged.token, type, limit, offset
                 // )
-                console.log(response.results)
-            } catch (e) {
-                throw new Error(`Não foi possível capturar os feedbacks.`)
+                console.log(response)
+                commit(Mutations.ADD_FEEDBACKS, response.results)
+            } catch (error) {
+                state.hasErrors = !!error
+                throw new Error(`Não foi possível capturar os feedbacks do usuário.`)
             }
         },
     },

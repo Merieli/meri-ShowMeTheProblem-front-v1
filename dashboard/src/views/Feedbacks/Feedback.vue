@@ -11,24 +11,20 @@
                 <FeedbackFilters />
             </aside>
             <section class="feedbacks__cards mt-12">
-                <ul class="feedbacks__received">
-                    <li class="feedbacks__item">
+                <div class="feedbacks__received">
+                    <div v-for="feedback in feedbacks" :key="feedback.id" class="feedbacks__item">
                         <div class="feedback__top flex justify-between mb-6">
-                            <div class="feedbacks__tag">Problema</div>
+                            <div class="feedbacks__tag">{{ feedback.type }}</div>
                             <div class="text-sm text-gray-400">20 segundos atrás</div>
                         </div>
                         <p class="font-medium text-lg mb-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in repre henderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            {{ feedback.text }}
                         </p>
                         <button>Show More</button>
                         <ul class="feedbacks__data flex justify-between flex-wrap">
                             <li class="w-3/6 mb-6">
                                 <div>PÁGINA</div>
-                                <p>https://feedbacker.com/ajuda</p>
+                                <p>{{ feedback.page }}</p>
                             </li>
                             <li class="w-3/6 mb-6">
                                 <div>USUÁRIO</div>
@@ -36,11 +32,11 @@
                             </li>
                             <li class="mb-6">
                                 <div>DISPOSITIVO</div>
-                                <p>Chrome 90.0, macOS 10.14</p>
+                                <p>{{ feedback.device }}</p>
                             </li>
                         </ul>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </section>
         </div>
     </div>
@@ -48,21 +44,24 @@
 
 <script lang="ts">
 import GeralHeader from '../../components/GeralHeader.vue'
+import { useStore } from '../../store'
 import { Actions } from '../../store/type-actions'
 import FeedbackFilters from './FeedbackFilters.vue'
-import { defineComponent } from '@vue/runtime-core'
-import { mapActions } from 'vuex'
+import { computed, defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
     components: { GeralHeader, FeedbackFilters },
     name: 'PageFeedbacks',
-    methods: {
-        ...mapActions({
-            getFeedback: Actions.GET_ALL_FEEDBACKS,
-        }),
-    },
-    mounted() {
-        this.getFeedback('', '', '')
+    setup() {
+        const store = useStore()
+
+        onMounted(() => {
+            const vazio = { type: '', limit: '', offset: '' }
+            store.dispatch(Actions.GET_ALL_FEEDBACKS, vazio)
+        })
+        return {
+            feedbacks: computed(() => store.getters.feedbacks),
+        }
     },
 })
 </script>
@@ -78,6 +77,10 @@ export default defineComponent({
         display: flex;
     }
 
+    &__cards {
+        width: 100%;
+    }
+
     &__listing {
         width: 300px;
         height: 100%;
@@ -87,6 +90,8 @@ export default defineComponent({
         background-color: theme('colors.brand.gray');
         border-radius: 0.25rem;
         padding: 1.1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
     }
 }
 </style>

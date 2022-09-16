@@ -1,2 +1,2 @@
-export * from './Labels.enum'
-export * from './ColorsFeedback.enum'
+export * from './FeedbackFilterColorsAndLabels'
+export * from './ApplyFiltersStructure'

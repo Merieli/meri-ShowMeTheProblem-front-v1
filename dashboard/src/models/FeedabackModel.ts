@@ -36,10 +36,7 @@ export class FeedbackModel {
                 },
             },
         }
-        return httpClient
-            .get(params.url, params.payload)
-            .then((response) => response.data)
-            .catch((e) => console.error(e))
+        return httpClient.get(params.url, params.payload).then((response) => response.data)
     }
 
     async show(token: string, type: string, limit: string, offset: string) {
@@ -56,11 +53,6 @@ export class FeedbackModel {
                 },
             },
         }
-        return httpClient
-            .get(params.url, params.payload)
-            .then((response) => {
-                return response.data
-            })
-            .catch((e) => console.error(e))
+        return httpClient.get(params.url, params.payload).then((response) => response.data)
     }
 }

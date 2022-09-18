@@ -137,7 +137,7 @@ export const store = createStore<IEstadoStore>({
                 throw new Error(`Não foi possível capturar os dados do usuário.`)
             }
         },
-        // Substituir o tokenTesteApi pelo token do usuario logado depois
+        // Substituir o tokenTesteApi pelo token do usuario logado depois "this.state.userLogged.token"
         async [Actions.GET_INDEX_FEEDBACK]({ commit, state }) {
             try {
                 const response = await callApiClient.feedback.showFilters(tokenTesteApi)
@@ -149,12 +149,10 @@ export const store = createStore<IEstadoStore>({
             }
         },
 
+        // Substituir o tokenTesteApi pelo token do usuario logado depois "this.state.userLogged.token"
         async [Actions.GET_ALL_FEEDBACKS]({ commit, state }, { type, limit, offset }) {
             try {
                 const response = await callApiClient.feedback.show(tokenTesteApi, type, limit, offset)
-                // const response = await callApiClient.feedback.show(
-                //     this.state.userLogged.token, type, limit, offset
-                // )
                 console.log(response)
                 commit(Mutations.ADD_FEEDBACKS, response.results)
             } catch (error) {

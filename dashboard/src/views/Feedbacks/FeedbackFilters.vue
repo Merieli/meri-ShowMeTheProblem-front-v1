@@ -43,7 +43,7 @@ export default defineComponent({
                 }
                 return (filter.active = false)
             })
-            this.store.commit(Mutations.ADD_FILTERS, newFiltersSelect)
+            // this.store.commit(Mutations.ADD_FILTERS, newFiltersSelect)
         },
     },
     computed: {
@@ -87,6 +87,42 @@ export default defineComponent({
         margin-right: 0.5rem;
         height: 0.5rem;
         width: 0.5rem;
+    }
+}
+
+.bg {
+    &-info {
+        background-color: #8296fb;
+    }
+
+    &-graydark {
+        background-color: #c0bcb0;
+    }
+
+    &-warning {
+        background-color: #e4b52e;
+    }
+
+    &-danger {
+        background-color: #f88676;
+    }
+}
+
+.text {
+    &-info {
+        color: #8296fb;
+    }
+
+    &-graydark {
+        color: #c0bcb0;
+    }
+
+    &-warning {
+        color: #e4b52e;
+    }
+
+    &-danger {
+        color: #f88676;
     }
 }
 </style>

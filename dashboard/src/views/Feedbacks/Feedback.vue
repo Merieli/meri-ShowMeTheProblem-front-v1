@@ -20,19 +20,19 @@
                         <p class="font-medium text-lg mb-4">
                             {{ feedback.text }}
                         </p>
-                        <button>Show More</button>
+                        <button class="font-medium text-gray-400">Show More</button>
                         <ul class="feedbacks__data flex justify-between flex-wrap">
-                            <li class="w-3/6 mb-6">
-                                <div>PÁGINA</div>
-                                <p>{{ feedback.page }}</p>
+                            <li class="w-3/6 mb-4">
+                                <div class="font-medium text-xs text-gray-400">PÁGINA</div>
+                                <p class="text-sm font-medium">{{ feedback.page }}</p>
                             </li>
-                            <li class="w-3/6 mb-6">
-                                <div>USUÁRIO</div>
-                                <p>Joaquim</p>
+                            <li class="w-3/6 mb-4">
+                                <div class="font-medium text-xs text-gray-400">USUÁRIO</div>
+                                <p class="text-sm font-medium">Joaquim</p>
                             </li>
-                            <li class="mb-6">
-                                <div>DISPOSITIVO</div>
-                                <p>{{ feedback.device }}</p>
+                            <li class="mb-4">
+                                <div class="font-medium text-xs text-gray-400">DISPOSITIVO</div>
+                                <p class="text-sm font-medium">{{ feedback.device }}</p>
                             </li>
                         </ul>
                     </div>

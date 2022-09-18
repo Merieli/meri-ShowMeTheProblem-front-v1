@@ -1,8 +1,8 @@
 export const feedbackFilterColors = {
-    all: 'brand-info',
-    issue: 'brand-danger',
-    idea: 'brand-warning',
-    other: 'brand-graydark',
+    all: 'info',
+    issue: 'danger',
+    idea: 'warning',
+    other: 'graydark',
 }
 
 export const feedbackFilterLabels = {

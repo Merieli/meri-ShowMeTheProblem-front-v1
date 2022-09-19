@@ -2,7 +2,7 @@ import useNotifier from '../hooks/notifier'
 import router from '../router/index'
 import { Actions } from './type-actions'
 import { Mutations } from './type-mutations'
-import { IEstadoStore, IUser, INotification, TypeOfNotification } from '@/interfaces'
+import { IEstadoStore, IUser, INotification, TypeOfNotification, TFeedback, IFeedbackFilters } from '@/interfaces'
 import callApiClient from '@/services/callApiClient'
 import { applyFiltersStructure } from '@/views/Feedbacks/module'
 import { InjectionKey } from 'vue'
@@ -22,8 +22,14 @@ export const store = createStore<IEstadoStore>({
             name: '',
             token: '',
             apiKey: '',
-            filters: [],
+            feedbackFilters: [],
             feedbacks: [],
+        },
+        filters: {
+            all: 0,
+            idea: 0,
+            issue: 0,
+            other: 0,
         },
         isLoading: false,
         hasErrors: false,
@@ -36,7 +42,10 @@ export const store = createStore<IEstadoStore>({
             return state.userLogged.feedbacks
         },
         feedbackFilters(state) {
-            return state.userLogged.filters
+            return state.userLogged.feedbackFilters
+        },
+        isLoading(state) {
+            return state.isLoading
         },
     },
     mutations: {
@@ -50,7 +59,7 @@ export const store = createStore<IEstadoStore>({
         [Mutations.ADD_USER](state, user: IUser) {
             state.users.push(user)
         },
-        [Mutations.LOGIN_USER](state, token) {
+        [Mutations.LOGIN_USER](state, token: string) {
             state.userLogged.token = token
             state.isLogged = true
         },
@@ -58,11 +67,17 @@ export const store = createStore<IEstadoStore>({
             state.userLogged.name = data.name
             state.userLogged.apiKey = data.apiKey
         },
-        [Mutations.ADD_FILTERS](state, data) {
-            state.userLogged.filters = applyFiltersStructure(data)
+        [Mutations.ADD_FILTERS](state, data: IFeedbackFilters) {
+            state.filters = data
+        },
+        [Mutations.ADD_CONFIGURED_FILTERS](state, { data, typeActive }) {
+            state.userLogged.feedbackFilters = applyFiltersStructure(data, typeActive)
         },
         [Mutations.ADD_FEEDBACKS](state, data) {
             state.userLogged.feedbacks = data
+        },
+        [Mutations.TOOGLE_LOADING](state, actual: boolean) {
+            state.isLoading = actual
         },
     },
     actions: {
@@ -74,19 +89,19 @@ export const store = createStore<IEstadoStore>({
         async [Actions.REGISTER_USER]({ commit, state }, user: IUser) {
             const { notify } = useNotifier()
             try {
-                state.isLoading = true
+                commit(Mutations.TOOGLE_LOADING, true)
                 if (user.name != '' && user.email != '' && user.password != '') {
                     const response = await callApiClient.user.register(user.name, user.email, user.password)
                     commit(Mutations.ADD_USER, response)
                 }
-                state.isLoading = false
+                commit(Mutations.TOOGLE_LOADING, false)
                 notify(
                     TypeOfNotification.SUCESSO,
                     'Conta Registrada',
                     'Sua conta foi criada com sucesso, efetue login.'
                 )
             } catch (error) {
-                state.isLoading = false
+                commit(Mutations.TOOGLE_LOADING, false)
                 state.hasErrors = !!error
                 notify(TypeOfNotification.FALHA, 'Preencha todos os campos', 'Erro na tentativa de criar uma conta.')
                 throw new Error(`Não foi possível efetuar cadastro. Confira os dados informados`)
@@ -103,7 +118,7 @@ export const store = createStore<IEstadoStore>({
         async [Actions.LOGIN_USER]({ commit, dispatch, state }, user: IUser) {
             const { notify } = useNotifier()
             try {
-                state.isLoading = true
+                commit(Mutations.TOOGLE_LOADING, true)
                 const response = await callApiClient.user.login(user.email, user.password)
                 console.log(response)
 
@@ -116,8 +131,9 @@ export const store = createStore<IEstadoStore>({
                 router.push('/feedbacks')
 
                 notify(TypeOfNotification.SUCESSO, '', 'Login efetuado com sucesso.')
+                commit(Mutations.TOOGLE_LOADING, false)
             } catch (error) {
-                state.isLoading = false
+                commit(Mutations.TOOGLE_LOADING, false)
                 state.hasErrors = !!error
                 notify(TypeOfNotification.FALHA, 'Não foi possível efetuar login', 'Confira os dados informados.')
                 throw new Error(`Não foi possível efetuar login. Confira os dados informados`)
@@ -131,32 +147,52 @@ export const store = createStore<IEstadoStore>({
          */
         async [Actions.GET_USER]({ commit }, token: string) {
             try {
+                commit(Mutations.TOOGLE_LOADING, true)
                 const response = await callApiClient.user.show(token)
                 commit(Mutations.USER_LOGGED, response)
+                commit(Mutations.TOOGLE_LOADING, false)
             } catch (e) {
+                commit(Mutations.TOOGLE_LOADING, false)
                 throw new Error(`Não foi possível capturar os dados do usuário.`)
             }
         },
-        // Substituir o tokenTesteApi pelo token do usuario logado depois "this.state.userLogged.token"
+
         async [Actions.GET_INDEX_FEEDBACK]({ commit, state }) {
             try {
+                // commit(Mutations.TOOGLE_LOADING,true)
+                // Substituir o tokenTesteApi pelo token do usuario logado depois "this.state.userLogged.token"
                 const response = await callApiClient.feedback.showFilters(tokenTesteApi)
                 commit(Mutations.ADD_FILTERS, response)
+                commit(Mutations.ADD_CONFIGURED_FILTERS, { data: response })
+                // commit(Mutations.TOOGLE_LOADING, false)
             } catch (error) {
                 state.hasErrors = !!error
-                commit(Mutations.ADD_FILTERS, { all: 0, issue: 0, idea: 0, other: 0 })
+                // commit(Mutations.TOOGLE_LOADING, false)
+                commit(Mutations.ADD_FILTERS, { data: { all: 0, issue: 0, idea: 0, other: 0 } })
                 throw new Error(`Não foi possível capturar os filtros dos feedbacks do usuário atual.`)
             }
         },
 
-        // Substituir o tokenTesteApi pelo token do usuario logado depois "this.state.userLogged.token"
-        async [Actions.GET_ALL_FEEDBACKS]({ commit, state }, { type, limit, offset }) {
+        async [Actions.CHANGE_ACTIVE_FEEDBACK]({ commit, state }, type?: TFeedback) {
             try {
-                const response = await callApiClient.feedback.show(tokenTesteApi, type, limit, offset)
-                console.log(response)
-                commit(Mutations.ADD_FEEDBACKS, response.results)
+                commit(Mutations.ADD_CONFIGURED_FILTERS, { data: state.filters, typeActive: type })
             } catch (error) {
                 state.hasErrors = !!error
+                state.isLoading = false
+                throw new Error(`Não foi possível alterar o filtro dos feedbacks ativos.`)
+            }
+        },
+
+        async [Actions.GET_ALL_FEEDBACKS]({ commit, state }, { type, limit, offset }) {
+            try {
+                // commit(Mutations.TOOGLE_LOADING, true)
+                // Substituir o tokenTesteApi pelo token do usuario logado depois "this.state.userLogged.token"
+                const response = await callApiClient.feedback.show(tokenTesteApi, type, limit, offset)
+                commit(Mutations.ADD_FEEDBACKS, response.results)
+                // commit(Mutations.TOOGLE_LOADING, false)
+            } catch (error) {
+                state.hasErrors = !!error
+                // state.isLoading = false
                 throw new Error(`Não foi possível capturar os feedbacks do usuário.`)
             }
         },

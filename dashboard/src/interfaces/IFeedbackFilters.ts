@@ -4,3 +4,5 @@ export interface IFeedbackFilters {
     idea: number
     other: number
 }
+
+export type TFeedback = 'idea' | 'issue' | 'all' | 'other'

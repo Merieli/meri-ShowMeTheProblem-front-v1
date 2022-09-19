@@ -1,8 +1,8 @@
-import { IUser, IStateFilters } from './'
+import { IUser, IConfiguredFilters } from './'
 
 export interface IUserLogged extends Pick<IUser, 'name'> {
     token: string
     apiKey: string
-    filters: IStateFilters[]
+    feedbackFilters: IConfiguredFilters[]
     feedbacks: []
 }

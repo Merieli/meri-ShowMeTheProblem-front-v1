@@ -1,4 +1,4 @@
-export interface IStateFilters {
+export interface IConfiguredFilters {
     label: string
     color: string
     amount: number

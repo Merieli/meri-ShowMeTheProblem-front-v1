@@ -3,7 +3,7 @@
         <h5 class="font-bold mb-5 text-2xl">Filtros</h5>
         <ul class="feedbacks-filter__items">
             <li
-                class="feedbacks-filter__item"
+                class="feedbacks-filter__item animate__animated animate__fadeIn animate__faster"
                 v-for="filter in filters"
                 :key="filter.label"
                 :class="{ 'feedbacks-filter__item--selected': filter.active }"
@@ -21,41 +21,31 @@
 </template>
 
 <script lang="ts">
-import { IStateFilters } from '../../interfaces'
+import { IConfiguredFilters } from '../../interfaces'
 import { useStore } from '../../store'
 import { Actions } from '../../store/type-actions'
-import { Mutations } from '../../store/type-mutations'
-import { defineComponent } from 'vue'
-import { mapActions, mapGetters } from 'vuex'
+import { computed, defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
     name: 'FeedbackFilters',
-    emits: ['select'],
-    methods: {
-        ...mapActions({
-            getFilters: Actions.GET_INDEX_FEEDBACK,
-        }),
-        handleSelect({ type }: IStateFilters): void {
-            console.log(type, this.filters)
-            const newFiltersSelect = this.filters.forEach((filter: IStateFilters) => {
-                if (filter.type === type) {
-                    return (filter.active = true)
-                }
-                return (filter.active = false)
-            })
-            // this.store.commit(Mutations.ADD_FILTERS, newFiltersSelect)
-        },
-    },
-    computed: {
-        ...mapGetters({ filters: 'feedbackFilters' }),
-    },
-    mounted() {
-        this.getFilters()
-    },
     setup() {
         const store = useStore()
+        const isLoading = computed(() => store.getters.isLoading)
+
+        onMounted(() => {
+            store.dispatch(Actions.GET_INDEX_FEEDBACK)
+        })
+
+        const handleSelect = ({ type }: IConfiguredFilters): void => {
+            if (isLoading.value) return
+
+            store.dispatch(Actions.CHANGE_ACTIVE_FEEDBACK, type)
+        }
+
         return {
             store,
+            handleSelect,
+            filters: computed(() => store.getters.feedbackFilters),
         }
     },
 })

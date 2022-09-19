@@ -85,13 +85,14 @@
                                     data-button="createAccount"
                                     color="dark"
                                     type-button="submit"
-                                    :disabled="isLoading"
+                                    :isDisabled="isLoading"
                                     class="mt-6"
                                     :class="{
                                         'opacity-50': isLoading,
                                     }"
                                 >
-                                    Criar conta
+                                    <UseIcon v-if="isLoading" name="IconLoading" class="animate-spin" />
+                                    <span v-else>Criar conta</span>
                                 </BaseButton>
                             </form>
                             <form
@@ -136,9 +137,17 @@
                                         {{ state.password.errorMessage }}
                                     </span>
                                 </fieldset>
-
-                                <BaseButton color="dark" type-button="submit" :disabled="isLoading" class="mt-6">
-                                    Entrar
+                                <BaseButton
+                                    color="dark"
+                                    type-button="submit"
+                                    :isDisabled="isLoading"
+                                    class="mt-6"
+                                    :class="{
+                                        'opacity-50': isLoading,
+                                    }"
+                                >
+                                    <UseIcon v-if="isLoading" name="IconLoading" class="animate-spin" />
+                                    <span v-else>Entrar</span>
                                 </BaseButton>
                             </form>
                         </div>
@@ -157,6 +166,7 @@ import { useStore } from '../store'
 import { Actions } from '../store/type-actions'
 import { validateEmptyAndLenght6, validateEmptyAndEmail } from '../utils/validators'
 import BaseButton from './BaseButton/index.vue'
+import UseIcon from './UseIcon/UseIcon.vue'
 import { useField } from 'vee-validate'
 import { defineComponent, computed, reactive, ref } from 'vue'
 import * as yup from 'yup'
@@ -166,6 +176,7 @@ export default defineComponent({
     emits: ['close', 'open'],
     components: {
         BaseButton,
+        UseIcon,
     },
     props: {
         /**

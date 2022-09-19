@@ -8,7 +8,8 @@
         <div class="feedbacks__all mt-8 mx-8">
             <aside class="feedbacks__listing mr-16 min-w-[20%]">
                 <h4 class="text-4xl font-black mb-9">Listagem</h4>
-                <FeedbackFilters />
+                <FiltersLoading v-if="isLoading" class="mt-8" />
+                <FeedbackFilters v-else class="animate__animated animate__fadeIn animate__faster" />
             </aside>
             <section class="feedbacks__cards mt-12">
                 <div class="feedbacks__received">
@@ -43,6 +44,7 @@
 </template>
 
 <script lang="ts">
+import FiltersLoading from '../../components/Feedbacks/FiltersLoading.vue'
 import GeralHeader from '../../components/GeralHeader.vue'
 import { useStore } from '../../store'
 import { Actions } from '../../store/type-actions'
@@ -50,17 +52,20 @@ import FeedbackFilters from './FeedbackFilters.vue'
 import { computed, defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
-    components: { GeralHeader, FeedbackFilters },
     name: 'PageFeedbacks',
+    components: { GeralHeader, FeedbackFilters, FiltersLoading },
     setup() {
         const store = useStore()
+        const isLoading = computed(() => store.getters.isLoading)
 
         onMounted(() => {
             const vazio = { type: '', limit: '', offset: '' }
             store.dispatch(Actions.GET_ALL_FEEDBACKS, vazio)
         })
+
         return {
             feedbacks: computed(() => store.getters.feedbacks),
+            isLoading,
         }
     },
 })

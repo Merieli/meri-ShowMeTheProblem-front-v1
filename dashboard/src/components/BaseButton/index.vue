@@ -4,6 +4,7 @@
         :class="classByColor"
         :type="typeButton"
         data-button="base"
+        :disabled="isDisabled"
     >
         <!-- @slot Texto de conteúdo do botão -->
         <slot />
@@ -35,6 +36,11 @@ export default defineComponent({
         typeButton: {
             type: String as PropType<TButton>,
             default: ButtonTypes.BUTTON,
+        },
+
+        isDisabled: {
+            type: Boolean,
+            default: false,
         },
     },
     setup(props) {

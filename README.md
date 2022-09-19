@@ -14,7 +14,7 @@ Os usuários devem ser capazes de:
     - [ ] Visualizar o status do cadastro
     - [ ] Criar, ler, atualizar e excluir solicitações de feedback do produto
     - [ ] Receba validações de formulário ao tentar criar/editar solicitações de feedback
-- [ ] Listar feedbacks
+- [X] Listar feedbacks
 - [ ] Filtrar Feedbacks por categoria
 
 **Bonus**

@@ -47,6 +47,9 @@ export const store = createStore<IEstadoStore>({
         isLoading(state) {
             return state.isLoading
         },
+        getApiKey(state) {
+            return state.userLogged.apiKey
+        },
     },
     mutations: {
         [Mutations.NOTIFY](state, newNotification: INotification) {
@@ -62,6 +65,12 @@ export const store = createStore<IEstadoStore>({
         [Mutations.LOGIN_USER](state, token: string) {
             state.userLogged.token = token
             state.isLogged = true
+        },
+        [Mutations.LOGGOUT_USER](state) {
+            state.userLogged.token = ''
+            state.isLogged = false
+            state.userLogged.name = ''
+            state.userLogged.apiKey = ''
         },
         [Mutations.USER_LOGGED](state, data) {
             state.userLogged.name = data.name
@@ -120,14 +129,11 @@ export const store = createStore<IEstadoStore>({
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
                 const response = await callApiClient.user.login(user.email, user.password)
-                console.log(response)
-
-                commit(Mutations.LOGIN_USER, response.token)
-                dispatch(Actions.GET_USER, state.userLogged.token)
+                window.localStorage.setItem('token', response.token)
+                dispatch(Actions.GET_USER)
 
                 // if (!errors) {
                 // }
-                window.localStorage.setItem('token', response.token)
                 router.push('/feedbacks')
 
                 notify(TypeOfNotification.SUCESSO, '', 'Login efetuado com sucesso.')
@@ -142,18 +148,40 @@ export const store = createStore<IEstadoStore>({
 
         /**
          * @name GET_USER
-         * @descripton Captura os dados do usuários e salva na store
-         * @param token chave de acesso do usuário
+         * @descripton Captura os dados do usuário, ou efetua o login se já tiver um
+         * token de usuário salvo, armazenando os dados na store
          */
-        async [Actions.GET_USER]({ commit }, token: string) {
+        async [Actions.GET_USER]({ commit, state }) {
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
+                let token
+                const tokenStorage = window.localStorage.getItem('token')
+
+                if (!tokenStorage) {
+                    token = state.userLogged.token
+                } else {
+                    token = tokenStorage
+                    commit(Mutations.LOGIN_USER, token)
+                }
                 const response = await callApiClient.user.show(token)
                 commit(Mutations.USER_LOGGED, response)
                 commit(Mutations.TOOGLE_LOADING, false)
             } catch (e) {
                 commit(Mutations.TOOGLE_LOADING, false)
                 throw new Error(`Não foi possível capturar os dados do usuário.`)
+            }
+        },
+
+        async [Actions.LOGGOUT_USER]({ commit }) {
+            try {
+                commit(Mutations.TOOGLE_LOADING, true)
+                window.localStorage.removeItem('token')
+                commit(Mutations.LOGGOUT_USER)
+                router.push({ name: 'home' })
+                commit(Mutations.TOOGLE_LOADING, false)
+            } catch (e) {
+                commit(Mutations.TOOGLE_LOADING, false)
+                throw new Error(`Não foi possível efetuar o loggout do usuário.`)
             }
         },
 

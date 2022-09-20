@@ -11,7 +11,7 @@
             <nav class="geral-header__navigation" v-else>
                 <button class="geral-header__link font-bold" @click="changePage('/credentials')">Credenciais</button>
                 <button class="geral-header__link font-bold" @click="changePage('/feedbacks')">Feedbacks</button>
-                <BaseButton @click="changePage('/')">{{ nameUser }} (sair)</BaseButton>
+                <BaseButton @click="loggout()">{{ nameUser }} (sair)</BaseButton>
             </nav>
         </header>
         <PartModal type-modal="create" :open="openCreateModal" @close="toggleModalCreate" />
@@ -26,9 +26,10 @@
  */
 import router from '../router/index'
 import { useStore } from '../store'
+import { Actions } from '../store/type-actions'
 import BaseButton from './BaseButton/index.vue'
 import PartModal from './PartModal.vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 
 export default defineComponent({
     name: 'GeralHeader',
@@ -64,12 +65,26 @@ export default defineComponent({
             router.push(rota)
         }
 
+        const loggout = (): void => {
+            changePage('/')
+            store.dispatch(Actions.LOGGOUT_USER)
+        }
+
+        /**
+         * Captura os dados do usuário logado
+         *
+         */
+        onMounted(() => {
+            store.dispatch(Actions.GET_USER)
+        })
+
         return {
             openCreateModal,
             toggleModalCreate,
             openLoginModal,
             toggleModalLogin,
             changePage,
+            loggout,
             logged: computed(() => store.state.isLogged),
             nameUser: computed(() => store.state.userLogged.name),
         }

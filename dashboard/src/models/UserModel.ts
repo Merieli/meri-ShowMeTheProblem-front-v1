@@ -52,7 +52,7 @@ export class UserModel {
      * @name show
      * @descripton método que captura os dados do usuário
      * @param token chave de acesso do usuário
-     * @returns name e apiKey do usuário
+     * @returns id, name, email, apiKey e createAt do usuário
      */
     async show(token: string) {
         const params = {
@@ -63,9 +63,6 @@ export class UserModel {
                 },
             },
         }
-        return httpClient
-            .get(params.url, params.payload)
-            .then((response) => response.data)
-            .catch((e) => console.error(e))
+        return httpClient.get(params.url, params.payload).then((response) => response.data)
     }
 }

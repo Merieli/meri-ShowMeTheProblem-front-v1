@@ -3,6 +3,7 @@ export enum Mutations {
 
     ADD_USER = 'ADD_USER',
     LOGIN_USER = 'LOGIN_USER',
+    LOGGOUT_USER = 'LOGGOUT_USER',
     USER_LOGGED = 'USER_LOGGED',
 
     ADD_FILTERS = 'ADD_FILTERS',

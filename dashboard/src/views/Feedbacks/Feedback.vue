@@ -44,11 +44,11 @@
 </template>
 
 <script lang="ts">
+import FeedbackFilters from '../../components/Feedbacks/FeedbackFilters.vue'
 import FiltersLoading from '../../components/Feedbacks/FiltersLoading.vue'
 import GeralHeader from '../../components/GeralHeader.vue'
 import { useStore } from '../../store'
 import { Actions } from '../../store/type-actions'
-import FeedbackFilters from './FeedbackFilters.vue'
 import { computed, defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
@@ -56,7 +56,6 @@ export default defineComponent({
     components: { GeralHeader, FeedbackFilters, FiltersLoading },
     setup() {
         const store = useStore()
-        const isLoading = computed(() => store.getters.isLoading)
 
         onMounted(() => {
             const vazio = { type: '', limit: '', offset: '' }
@@ -65,7 +64,7 @@ export default defineComponent({
 
         return {
             feedbacks: computed(() => store.getters.feedbacks),
-            isLoading,
+            isLoading: computed(() => store.getters.isLoading),
         }
     },
 })

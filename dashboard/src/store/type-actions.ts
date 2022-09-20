@@ -1,5 +1,6 @@
 export enum Actions {
     LOGIN_USER = 'LOGIN_USER',
+    LOGGOUT_USER = 'LOGGOUT_USER',
     REGISTER_USER = 'REGISTER_USER',
     GET_USER = 'GET_USER',
 

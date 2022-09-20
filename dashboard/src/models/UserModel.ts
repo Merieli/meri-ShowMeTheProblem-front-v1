@@ -50,7 +50,7 @@ export class UserModel {
 
     /**
      * @name show
-     * @descripton método que captura os dados do usuário
+     * @description método que captura os dados do usuário
      * @param token chave de acesso do usuário
      * @returns id, name, email, apiKey e createAt do usuário
      */
@@ -64,5 +64,23 @@ export class UserModel {
             },
         }
         return httpClient.get(params.url, params.payload).then((response) => response.data)
+    }
+
+    /**
+     * @name generateNewKey
+     * @description Gera uma nova chave de api para o usuário logado
+     * @param token chave de acesso do usuário
+     * @returns apiKey
+     */
+    async generateNewKey(token: string) {
+        const params = {
+            url: this.url.newApiKey,
+            payload: {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        }
+        return httpClient.post(params.url, {}, params.payload).then((response) => response.data.apiKey)
     }
 }

@@ -30,14 +30,14 @@ export default defineComponent({
     name: 'FeedbackFilters',
     setup() {
         const store = useStore()
-        const isLoading = computed(() => store.getters.isLoading)
+        // const isLoading = computed(() => store.getters.isLoading)
 
-        onMounted(() => {
-            store.dispatch(Actions.GET_INDEX_FEEDBACK)
-        })
+        // onMounted(async () => {
+        store.dispatch(Actions.GET_INDEX_FEEDBACK)
+        // })
 
         const handleSelect = ({ type }: IConfiguredFilters): void => {
-            if (isLoading.value) return
+            // if (isLoading.value) return
 
             store.dispatch(Actions.CHANGE_ACTIVE_FEEDBACK, type)
         }
@@ -45,6 +45,7 @@ export default defineComponent({
         return {
             store,
             handleSelect,
+            isLoading: computed(() => store.getters.isLoading),
             filters: computed(() => store.getters.feedbackFilters),
         }
     },

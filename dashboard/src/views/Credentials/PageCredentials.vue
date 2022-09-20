@@ -10,14 +10,17 @@
 
             <p class="mt-10 text-lg text-left text-gray-800 font-regular">Este aqui é sua chave de api</p>
             <ContentLoader v-if="isLoading" class="rounded" width="600px" height="50px" />
-            <div v-else class="credentials__apiKey bg-brand-gray py-3 pl-5 pr-20 mt-2 flex rounded max-w-2xl">
+            <div
+                v-else
+                class="credentials__apiKey bg-brand-gray py-3 px-5 mt-2 flex justify-between items-center rounded max-w-2xl"
+            >
                 {{ apiKey }}
-                <div class="ml-20 mr-5">
-                    <button type="button" class="cursor-pointer">
-                        <UseIcon name="IconCopy" color="#ff0000" size="24" />
+                <div class="ml-5 min-w-max">
+                    <button type="button" class="credentials__button cursor-pointer" @click="handleCopyText(apiKey)">
+                        <UseIcon name="IconCopy" color="#A9A9A9" size="24" />
                     </button>
-                    <button type="button">
-                        <UseIcon name="IconLoading" color="#ff0000" size="24" />
+                    <button type="button" class="credentials__button cursor-pointer ml-4" @click="generateNewKey">
+                        <UseIcon name="IconLoading" color="#A9A9A9" size="24" />
                     </button>
                 </div>
             </div>
@@ -26,14 +29,19 @@
                 Coloque o script abaixo no seu site para começar a receber feedbacks
             </p>
             <ContentLoader v-if="isLoading" class="rounded" width="600px" height="50px" />
-            <div v-else class="credentials__script bg-brand-gray py-3 pl-5 pr-20 mt-2 flex rounded max-w-2xl">
-                <div class="w-full overflow-x-scroll">
-                    <pre>
-&lt;script src="https://merieli-feedbacker-widget.netifly.app?api_key={{ apiKey }}"&gt;&lt;/script&gt;</pre
-                    >
-                </div>
-                <button type="button" class="cursor-pointer">
-                    <UseIcon name="IconCopy" color="#ff0000" size="24" />
+            <div
+                v-else
+                class="credentials__script bg-brand-gray py-3 px-5 mt-2 flex justify-between items-center rounded max-w-2xl"
+            >
+                <p id="script" class="w-full overflow-x-scroll whitespace-pre">
+                    &lt;script src="{{ linkScript }}"&gt;&lt;/script&gt;"
+                </p>
+                <button
+                    type="button"
+                    class="credentials__button cursor-pointer ml-5"
+                    @click="handleCopyText(getScript())"
+                >
+                    <UseIcon name="IconCopy" color="#A9A9A9" size="24" />
                 </button>
             </div>
         </section>
@@ -41,12 +49,13 @@
 </template>
 
 <script lang="ts">
-// import palette from '../../../palette.js'
 import ContentLoader from '../../components/ContentLoader.vue'
 import GeralHeader from '../../components/GeralHeader.vue'
 import UseIcon from '../../components/UseIcon/UseIcon.vue'
 import { useStore } from '../../store'
+import { Actions } from '../../store/type-actions'
 import { computed, defineComponent } from '@vue/runtime-core'
+import { ref } from 'vue'
 
 export default defineComponent({
     name: 'PageCredencials',
@@ -57,11 +66,29 @@ export default defineComponent({
     },
     setup() {
         const store = useStore()
+        const apiKey = computed(() => store.getters.getApiKey)
+        const linkScript = ref(`https://merieli-feedbacker-widget.netifly.app?api_key=${apiKey.value}`)
+
+        const generateNewKey = () => {
+            store.dispatch(Actions.GENERATE_NEW_KEY)
+        }
+
+        const handleCopyText = (text: string) => {
+            store.dispatch(Actions.HANDLE_COPY_TEXT, text)
+        }
+
+        const getScript = (): string => {
+            const element = document.getElementById('script')
+            return element?.textContent || ''
+        }
 
         return {
-            apiKey: computed(() => store.getters.getApiKey),
+            apiKey,
             isLoading: computed(() => store.getters.isLoading),
-            // brandColors: palette.brand,
+            linkScript,
+            generateNewKey,
+            handleCopyText,
+            getScript,
         }
     },
 })
@@ -86,6 +113,19 @@ export default defineComponent({
         width: 100%;
         min-height: 500px;
         max-width: 1080px;
+    }
+
+    &__button {
+        transition: 0.5s ease-out;
+        position: relative;
+
+        &:hover {
+            opacity: 0.5;
+        }
+
+        &:active {
+            top: 2px;
+        }
     }
 }
 </style>

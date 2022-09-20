@@ -8,9 +8,16 @@
         <div class="feedbacks__all mt-8 mx-8">
             <aside class="feedbacks__listing mr-16 min-w-[20%]">
                 <h4 class="text-4xl font-black mb-9">Listagem</h4>
-                <FiltersLoading v-if="isLoading" class="mt-8" />
-                <FeedbackFilters v-else class="animate__animated animate__fadeIn animate__faster" />
+                <suspense>
+                    <template #default>
+                        <FeedbackFilters class="animate__animated animate__fadeIn animate__faster" />
+                    </template>
+                    <template #fallback>
+                        <FiltersLoading class="mt-8" />
+                    </template>
+                </suspense>
             </aside>
+            <div>Aconteceu um erro ao carregar os Feedbacks</div>
             <section class="feedbacks__cards mt-12">
                 <div class="feedbacks__received">
                     <div v-for="feedback in feedbacks" :key="feedback.id" class="feedbacks__item">

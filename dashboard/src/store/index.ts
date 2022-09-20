@@ -66,6 +66,9 @@ export const store = createStore<IEstadoStore>({
             state.userLogged.token = token
             state.isLogged = true
         },
+        [Mutations.SAVE_NEW_KEY](state, newKey: string) {
+            state.userLogged.apiKey = newKey
+        },
         [Mutations.LOGGOUT_USER](state) {
             state.userLogged.token = ''
             state.isLogged = false
@@ -166,36 +169,72 @@ export const store = createStore<IEstadoStore>({
                 const response = await callApiClient.user.show(token)
                 commit(Mutations.USER_LOGGED, response)
                 commit(Mutations.TOOGLE_LOADING, false)
-            } catch (e) {
+            } catch (error) {
                 commit(Mutations.TOOGLE_LOADING, false)
+                state.hasErrors = !!error
                 throw new Error(`Não foi possível capturar os dados do usuário.`)
             }
         },
 
-        async [Actions.LOGGOUT_USER]({ commit }) {
+        async [Actions.LOGGOUT_USER]({ commit, state }) {
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
                 window.localStorage.removeItem('token')
                 commit(Mutations.LOGGOUT_USER)
                 router.push({ name: 'home' })
                 commit(Mutations.TOOGLE_LOADING, false)
-            } catch (e) {
+            } catch (error) {
                 commit(Mutations.TOOGLE_LOADING, false)
+                state.hasErrors = !!error
                 throw new Error(`Não foi possível efetuar o loggout do usuário.`)
+            }
+        },
+
+        async [Actions.GENERATE_NEW_KEY]({ commit, state }) {
+            const { notify } = useNotifier()
+            try {
+                commit(Mutations.TOOGLE_LOADING, true)
+                const token = window.localStorage.getItem('token') || ''
+                const response = await callApiClient.user.generateNewKey(token)
+                commit(Mutations.SAVE_NEW_KEY, response)
+                commit(Mutations.TOOGLE_LOADING, false)
+            } catch (error) {
+                commit(Mutations.TOOGLE_LOADING, false)
+                state.hasErrors = !!error
+                notify(TypeOfNotification.FALHA, 'Não foi possível gerar uma nova chave de api', '')
+                throw new Error(`Não foi possível efetuar o loggout do usuário.`)
+            }
+        },
+
+        async [Actions.HANDLE_COPY_TEXT](context, text: string) {
+            const { notify } = useNotifier()
+            try {
+                await navigator.clipboard.writeText(text)
+                notify(TypeOfNotification.SUCESSO, 'Copiado!', '')
+            } catch (error) {
+                notify(TypeOfNotification.FALHA, 'Não foi possível copiar!', '')
+                throw new Error(`Erro ao copiar.`)
             }
         },
 
         async [Actions.GET_INDEX_FEEDBACK]({ commit, state }) {
             try {
-                // commit(Mutations.TOOGLE_LOADING,true)
+                // state.isLoading = true
+                commit(Mutations.TOOGLE_LOADING, true)
                 // Substituir o tokenTesteApi pelo token do usuario logado depois "this.state.userLogged.token"
                 const response = await callApiClient.feedback.showFilters(tokenTesteApi)
+                console.log(response)
+
                 commit(Mutations.ADD_FILTERS, response)
                 commit(Mutations.ADD_CONFIGURED_FILTERS, { data: response })
-                // commit(Mutations.TOOGLE_LOADING, false)
+
+                console.log(state.isLoading)
+                commit(Mutations.TOOGLE_LOADING, false)
+                console.log(state.isLoading)
+                // state.isLoading = false
             } catch (error) {
                 state.hasErrors = !!error
-                // commit(Mutations.TOOGLE_LOADING, false)
+                commit(Mutations.TOOGLE_LOADING, false)
                 commit(Mutations.ADD_FILTERS, { data: { all: 0, issue: 0, idea: 0, other: 0 } })
                 throw new Error(`Não foi possível capturar os filtros dos feedbacks do usuário atual.`)
             }

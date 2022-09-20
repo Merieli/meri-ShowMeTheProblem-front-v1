@@ -11,16 +11,13 @@
 </template>
 
 <script lang="ts">
-// import ContentLoader from '../ContentLoader'
+import ContentLoader from '../ContentLoader.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'FiltersLoading',
-    // components: {
-    //     ContentLoader,
-    // },
-    setup() {
-        return
+    components: {
+        ContentLoader,
     },
 })
 </script>

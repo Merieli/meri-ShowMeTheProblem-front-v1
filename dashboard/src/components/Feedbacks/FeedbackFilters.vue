@@ -24,28 +24,27 @@
 import { IConfiguredFilters } from '../../interfaces'
 import { useStore } from '../../store'
 import { Actions } from '../../store/type-actions'
-import { computed, defineComponent, onMounted } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
-    name: 'FeedbackFilters',
-    setup() {
+    setup(props, { emit }) {
         const store = useStore()
-        // const isLoading = computed(() => store.getters.isLoading)
+        const isLoading = computed(() => store.getters.isLoading)
 
-        // onMounted(async () => {
-        store.dispatch(Actions.GET_INDEX_FEEDBACK)
-        // })
+        store.dispatch(Actions.GET_SUMMARY_FEEDBACK)
 
         const handleSelect = ({ type }: IConfiguredFilters): void => {
-            // if (isLoading.value) return
+            if (isLoading.value) return
 
             store.dispatch(Actions.CHANGE_ACTIVE_FEEDBACK, type)
+
+            emit('select', type)
         }
 
         return {
             store,
             handleSelect,
-            isLoading: computed(() => store.getters.isLoading),
+            isLoading,
             filters: computed(() => store.getters.feedbackFilters),
         }
     },

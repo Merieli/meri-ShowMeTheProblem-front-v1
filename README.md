@@ -10,6 +10,9 @@ Os usuários devem ser capazes de:
 - [X] Efetuar Login
     - [X] Visualizar se login estiver incorreto
     - [X] Visualizar dados do usuário logado
+- [X] Usar credenciais
+    - [X] Copiar e gerar novas chaves de API
+    - [X] Copiar Script de feedbacks
 - [ ] Cadastrar feedback
     - [ ] Visualizar o status do cadastro
     - [ ] Criar, ler, atualizar e excluir solicitações de feedback do produto

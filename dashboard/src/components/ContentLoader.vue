@@ -1,7 +1,7 @@
 <template>
     <div
         :style="{
-            width: computedWidth,
+            width,
             height,
         }"
         class="content-loader opacity-75"
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'ContentLoader',
@@ -37,15 +37,6 @@ export default defineComponent({
             default: '1rem',
             type: String,
         },
-    },
-    setup(props) {
-        const computedWidth = computed(() => {
-            const value = Math.random() * (Number(props.width) - Number(props.minWidth))
-            return props.width ?? `${Math.floor(value + props.minWidth)}%`
-        })
-        return {
-            computedWidth,
-        }
     },
 })
 </script>

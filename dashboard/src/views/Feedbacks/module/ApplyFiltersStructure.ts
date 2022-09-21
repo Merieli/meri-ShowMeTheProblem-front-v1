@@ -4,9 +4,9 @@ import { feedbackFilterColors, feedbackFilterLabels } from '@/views/Feedbacks/mo
 export const applyFiltersStructure = (summary: IFeedbackFilters, filterActive?: string) => {
     return Object.keys(summary).map((typeOfFeedback) => {
         const checkActive = (): boolean => {
-            if (typeOfFeedback === 'all' && filterActive == undefined) return true
+            if (!filterActive && typeOfFeedback === 'all') return true
 
-            if (filterActive != undefined && typeOfFeedback === filterActive) return true
+            if (filterActive && typeOfFeedback === filterActive) return true
 
             return false
         }

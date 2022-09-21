@@ -1,3 +1,4 @@
+import { TFeedback } from '@/interfaces'
 import { IFeedbackApiClientUrls } from '@/interfaces/IFeedbackApiClientUrls'
 import httpClient from '@/services'
 
@@ -39,7 +40,7 @@ export class FeedbackModel {
         return httpClient.get(params.url, params.payload).then((response) => response.data)
     }
 
-    async show(token: string, type: string, limit: string, offset: string) {
+    async show(token: string, type?: TFeedback, limit?: string, offset?: string) {
         const params = {
             url: this.url.show,
             payload: {

@@ -41,6 +41,7 @@ export default defineComponent({
         const store = useStore()
         const openCreateModal = ref(false)
         const openLoginModal = ref(false)
+        const logged = computed(() => store.state.isLogged)
 
         /**
          * Alterna o modal de criação de conta para ser oculto ou visivel
@@ -75,7 +76,9 @@ export default defineComponent({
          *
          */
         onMounted(() => {
-            store.dispatch(Actions.GET_USER)
+            if (window.localStorage.getItem('token')) {
+                store.dispatch(Actions.GET_USER)
+            }
         })
 
         return {
@@ -85,7 +88,7 @@ export default defineComponent({
             toggleModalLogin,
             changePage,
             loggout,
-            logged: computed(() => store.state.isLogged),
+            logged,
             nameUser: computed(() => store.state.userLogged.name),
         }
     },

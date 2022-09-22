@@ -1,8 +1,13 @@
+const path = require('path')
+const vueLoader = require('vue-loader')
+
+const docSiteUrl = process.env.DEPLOY_PRIME_URL || 'https://vue-styleguidist.github.io'
+
+/** @type import("vue-styleguidist").Config */
 module.exports = {
-    // set your styleguidist configuration here
-    title: 'Default Style Guide',
+    title: 'Default Style Guide with Vuex',
     components: 'src/components/**/*.vue',
-    // defaultExample: true,
+    simpleEditor: true,
     sections: [
         {
             name: 'First Section',
@@ -10,7 +15,34 @@ module.exports = {
         },
     ],
     webpackConfig: {
-        // custom config goes here
+        module: {
+            rules: [
+                {
+                    test: /\.vue$/,
+                    loader: 'vue-loader',
+                },
+                {
+                    test: /\.ts?$/,
+                    exclude: /(node_modules|packages)/,
+                    loader: 'babel-loader',
+                },
+                {
+                    test: /\.css$/,
+                    use: ['style-loader', 'css-loader', 'sass-loader'],
+                },
+                {
+                    test: /\.scss$/,
+                    use: ['style-loader', 'css-loader', 'sass-loader'],
+                },
+            ],
+        },
+        plugins: [new vueLoader.VueLoaderPlugin()],
     },
-    exampleMode: 'expand',
+    renderRootJsx: path.join(__dirname, 'config/styleguide.root.js'),
+    usageMode: 'expand',
+    styleguideDir: 'dist',
+    ribbon: {
+        text: 'Back to examples',
+        url: `${docSiteUrl}/Examples.html`,
+    },
 }

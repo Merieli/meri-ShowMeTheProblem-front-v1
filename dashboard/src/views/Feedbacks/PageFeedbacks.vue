@@ -10,7 +10,7 @@
                 <h4 class="text-4xl font-black mb-9">Listagem</h4>
                 <suspense>
                     <FeedbackFilters
-                        @select="changeFeedbacksType"
+                        @select="fetchFeedbacks"
                         class="animate__animated animate__fadeIn animate__faster"
                     />
                     <template #fallback>
@@ -28,13 +28,19 @@
                 >
                     Ainda nenhum feedback recebido 🤓
                 </div>
-                <FeedbackCardLoading v-if="(isLoading || state.isLoadingFeedbacks) && !hasErrors" />
+                <FeedbackCardLoading
+                    v-if="(isLoading || state.isLoadingFeedbacks) && !hasErrors && !state.isLoadingMoreFeedbacks"
+                />
                 <FeedbackCard
                     v-else-if="!hasErrors"
                     v-for="(feedback, index) in feedbacks"
                     :key="feedback.id"
                     :is-opened="index === 0"
                     :feedback="feedback"
+                />
+                <FeedbackCardLoading
+                    v-if="state.isLoadingMoreFeedbacks && feedbacks.length < paginationTotal"
+                    :less="true"
                 />
             </section>
         </div>
@@ -65,51 +71,89 @@ export default defineComponent({
         const store = useStore()
         const hasErrors = computed(() => store.getters.hasErrors)
         const feedbacks = computed(() => store.getters.feedbacks)
+        const currentFeedbackType = computed(() => store.getters.feedbackCurrentType)
+
+        const paginationLimit = computed(() => store.getters.paginationFeedbacksLimit)
+        const paginationOffset = computed(() => store.getters.paginationFeedbacksOffset)
+        const paginationTotal = computed(() => store.getters.paginationFeedbacksTotal)
+
         const state = reactive({
-            feedbacks: [],
-            currentFeedbackType: 'all',
-
-            pagination: {
-                limit: 4,
-                offset: 0,
-                total: 0,
-            },
-
             isLoadingFeedbacks: false,
             isLoadingMoreFeedbacks: false,
         })
 
         const hasErrorComponent = ref(false)
 
-        async function handleScroll() {
-            const isBottomOfWindow =
-                Math.ceil(document.documentElement.scrollTop + window.innerHeight) >=
-                document.documentElement.scrollHeight
-            if (state.isLoadingFeedbacks || state.isLoadingMoreFeedbacks) return
-            if (!isBottomOfWindow) return
-            if (state.feedbacks.length >= state.pagination.total) return
-            const newPage = state.pagination.offset + 5
-            try {
-                state.isLoadingMoreFeedbacks = true
-                await store.dispatch(Actions.GET_ALL_FEEDBACKS, {
-                    type: state.currentFeedbackType,
-                    limit: state.pagination.limit,
-                    offset: newPage,
-                })
-            } catch (e) {
-                state.isLoadingMoreFeedbacks = false
-                hasErrorComponent.value = !!e
-            }
-        }
-
-        function handleErrors(error: string) {
+        function handleErrors(error: unknown) {
             state.isLoadingFeedbacks = false
             state.isLoadingMoreFeedbacks = false
             hasErrorComponent.value = !!error
         }
 
+        const setTheCorrectParameters = (type?: TFeedback | string, offset?: number) => {
+            const isNewTypeFeedback = type != currentFeedbackType.value
+            let typeCorrect: Omit<TFeedback, 'all'> | ''
+            let offsetCorrect: number
+
+            typeCorrect = type ? type : currentFeedbackType.value
+            offsetCorrect = offset ? offset : paginationOffset.value
+
+            if (typeCorrect === 'all') {
+                typeCorrect = ''
+            }
+
+            if (isNewTypeFeedback) {
+                offsetCorrect = 0
+                state.isLoadingMoreFeedbacks = false
+            }
+
+            return {
+                typeCorrect,
+                offsetCorrect,
+            }
+        }
+
+        async function fetchFeedbacks(type?: TFeedback | string, offset?: number) {
+            try {
+                state.isLoadingFeedbacks = true
+                const { typeCorrect, offsetCorrect } = setTheCorrectParameters(type, offset)
+                return await store.dispatch(Actions.GET_ALL_FEEDBACKS, {
+                    type: typeCorrect,
+                    limit: paginationLimit.value,
+                    offset: offsetCorrect,
+                })
+            } catch (e) {
+                handleErrors(e)
+            } finally {
+                state.isLoadingFeedbacks = false
+            }
+        }
+
+        async function handleScroll() {
+            const isBottomOfWindow =
+                Math.ceil(document.documentElement.scrollTop + window.innerHeight) >=
+                document.documentElement.scrollHeight
+
+            if (state.isLoadingFeedbacks || state.isLoadingMoreFeedbacks) return
+            if (feedbacks.value.length >= paginationTotal.value) {
+                state.isLoadingMoreFeedbacks = false
+                return
+            }
+            if (!isBottomOfWindow) return
+
+            const newPage = paginationOffset.value + paginationLimit.value
+            try {
+                state.isLoadingMoreFeedbacks = true
+                fetchFeedbacks(currentFeedbackType.value, newPage)
+            } catch (e) {
+                handleErrors(e)
+            }
+        }
+
         onMounted(() => {
-            fetchFeedbacks()
+            if (feedbacks.value.length == 0) {
+                fetchFeedbacks('all', 0)
+            }
             window.addEventListener('scroll', handleScroll, false)
         })
         onUnmounted(() => {
@@ -118,44 +162,13 @@ export default defineComponent({
 
         onErrorCaptured(handleErrors)
 
-        async function fetchFeedbacks() {
-            try {
-                state.isLoadingFeedbacks = true
-                return await store.dispatch(Actions.GET_ALL_FEEDBACKS, {
-                    type: '',
-                    limit: state.pagination.limit,
-                    offset: state.pagination.offset,
-                })
-            } catch (e) {
-                hasErrorComponent.value = !!e
-            } finally {
-                state.isLoadingFeedbacks = false
-            }
-        }
-
-        const changeFeedbacksType = async (type: TFeedback) => {
-            try {
-                state.isLoadingFeedbacks = true
-                state.currentFeedbackType = type
-                let typeCorrect: Omit<TFeedback, 'all'> | '' = type
-
-                if (typeCorrect === 'all') {
-                    typeCorrect = ''
-                }
-                return await store.dispatch(Actions.GET_ALL_FEEDBACKS, { type: typeCorrect })
-            } catch (e) {
-                hasErrorComponent.value = !!e
-            } finally {
-                state.isLoadingFeedbacks = false
-            }
-        }
-
         return {
             feedbacks,
             state,
             isLoading: computed(() => store.getters.isLoading),
             hasErrors,
-            changeFeedbacksType,
+            fetchFeedbacks,
+            paginationTotal,
         }
     },
 })

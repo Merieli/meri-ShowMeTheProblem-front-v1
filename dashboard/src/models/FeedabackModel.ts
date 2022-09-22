@@ -3,15 +3,7 @@ import { IFeedbackApiClientUrls } from '@/interfaces/IFeedbackApiClientUrls'
 import httpClient from '@/services'
 
 export class FeedbackModel {
-    private defaultPagination
-
-    constructor(private readonly url: IFeedbackApiClientUrls) {
-        this.defaultPagination = {
-            type: '',
-            limit: 5,
-            offset: 0,
-        }
-    }
+    constructor(private readonly url: IFeedbackApiClientUrls) {}
 
     async create(type: string, text: string, fingerprint: string, apiKey: string) {
         const params = {
@@ -40,7 +32,7 @@ export class FeedbackModel {
         return httpClient.get(params.url, params.payload).then((response) => response.data)
     }
 
-    async show(token: string, type?: TFeedback, limit?: string, offset?: string) {
+    async show(token: string, type: TFeedback, limit: number, offset: number) {
         const params = {
             url: this.url.show,
             payload: {

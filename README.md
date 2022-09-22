@@ -13,19 +13,16 @@ Os usuários devem ser capazes de:
 - [X] Usar credenciais
     - [X] Copiar e gerar novas chaves de API
     - [X] Copiar Script de feedbacks
-- [ ] Cadastrar feedback
-    - [ ] Visualizar o status do cadastro
-    - [ ] Criar, ler, atualizar e excluir solicitações de feedback do produto
-    - [ ] Receba validações de formulário ao tentar criar/editar solicitações de feedback
 - [X] Listar feedbacks
-- [ ] Filtrar Feedbacks por categoria
+- [X] Carregar proxima página de feedback ao efetuar scroll na página
+- [X] Filtrar Feedbacks por categoria
 
 **Bonus**
 https://thirsty-clarke-9a6686.netlify.app/
 - [ ] Classificar as sugestões por mais/menos votos positivos e mais/menos comentários
 - [ ] Adicionar comentários e respostas a uma solicitação de feedback do produto
 - [ ] Aprovar solicitações de feedback do produto
-- [ ] Acompanhar todas as alterações, mesmo depois de atualizar o navegador (localStorage pode ser usado)
+- [X] Acompanhar todas as alterações, mesmo depois de atualizar o navegador (localStorage pode ser usado)
 
 ## Requisitos de Desenvolvimento:
 - [X] Vue3

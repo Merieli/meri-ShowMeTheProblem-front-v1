@@ -2,13 +2,19 @@ import useNotifier from '../hooks/notifier'
 import router from '../router/index'
 import { Actions } from './type-actions'
 import { Mutations } from './type-mutations'
-import { IEstadoStore, IUser, INotification, TypeOfNotification, TFeedback } from '@/interfaces'
+import {
+    IEstadoStore,
+    IUser,
+    INotification,
+    TypeOfNotification,
+    TFeedback,
+    IFeedbacksPagination,
+    IFeedback,
+} from '@/interfaces'
 import callApiClient from '@/services/callApiClient'
 import { applyFiltersStructure } from '@/views/Feedbacks/module'
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
-
-export const key: InjectionKey<Store<IEstadoStore>> = Symbol()
 
 export const store = createStore<IEstadoStore>({
     state: {
@@ -19,8 +25,16 @@ export const store = createStore<IEstadoStore>({
             name: '',
             token: '',
             apiKey: '',
-            feedbackFilters: [],
             feedbacks: [],
+            feedbacksData: {
+                filters: [],
+                pagination: {
+                    limit: 4,
+                    offset: 0,
+                    total: 0,
+                },
+                currentType: 'all',
+            },
         },
         filters: {
             all: 0,
@@ -39,7 +53,10 @@ export const store = createStore<IEstadoStore>({
             return state.userLogged.feedbacks
         },
         feedbackFilters(state) {
-            return state.userLogged.feedbackFilters
+            return state.userLogged.feedbacksData.filters
+        },
+        feedbackCurrentType(state) {
+            return state.userLogged.feedbacksData.currentType
         },
         isLoading(state) {
             return state.isLoading
@@ -49,6 +66,15 @@ export const store = createStore<IEstadoStore>({
         },
         hasErrors(state) {
             return state.hasErrors
+        },
+        paginationFeedbacksLimit(state) {
+            return state.userLogged.feedbacksData.pagination.limit
+        },
+        paginationFeedbacksTotal(state) {
+            return state.userLogged.feedbacksData.pagination.total
+        },
+        paginationFeedbacksOffset(state) {
+            return state.userLogged.feedbacksData.pagination.offset
         },
     },
     mutations: {
@@ -81,10 +107,27 @@ export const store = createStore<IEstadoStore>({
         },
         [Mutations.ADD_CONFIGURED_FILTERS](state, { data, typeActive }) {
             state.filters = data
-            state.userLogged.feedbackFilters = applyFiltersStructure(data, typeActive)
+            state.userLogged.feedbacksData.filters = applyFiltersStructure(data, typeActive)
         },
-        [Mutations.ADD_FEEDBACKS](state, data) {
-            state.userLogged.feedbacks = data
+        [Mutations.ADD_FEEDBACKS](state, data: IFeedback[]) {
+            data.forEach((feedback: IFeedback) => {
+                state.userLogged.feedbacks.push(feedback)
+            })
+        },
+        [Mutations.CLEAR_FEEDBACKS](state) {
+            state.userLogged.feedbacks = []
+        },
+        [Mutations.CLEAR_PAGINATION_FEEDBACKS](state) {
+            state.userLogged.feedbacksData.pagination.offset = 0
+            state.userLogged.feedbacksData.pagination.total = 0
+        },
+        [Mutations.ADD_CURRENT_FEEDBACK_TYPE](state, type: string) {
+            state.userLogged.feedbacksData.currentType = type
+        },
+        [Mutations.ADD_PAGINATION_FEEDBACKS](state, data: IFeedbacksPagination) {
+            state.userLogged.feedbacksData.pagination.limit = data.limit
+            state.userLogged.feedbacksData.pagination.offset = data.offset
+            state.userLogged.feedbacksData.pagination.total = data.total
         },
         [Mutations.TOOGLE_LOADING](state, actual: boolean) {
             state.isLoading = actual
@@ -257,13 +300,34 @@ export const store = createStore<IEstadoStore>({
             }
         },
 
-        async [Actions.GET_ALL_FEEDBACKS]({ commit, state }, { type, limit = '', offset = '' }) {
+        /**
+         * @name GET_ALL_FEEDBACKS
+         * @descripton
+         * @param {Object} paramsRequest
+         */
+        async [Actions.GET_ALL_FEEDBACKS]({ commit, state }, { type, limit, offset }) {
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
-                const token = state.userLogged.token
-                const response = await callApiClient.feedback.show(token, type, limit, offset)
-                commit(Mutations.ADD_FEEDBACKS, response.results)
-                console.log(`feedbacks na store: `, state.userLogged.feedbacks)
+                const notAllFeedbackSaved =
+                    state.userLogged.feedbacks.length < state.userLogged.feedbacksData.pagination.total ||
+                    state.userLogged.feedbacks.length == 0
+
+                const isNewTypeFeedback = type != state.userLogged.feedbacksData.currentType
+
+                if (notAllFeedbackSaved || isNewTypeFeedback) {
+                    const token = state.userLogged.token
+
+                    const response = await callApiClient.feedback.show(token, type, limit, offset)
+
+                    if (isNewTypeFeedback) {
+                        commit(Mutations.CLEAR_FEEDBACKS)
+                        commit(Mutations.CLEAR_PAGINATION_FEEDBACKS)
+                    }
+
+                    commit(Mutations.ADD_FEEDBACKS, response.results)
+                    commit(Mutations.ADD_PAGINATION_FEEDBACKS, response.pagination)
+                    commit(Mutations.ADD_CURRENT_FEEDBACK_TYPE, type)
+                }
             } catch (error) {
                 const { notify } = useNotifier()
                 commit(Mutations.TOOGLE_ERROR, error)
@@ -276,6 +340,8 @@ export const store = createStore<IEstadoStore>({
     },
     modules: {},
 })
+
+export const key: InjectionKey<Store<IEstadoStore>> = Symbol()
 
 export function useStore(): Store<IEstadoStore> {
     return baseUseStore(key)

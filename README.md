@@ -1,6 +1,36 @@
-# feedback
+<h1 align="center">
+    <br>
+    <img src="[url da Logo do projeto]" alt="" width="120">
+    <br>
+    <br>
+    Show me the Problem
+</h1>
 
-## Briefing
+<p align="center">Projeto para gerar script de captura de feedbacks para ser inserido em sites e visualizar os comentários recebidos. Desenvolvimento para estudo com base no projeto do curso da comunidade VueJS Brasil</p>
+
+<!-- SHIELDS DO PROJETO -->
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License MIT">
+  </a>
+  
+<!-- INSERIR GIF DEMO DO PROJETO 
+<div align="center">
+  <img src="[GIF DE DEMONSTRAÇÃO OU IMAGEM do projeto]" alt="demo-web" height="425">
+</div>
+-->
+<hr/>
+
+## ⚡ Built With
+
+- <img src="https://img.icons8.com/color/48/000000/vue-js.png" width="20px"/> **[Vue.js](https://vuejs.org/)**
+- <img src="https://img.icons8.com/color/48/000000/typescript.png" width="20px"/> **[TypeScript](https://www.typescriptlang.org/)**
+- <img src="https://img.icons8.com/color/48/000000/tailwind_css.png" width="20px"/> **Tailwind**
+- <img src="https://img.icons8.com/color/48/000000/sass-avatar.png" width="20px"/> **SASS**
+- <img src="https://vue-styleguidist.github.io/assets/logo.png" width="20px"/> **[Vue Styleguidist](https://vue-styleguidist.github.io/)**
+
+
+### 🎯 Briefing
 
 Os usuários devem ser capazes de:
 - [ ] Vizualizar o layout ideal para o aplicativo, dependendo do tamanho da tela do dispositivo
@@ -24,7 +54,7 @@ https://thirsty-clarke-9a6686.netlify.app/
 - [ ] Aprovar solicitações de feedback do produto
 - [X] Acompanhar todas as alterações, mesmo depois de atualizar o navegador (localStorage pode ser usado)
 
-## Requisitos de Desenvolvimento:
+#### Requisitos de Desenvolvimento:
 - [X] Vue3
     - [X] Usar composition API
     - [X] Usar Vuex
@@ -43,3 +73,40 @@ https://thirsty-clarke-9a6686.netlify.app/
 - [X] Prettier
 - [ ] Docker para ambiente Dev
 - [X] Documentar com JS Docs e Vue Styleguidist
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## 🗂 How To Use
+
+#### Starting Development 
+```sh
+# Iniciar o backend
+cd backend
+npm run container
+cd ../
+
+# Iniciar o server Vue
+cd dashboard
+npm run serve
+
+# Iniciar documentação 
+npm run stylguide
+```
+
+## :octocat: Contributing
+
+This project is for study purposes, so contact me and let me know your ideas.
+
+All kinds of contributions are very welcome and appreciated!
+   - ⭐️ Star the project
+   - 🐛 Find and report issues
+   - 📥 Submit PRs to help solve issues or add features
+   - ✋ Influence the future of project with feature requests
+
+-------------------------------------
+```diff
+@@      🤍 Made by Merieli Manzano |\/|>    @@
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>

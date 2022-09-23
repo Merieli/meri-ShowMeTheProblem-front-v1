@@ -24,14 +24,20 @@
 import { IConfiguredFilters } from '../../interfaces'
 import { useStore } from '../../store'
 import { Actions } from '../../store/type-actions'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
-    setup(props, { emit }) {
+    async setup(_, { emit }) {
         const store = useStore()
         const isLoading = computed(() => store.getters.isLoading)
+        const hasError = ref(false)
 
-        store.dispatch(Actions.GET_SUMMARY_FEEDBACK)
+        try {
+            await store.dispatch(Actions.GET_SUMMARY_FEEDBACK)
+        } catch (error) {
+            hasError.value = true
+            console.error(error)
+        }
 
         const handleSelect = ({ type }: IConfiguredFilters): void => {
             if (isLoading.value) return
@@ -44,7 +50,6 @@ export default defineComponent({
         return {
             store,
             handleSelect,
-            isLoading,
             filters: computed(() => store.getters.feedbackFilters),
         }
     },

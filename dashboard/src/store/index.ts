@@ -100,6 +100,10 @@ export const store = createStore<IEstadoStore>({
             state.isLogged = false
             state.userLogged.name = ''
             state.userLogged.apiKey = ''
+            state.userLogged.token = ''
+            state.userLogged.feedbacks = []
+            state.userLogged.feedbacksData.filters = []
+            state.userLogged.feedbacksData.currentType = 'all'
         },
         [Mutations.USER_LOGGED](state, data) {
             state.userLogged.name = data.name
@@ -108,6 +112,7 @@ export const store = createStore<IEstadoStore>({
         [Mutations.ADD_CONFIGURED_FILTERS](state, { data, typeActive }) {
             state.filters = data
             state.userLogged.feedbacksData.filters = applyFiltersStructure(data, typeActive)
+            console.log(state.userLogged.feedbacksData.filters)
         },
         [Mutations.ADD_FEEDBACKS](state, data: IFeedback[]) {
             data.forEach((feedback: IFeedback) => {
@@ -293,6 +298,7 @@ export const store = createStore<IEstadoStore>({
         async [Actions.CHANGE_ACTIVE_FEEDBACK]({ commit, state }, type?: TFeedback) {
             try {
                 commit(Mutations.ADD_CONFIGURED_FILTERS, { data: state.filters, typeActive: type })
+                commit(Mutations.ADD_CURRENT_FEEDBACK_TYPE, type)
             } catch (error) {
                 commit(Mutations.TOOGLE_ERROR, error)
                 state.isLoading = false

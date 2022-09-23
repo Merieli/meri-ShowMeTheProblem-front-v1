@@ -20,7 +20,7 @@
             </aside>
             <section class="feedbacks__cards mt-12">
                 <div v-if="hasErrors" class="text-lg text-center text-gray-800 font-regular">
-                    Aconteceu um erro ao carregar os Feedbacks 😥
+                    ❌ Aconteceu um erro ao carregar os Feedbacks 😥, tente novamente mais tarde!
                 </div>
                 <div
                     v-if="!isLoading && !state.isLoadingFeedbacks && !feedbacks.length && !hasErrors"

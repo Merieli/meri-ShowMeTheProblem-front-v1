@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PartModal Integração/Componente Renderização: Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado 1`] = `
+<!--teleport start-->
+<!--teleport end-->
+`;

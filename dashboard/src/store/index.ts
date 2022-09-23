@@ -112,7 +112,6 @@ export const store = createStore<IEstadoStore>({
         [Mutations.ADD_CONFIGURED_FILTERS](state, { data, typeActive }) {
             state.filters = data
             state.userLogged.feedbacksData.filters = applyFiltersStructure(data, typeActive)
-            console.log(state.userLogged.feedbacksData.filters)
         },
         [Mutations.ADD_FEEDBACKS](state, data: IFeedback[]) {
             data.forEach((feedback: IFeedback) => {
@@ -295,10 +294,10 @@ export const store = createStore<IEstadoStore>({
          * @descripton altera o tipo de feedback ativo
          * @param {TFeedback} type tipo do feedback retornado
          */
-        async [Actions.CHANGE_ACTIVE_FEEDBACK]({ commit, state }, type?: TFeedback) {
+        async [Actions.CHANGE_ACTIVE_FEEDBACK]({ commit, state }, type: TFeedback) {
             try {
-                commit(Mutations.ADD_CONFIGURED_FILTERS, { data: state.filters, typeActive: type })
                 commit(Mutations.ADD_CURRENT_FEEDBACK_TYPE, type)
+                commit(Mutations.ADD_CONFIGURED_FILTERS, { data: state.filters, typeActive: type })
             } catch (error) {
                 commit(Mutations.TOOGLE_ERROR, error)
                 state.isLoading = false
@@ -322,13 +321,12 @@ export const store = createStore<IEstadoStore>({
 
                 if (notAllFeedbackSaved || isNewTypeFeedback) {
                     const token = state.userLogged.token
-
-                    const response = await callApiClient.feedback.show(token, type, limit, offset)
-
                     if (isNewTypeFeedback) {
                         commit(Mutations.CLEAR_FEEDBACKS)
                         commit(Mutations.CLEAR_PAGINATION_FEEDBACKS)
                     }
+
+                    const response = await callApiClient.feedback.show(token, type, limit, offset)
 
                     commit(Mutations.ADD_FEEDBACKS, response.results)
                     commit(Mutations.ADD_PAGINATION_FEEDBACKS, response.pagination)

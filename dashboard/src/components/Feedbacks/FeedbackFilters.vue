@@ -39,12 +39,10 @@ export default defineComponent({
             console.error(error)
         }
 
-        const handleSelect = ({ type }: IConfiguredFilters): void => {
+        const handleSelect = ({ type }: IConfiguredFilters) => {
             if (isLoading.value) return
-
-            store.dispatch(Actions.CHANGE_ACTIVE_FEEDBACK, type)
-
             emit('select', type)
+            store.dispatch(Actions.CHANGE_ACTIVE_FEEDBACK, type)
         }
 
         return {

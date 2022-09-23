@@ -1,6 +1,6 @@
 type TValidator = string | boolean
 
-export function validateEmptyAndEmail(value: any): TValidator {
+export function validateEmptyAndEmail(value?: string): TValidator {
     if (!value) {
         return '*Este campo é obrigatório'
     }
@@ -14,7 +14,7 @@ export function validateEmptyAndEmail(value: any): TValidator {
     return true
 }
 
-export function validateEmptyAndLenght6(value: any): TValidator {
+export function validateEmptyAndLenght6(value?: string): TValidator {
     if (!value) {
         return '*Este campo é obrigatório'
     }

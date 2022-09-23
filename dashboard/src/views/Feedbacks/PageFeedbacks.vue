@@ -90,17 +90,13 @@ export default defineComponent({
             hasErrorComponent.value = !!error
         }
 
-        const setTheCorrectParameters = (type?: TFeedback | string, offset?: number) => {
+        const setTheCorrectParameters = (type: TFeedback | string, offset?: number) => {
             const isNewTypeFeedback = type != currentFeedbackType.value
             let typeCorrect: Omit<TFeedback, 'all'> | ''
             let offsetCorrect: number
 
-            typeCorrect = type ? type : currentFeedbackType.value
+            typeCorrect = type == 'all' ? '' : type
             offsetCorrect = offset ? offset : paginationOffset.value
-
-            if (typeCorrect === 'all') {
-                typeCorrect = ''
-            }
 
             if (isNewTypeFeedback) {
                 offsetCorrect = 0
@@ -113,7 +109,7 @@ export default defineComponent({
             }
         }
 
-        async function fetchFeedbacks(type?: TFeedback | string, offset?: number) {
+        async function fetchFeedbacks(type: TFeedback | string, offset?: number) {
             try {
                 state.isLoadingFeedbacks = true
                 const { typeCorrect, offsetCorrect } = setTheCorrectParameters(type, offset)
@@ -151,9 +147,7 @@ export default defineComponent({
         }
 
         onMounted(() => {
-            if (feedbacks.value.length == 0) {
-                fetchFeedbacks('all', 0)
-            }
+            fetchFeedbacks('all', 0)
             window.addEventListener('scroll', handleScroll, false)
         })
         onUnmounted(() => {

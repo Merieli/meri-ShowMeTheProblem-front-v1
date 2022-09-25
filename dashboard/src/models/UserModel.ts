@@ -1,7 +1,7 @@
-import { IUserApiClientUrls } from '@/interfaces/IUserApiClientUrls'
+import { IUser, IUserApiClientUrls, IUserLogged, IUserModelApi } from '@/interfaces'
 import httpClient from '@/services/index'
 
-export class UserModel {
+export class UserModel implements IUserModelApi {
     constructor(private readonly url: IUserApiClientUrls) {}
 
     /**
@@ -10,9 +10,8 @@ export class UserModel {
      * @param name nome do usuário
      * @param email email do usuário
      * @param password password do usuário
-     * @returns
      */
-    async register(name: string, email: string, password: string) {
+    async register(name: string, email: string, password: string): Promise<IUser> {
         const params = {
             url: this.url.register,
             payload: {
@@ -34,7 +33,7 @@ export class UserModel {
      * @param email do usuário que deseja efetuar login
      * @param password do usuário que deseja efetuar login
      */
-    async login(email: string, password: string) {
+    async login(email: string, password: string): Promise<IUser> {
         const params = {
             url: this.url.login,
             payload: {
@@ -54,7 +53,7 @@ export class UserModel {
      * @param token chave de acesso do usuário
      * @returns id, name, email, apiKey e createAt do usuário
      */
-    async show(token: string) {
+    async show(token: string): Promise<IUser> {
         const params = {
             url: this.url.show,
             payload: {
@@ -72,7 +71,7 @@ export class UserModel {
      * @param token chave de acesso do usuário
      * @returns apiKey
      */
-    async generateNewKey(token: string) {
+    async generateNewKey(token: string): Promise<Pick<IUserLogged, 'apiKey'>> {
         const params = {
             url: this.url.newApiKey,
             payload: {

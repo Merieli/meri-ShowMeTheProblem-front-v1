@@ -33,7 +33,7 @@ export class UserModel implements IUserModelApi {
      * @param email do usuário que deseja efetuar login
      * @param password do usuário que deseja efetuar login
      */
-    async login(email: string, password: string): Promise<IUser> {
+    async login(email: string, password: string): Promise<IUserLogged> {
         const params = {
             url: this.url.login,
             payload: {

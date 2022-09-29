@@ -1,37 +1,28 @@
-import { IUserApiClientUrls, IUserModelApi } from '@/interfaces'
-import { UserModel } from '@/models'
-import apiClient from '@/services/server.json'
+import { IUserApiClientUrls } from '../../../src/interfaces'
+import { UserModel } from '@/models/UserModel'
+import httpClient from '@/services/index'
 import axios from 'axios'
 
 describe('Class UserModel.ts', () => {
-    jest.mock('axios')
-    const mockAxios = axios as jest.Mocked<typeof axios>
-    // jest.mock('@/models')
+    // jest.mock('axios')
 
-    // const urlUserMock: jest.Mocked<IUserModelApi> = {
-    //     login: jest.fn(),
-    //     register: jest.fn(),
-    // }
-
-    jest.mock('@/services/index')
-
-    class UserModelMock implements IUserModelApi {}
-
-    jest.mock('../../src/models/UserModel.ts', () => {
+    const dataToken = { data: { token: '123.123.123abcd' } }
+    jest.mock('axios', () => {
         return {
-            UserModel: jest.fn().mockImplementation(() => {
-                return {
-                    login: jest.fn(),
-                    register: jest.fn(),
-                    show: jest.fn(),
-                }
+            login: jest.fn().mockReturnValue({
+                interceptors: {
+                    request: { use: jest.fn(), eject: jest.fn() },
+                    response: { use: jest.fn(), eject: jest.fn() },
+                },
+
+                post: jest.fn().mockReturnValue(dataToken),
             }),
         }
     })
 
-    const urlUser: IUserApiClientUrls = apiClient.user
-    const MockedUserModel = jest.mocked(UserModel, true)
-
+    // const mockAxios = axios as jest.Mocked<typeof axios>
+    jest.mock('@/services/index')
+    jest.mocked(httpClient, true)
     // beforeEach(() => {})
 
     afterEach(() => {
@@ -40,16 +31,26 @@ describe('Class UserModel.ts', () => {
 
     describe('Integração', () => {
         describe('🧠 Comportamento:', () => {
-            test('Dado um email e senha Quando executado o login do usuário Então a resposta deve possuir um token', async () => {
-                const dataToken = { data: { token: '123.123.123abcd' } }
+            test.only('Dado um email e senha Quando executado o login do usuário Então a resposta deve possuir um token', async () => {
                 const email = 'teste@gmail.com'
                 const password = '123456'
 
-                mockAxios.post.mockResolvedValueOnce(dataToken)
+                // mockAxios.post.mockResolvedValueOnce(dataToken)
 
-                const response = await MockedUserModel.login(email, password)
-                expect(axios.get).toHaveBeenCalledWith(urlUser)
-                expect(mockAxios.post).toHaveBeenCalled()
+                const mockApiClient: jest.Mocked<IUserApiClientUrls> = {
+                    login: '' as jest.Mocked<string>,
+                    register: '' as jest.Mocked<string>,
+                    show: '' as jest.Mocked<string>,
+                    apiKeyExists: '' as jest.Mocked<string>,
+                    newApiKey: '' as jest.Mocked<string>,
+                }
+
+                // const urlUser: IUserApiClientUrls = apiClient.user
+                const user = new UserModel(mockApiClient)
+
+                const response = await user.login(email, password)
+                // expect(axios.get).toHaveBeenCalledWith(mockApiClient)
+                // expect(mockAxios.post).toHaveBeenCalled()
                 console.log('>>>>>', response)
                 expect(response).toHaveProperty('token')
             })

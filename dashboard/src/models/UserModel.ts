@@ -20,10 +20,7 @@ export class UserModel implements IUserModelApi {
                 password,
             },
         }
-        return httpClient
-            .post(params.url, params.payload)
-            .then((response) => response.data)
-            .catch((e) => console.error(e))
+        return httpClient.post(params.url, params.payload).then((response) => response.data)
     }
 
     /**
@@ -41,10 +38,7 @@ export class UserModel implements IUserModelApi {
                 password,
             },
         }
-        return httpClient
-            .post(params.url, params.payload)
-            .then((response) => response.data)
-            .catch((error) => console.error(error))
+        return httpClient.post(params.url, params.payload).then((response) => response.data)
     }
 
     /**

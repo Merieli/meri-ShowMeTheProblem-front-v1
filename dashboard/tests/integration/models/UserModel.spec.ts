@@ -71,18 +71,31 @@ describe('Class UserModel.ts', () => {
                 expect(response).toHaveProperty('token')
             })
 
-            test('Dado um email e senha Quando executado o login do usuário Então a resposta deve possuir um token', async () => {
+            test('Dado um usuário logado Quando exibir os dados Então a resposta deve possuir o name e email do usuário', async () => {
                 const dataUser = {
-                    data: { name, email, password },
+                    data: { id, name, email, apiKey, createdAt },
                 }
-                const payloadParams = { email, password }
+                const payloadParams = { headers: { Authorization: `Bearer ${tokenValue}` } }
 
-                mockHttp.post = jest.fn().mockResolvedValueOnce(dataUser)
+                mockHttp.get = jest.fn().mockResolvedValueOnce(dataUser)
                 const response = await sut.show(tokenValue)
 
-                // expect(mockHttp.post).toHaveBeenCalledWith(urlUser.show, payloadParams)
+                expect(mockHttp.get).toHaveBeenCalledWith(urlUser.show, payloadParams)
+                expect(mockHttp.get).toHaveBeenCalled()
+                expect(response).toHaveProperty('apiKey', apiKey)
+                expect(response).toHaveProperty('createdAt', createdAt)
+            })
+
+            test('Dado o token do usuário Quando for gerada uma chave Então deve retornar uma nova apiKey', async () => {
+                const dataKey = { data: { apiKey: apiKey } }
+                const payloadParams = { headers: { Authorization: `Bearer ${tokenValue}` } }
+
+                mockHttp.post = jest.fn().mockResolvedValueOnce(dataKey)
+                const response = await sut.generateNewKey(tokenValue)
+
+                expect(mockHttp.post).toHaveBeenCalledWith(urlUser.newApiKey, {}, payloadParams)
                 expect(mockHttp.post).toHaveBeenCalled()
-                expect(response).toHaveProperty('password')
+                expect(response).toHaveProperty('[]', apiKey)
             })
 
             // test('Dado dados inválidos Quando efetuar login Então recebe um erro de que não foi encontrado', async () => {

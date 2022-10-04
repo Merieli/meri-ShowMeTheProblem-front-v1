@@ -1,4 +1,4 @@
-import { IUser, IUserApiClientUrls, IUserLogged, IUserModelApi, IUserApiRegister } from '@/interfaces'
+import { IUserApiClientUrls, IUserLogged, IUserModelApi, IUserApiRegister } from '@/interfaces'
 import httpClient from '@/services/index'
 
 export class UserModel implements IUserModelApi {
@@ -47,7 +47,7 @@ export class UserModel implements IUserModelApi {
      * @param token chave de acesso do usuário
      * @returns id, name, email, apiKey e createAt do usuário
      */
-    async show(token: string): Promise<IUser> {
+    async show(token: string): Promise<IUserApiRegister> {
         const params = {
             url: this.url.show,
             payload: {

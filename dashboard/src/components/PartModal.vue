@@ -129,10 +129,12 @@
                                         placeholder="******"
                                         v-model="state.password.value"
                                         required
+                                        :rules="validateEmptyAndLenght6"
                                     />
                                     <span
                                         v-if="!!state.password.errorMessage"
                                         class="block font-medium text-brand-danger"
+                                        name="email"
                                     >
                                         {{ state.password.errorMessage }}
                                     </span>

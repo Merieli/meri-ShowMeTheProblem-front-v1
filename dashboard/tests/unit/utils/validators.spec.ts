@@ -4,10 +4,10 @@ describe('Validators', () => {
     describe('💎 Unidade:', () => {
         describe('validateEmptyAndLenght6', () => {
             it('Dado a digitação em um campo quando nada for digitado então é informado que o campo é obrigatório', () => {
-                expect(validateEmptyAndLenght6()).toBe('*Este campo é obrigatório')
+                expect(validateEmptyAndLenght6('')).toBe('*Este campo é obrigatório')
             })
 
-            it('Dado a digitação em um campo quando digitar 4 caracteres então deve informar que o mínimo é de 6 caracteres', () => {
+            it('Dado a digitação em um campo quando digitar poucos caracteres então deve informar o mínimo de caracteres', () => {
                 expect(validateEmptyAndLenght6('1234')).toBe('*Este campo precisa de no mínimo 6 caracteres')
             })
 
@@ -18,7 +18,7 @@ describe('Validators', () => {
 
         describe('validateEmptyAndEmail', () => {
             it('Dado a digitação em um campo quando nada for digitado então é informado que o campo é obrigatório', () => {
-                expect(validateEmptyAndEmail()).toBe('*Este campo é obrigatório')
+                expect(validateEmptyAndEmail('')).toBe('*Este campo é obrigatório')
             })
 
             it('Dado a digitação em um campo quando digitar algo que não seja um email então deve informar que deve ser um e-mail', () => {

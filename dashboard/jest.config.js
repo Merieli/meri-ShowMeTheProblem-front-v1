@@ -7,6 +7,9 @@ module.exports = {
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },
-    testMatch: ['**/tests/unit/**/*spec.ts', '**/tests/integration/**/*spec.ts', '**/tests/**/*test.ts'],
+    testMatch: [
+        '**/tests/unit/**/?(*.unit.)+(spec|test).[jt]s?(x)',
+        '**/tests/integration/**/?(*.)+(spec|test).[jt]s?(x)',
+    ],
     resolver: undefined,
 }

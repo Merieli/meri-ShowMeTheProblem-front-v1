@@ -8,7 +8,7 @@ module.exports = {
         '^@/(.*)$': '<rootDir>/src/$1',
     },
     testMatch: [
-        '**/tests/unit/**/?(*.unit.)+(spec|test).[jt]s?(x)',
+        '**/tests/unit/**/?(*.)+(unit.spec|unit.test).[jt]s?(x)',
         '**/tests/integration/**/?(*.)+(spec|test).[jt]s?(x)',
     ],
     resolver: undefined,

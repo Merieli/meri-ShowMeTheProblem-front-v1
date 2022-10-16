@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageHome.vue Integração/Componente 👀 Renderização: Dado o componente Quando renderizado Então deve possuir html equivalente ao Snapshot gravado 1`] = `
+"<div class=\\"home\\">
+  <geral-header-stub></geral-header-stub>
+  <section class=\\"home__presentation\\">
+    <div class=\\"home__content flex flex-col mt-28\\">
+      <h2 class=\\"home__title home__title_light\\"> Tenha um feedback. <br class=\\"hidden lg:inline-block\\"> E faça seus clientes mais felizes! </h2>
+      <p class=\\"home__text home__text_light\\"> Receba ideias, reclamações e feedbacks com um simples widget na página. </p>
+      <base-button-stub color=\\"light\\" typebutton=\\"button\\" isdisabled=\\"false\\"></base-button-stub>
+    </div>
+  </section>
+  <section class=\\"home__contact\\">
+    <h3 class=\\"home__title home__title_dark\\">Alguma dúvida?</h3>
+    <p class=\\"home__text\\">Quer saber melhor como funciona e quais são os preços?</p>
+    <base-button-stub color=\\"dark\\" typebutton=\\"button\\" isdisabled=\\"false\\"></base-button-stub>
+  </section>
+  <footer class=\\"home__footer\\">
+    <p class=\\"home__text\\">ShowMeTheProblem © 2022</p>
+  </footer>
+  <part-modal-stub typemodal=\\"create\\" open=\\"false\\"></part-modal-stub>
+</div>"
+`;

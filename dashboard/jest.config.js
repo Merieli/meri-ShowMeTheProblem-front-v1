@@ -12,4 +12,5 @@ module.exports = {
         '**/tests/integration/**/?(*.)+(spec|test).[jt]s?(x)',
     ],
     resolver: undefined,
+    testEnvironment: 'jsdom',
 }

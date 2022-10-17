@@ -3,15 +3,15 @@
         <header class="geral-header justify-between items-center flex">
             <h1 class="geral-header__logo font-black"><a href="#" @click="changePage('/')">ShowMeTheProblem</a></h1>
             <nav class="geral-header__navigation" v-if="!logged">
-                <button class="geral-header__link font-bold" data-create @click="toggleModalCreate">
+                <button id="button-create" class="geral-header__link font-bold" data-create @click="toggleModalCreate">
                     Crie uma conta
                 </button>
-                <BaseButton @click="toggleModalLogin" data-login> Entrar </BaseButton>
+                <BaseButton id="button-login" @click="toggleModalLogin" data-login> Entrar </BaseButton>
             </nav>
             <nav class="geral-header__navigation" v-else>
                 <button class="geral-header__link font-bold" @click="changePage('/credentials')">Credenciais</button>
                 <button class="geral-header__link font-bold" @click="changePage('/feedbacks')">Feedbacks</button>
-                <BaseButton @click="loggout()">{{ nameUser }} (sair)</BaseButton>
+                <BaseButton id="logout-button" @click="loggout()">{{ nameUser ? nameUser : '...' }} (sair)</BaseButton>
             </nav>
         </header>
         <PartModal type-modal="create" :open="openCreateModal" @close="toggleModalCreate" />

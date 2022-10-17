@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GeralHeader Integração/Componente 👀 Renderização: Dado o componente Quando renderizado Então deve possuir html equivalente ao Snapshot gravado 1`] = `
+"<div class=\\"bg-brand-main w-full justify-center flex\\">
+  <header class=\\"geral-header justify-between items-center flex\\">
+    <h1 class=\\"geral-header__logo font-black\\"><a href=\\"#\\">ShowMeTheProblem</a></h1>
+    <nav class=\\"geral-header__navigation\\"><button class=\\"geral-header__link font-bold\\">Credenciais</button><button class=\\"geral-header__link font-bold\\">Feedbacks</button><button class=\\"base-button rounded-full font-bold text-xl transition-all duration-150 base-button_light\\" type=\\"button\\" data-button=\\"base\\" id=\\"logout-button\\">
+        <!-- @slot Texto de conteúdo do botão -->... (sair)
+      </button></nav>
+  </header>
+  <!--teleport start-->
+  <!--teleport end-->
+  <!--teleport start-->
+  <!--teleport end-->
+</div>"
+`;

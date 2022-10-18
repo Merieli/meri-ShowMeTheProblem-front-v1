@@ -1,8 +1,7 @@
 import GeralHeader from '@/components/GeralHeader.vue'
-// import PartModal from '@/components/Modal/index.vue'
 import { routes } from '@/router'
 import { key } from '@/store'
-import { mount, shallowMount, VueWrapper } from '@vue/test-utils'
+import { mount, VueWrapper } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createStore } from 'vuex'
@@ -31,10 +30,15 @@ describe('GeralHeader', () => {
         wrapper = mount(GeralHeader, {
             global: {
                 plugins: [[mockStore, key], router],
+                stubs: {
+                    PartModal: {
+                        template: '<div>Modal de login e registro</div>',
+                    },
+                    teleport: true,
+                },
             },
         })
     })
-    const spyDispatch = jest.spyOn(mockStore, 'dispatch').mockImplementation()
 
     afterEach(() => {
         wrapper.unmount()
@@ -69,23 +73,25 @@ describe('GeralHeader', () => {
             })
 
             test('Dado que o usuário precisa criar uma conta quando clicar em "Crie uma conta" então deve exibir um modal', async () => {
-                mockStore.state.isLogged = true
-                mockStore.state.userLogged.name = 'Jorge'
+                mockStore.state.isLogged = false
                 await nextTick()
-                const button = wrapper.find('#button-create')
+                const button = wrapper.find('[data-create]')
                 await button.trigger('click')
-
-                console.log('>>>>>', wrapper.html())
+                const modalRegister = wrapper.get('[data-modal="create"]')
 
                 expect(wrapper.emitted().click).toBeTruthy()
-                // expect(wrapper.findComponent(PartModal)).toBeTruthy()
+                expect(modalRegister.attributes('open')).toBe('true')
             })
 
-            test.skip('Dado que o usuário precisa efetuar login quando clicar em "Entrar" então deve exibir um modal', async () => {
-                await wrapper.find('[data-login]').trigger('click')
+            test('Dado que o usuário precisa efetuar login quando clicar em "Entrar" então deve exibir um modal', async () => {
+                mockStore.state.isLogged = false
+                await nextTick()
+                const button = wrapper.find('[data-login]')
+                await button.trigger('click')
+                const modalLogin = wrapper.get('[data-modal="login"]')
 
                 expect(wrapper.emitted().click).toBeTruthy()
-                // expect(wrapper.findComponent(PartModal)).toBeTruthy()
+                expect(modalLogin.attributes('open')).toBe('true')
             })
         })
         describe('🐕 Navegação:', () => {

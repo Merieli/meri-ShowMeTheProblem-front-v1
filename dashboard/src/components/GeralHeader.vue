@@ -14,8 +14,8 @@
                 <BaseButton id="logout-button" @click="loggout()">{{ nameUser ? nameUser : '...' }} (sair)</BaseButton>
             </nav>
         </header>
-        <PartModal type-modal="create" :open="openCreateModal" @close="toggleModalCreate" />
-        <PartModal type-modal="login" :open="openLoginModal" @close="toggleModalLogin" />
+        <PartModal data-modal="create" type-modal="create" :open="openCreateModal" @close="toggleModalCreate" />
+        <PartModal data-modal="login" type-modal="login" :open="openLoginModal" @close="toggleModalLogin" />
     </div>
 </template>
 

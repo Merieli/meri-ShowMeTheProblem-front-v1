@@ -9,8 +9,16 @@
                 <BaseButton id="button-login" @click="toggleModalLogin" data-login> Entrar </BaseButton>
             </nav>
             <nav class="geral-header__navigation" v-else>
-                <button class="geral-header__link font-bold" @click="changePage('/credentials')">Credenciais</button>
-                <button class="geral-header__link font-bold" @click="changePage('/feedbacks')">Feedbacks</button>
+                <button
+                    data-button="credentials"
+                    class="geral-header__link font-bold"
+                    @click="changePage('/credentials')"
+                >
+                    Credenciais
+                </button>
+                <button data-button="feedbacks" class="geral-header__link font-bold" @click="changePage('/feedbacks')">
+                    Feedbacks
+                </button>
                 <BaseButton id="logout-button" @click="loggout()">{{ nameUser ? nameUser : '...' }} (sair)</BaseButton>
             </nav>
         </header>

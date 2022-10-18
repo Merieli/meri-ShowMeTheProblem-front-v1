@@ -1,4 +1,5 @@
 import GeralHeader from '@/components/GeralHeader.vue'
+import { IEstadoStore } from '@/interfaces'
 import { routes } from '@/router'
 import { key } from '@/store'
 import { mount, VueWrapper } from '@vue/test-utils'
@@ -12,11 +13,13 @@ describe('GeralHeader', () => {
         routes,
     })
 
-    const mockStore = createStore({
+    const mockStore = createStore<Pick<IEstadoStore, 'isLogged' | 'userLogged'>>({
         state: {
             isLogged: false,
             userLogged: {
                 name: '',
+                token: '',
+                apiKey: '',
             },
         },
     })
@@ -86,7 +89,7 @@ describe('GeralHeader', () => {
             test('Dado que o usuário precisa efetuar login quando clicar em "Entrar" então deve exibir um modal', async () => {
                 mockStore.state.isLogged = false
                 await nextTick()
-                const button = wrapper.find('[data-login]')
+                const button = wrapper.get('[data-login]')
                 await button.trigger('click')
                 const modalLogin = wrapper.get('[data-modal="login"]')
 
@@ -94,9 +97,18 @@ describe('GeralHeader', () => {
                 expect(modalLogin.attributes('open')).toBe('true')
             })
         })
-        describe('🐕 Navegação:', () => {
-            it.skip('deveria abrir a rota "Credentials" ao efetuar login', () => {
-                return
+        describe('🐇 Navegação:', () => {
+            test.skip('Dado o botão para página de Credenciais Quando clicado Então deve carregar a página', async () => {
+                mockStore.state.isLogged = true
+                await nextTick()
+                const push = jest.spyOn(router, 'push')
+                // const push = jest.fn()
+                const button = wrapper.get('[data-button="credentials"]')
+                await button.trigger('click')
+                // await router.isReady()
+
+                expect(push).toHaveBeenCalledTimes(1)
+                expect(push).toHaveBeenCalledWith('/credentials')
             })
         })
     })

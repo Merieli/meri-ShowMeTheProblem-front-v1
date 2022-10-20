@@ -1,7 +1,7 @@
 import { IUserApiClientUrls, IUserLogged, IUserModelApi, IUserApiRegister } from '@/interfaces'
 import httpClient from '@/services/index'
 
-//Service pattern é a logica usada nas actions que executam o Repository Paterrn
+//Service pattern é a logica usada nas actions para guardar as regras de negócio da criação de um usuário
 //Repository Pattern:
 export class UserModel implements IUserModelApi {
     constructor(private readonly url: IUserApiClientUrls) {}
@@ -44,12 +44,12 @@ export class UserModel implements IUserModelApi {
     }
 
     /**
-     * @name show
-     * @description método que captura os dados do usuário
+     * @name findByToken
+     * @description método que busca um usuário e retorna seus dados
      * @param token chave de acesso do usuário
      * @returns id, name, email, apiKey e createAt do usuário
      */
-    async show(token: string): Promise<IUserApiRegister> {
+    async findByToken(token: string): Promise<IUserApiRegister> {
         const params = {
             url: this.url.show,
             payload: {

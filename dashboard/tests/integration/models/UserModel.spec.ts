@@ -78,7 +78,7 @@ describe('Class UserModel.ts', () => {
                 const payloadParams = { headers: { Authorization: `Bearer ${tokenValue}` } }
 
                 mockHttp.get = jest.fn().mockResolvedValueOnce(dataUser)
-                const response = await sut.show(tokenValue)
+                const response = await sut.findByToken(tokenValue)
 
                 expect(mockHttp.get).toHaveBeenCalledWith(urlUser.show, payloadParams)
                 expect(mockHttp.get).toHaveBeenCalled()

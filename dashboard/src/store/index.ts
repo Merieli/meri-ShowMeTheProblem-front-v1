@@ -150,10 +150,8 @@ export const store = createStore<IEstadoStore>({
             const { notify } = useNotifier()
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
-                if (user.name != '' && user.email != '' && user.password != '') {
-                    const response = await callApiClient.user.register(user.name, user.email, user.password)
-                    commit(Mutations.ADD_USER, response)
-                }
+                const response = await callApiClient.user.register(user.name, user.email, user.password)
+                commit(Mutations.ADD_USER, response)
                 notify(
                     TypeOfNotification.SUCESSO,
                     'Conta Registrada',
@@ -195,7 +193,7 @@ export const store = createStore<IEstadoStore>({
 
         /**
          * @name GET_USER
-         * @descripton Captura os dados do usuário, ou efetua o login se já tiver um
+         * @descripton Captura os dados do usuário e efetua o login se já tiver um
          * token de usuário salvo, armazenando os dados na store
          */
         async [Actions.GET_USER]({ commit, state }) {
@@ -210,7 +208,7 @@ export const store = createStore<IEstadoStore>({
                     token = tokenStorage
                     commit(Mutations.LOGIN_USER, token)
                 }
-                const response = await callApiClient.user.show(token)
+                const response = await callApiClient.user.findByToken(token)
                 commit(Mutations.USER_LOGGED, response)
             } catch (error) {
                 commit(Mutations.TOOGLE_ERROR, error)

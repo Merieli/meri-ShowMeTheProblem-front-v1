@@ -1,6 +1,8 @@
 import { IUserApiClientUrls, IUserLogged, IUserModelApi, IUserApiRegister } from '@/interfaces'
 import httpClient from '@/services/index'
 
+//Service pattern é a logica usada nas actions que executam o Repository Paterrn
+//Repository Pattern:
 export class UserModel implements IUserModelApi {
     constructor(private readonly url: IUserApiClientUrls) {}
 

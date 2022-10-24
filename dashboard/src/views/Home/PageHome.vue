@@ -10,7 +10,9 @@
                 <p class="home__text home__text_light">
                     Receba ideias, reclamações e feedbacks com um simples widget na página.
                 </p>
-                <BaseButton color="light" @click="toggleModalCreate"> Crie uma conta grátis </BaseButton>
+                <BaseButton id="create-account-button" color="light" @click="toggleModalCreate">
+                    Crie uma conta grátis
+                </BaseButton>
             </div>
         </section>
         <section class="home__contact">

@@ -10,19 +10,22 @@ const httpClient: AxiosInstance = axios.create({
     baseURL: API_ENVS.local,
 })
 
-// httpClient.interceptors.request.use((config) => {
-//     const token = window.localStorage.getItem('token')
-//     if (token) {
-//         config.headers.Authorization = `Bearer ${token}`
-//     }
+httpClient.interceptors.request.use(
+    (config) => {
+        // const token = window.localStorage.getItem('token')
+        // if (token) {
+        //     config.headers?.Authorization = `Bearer ${token}`
+        // }
 
-//     return config
-// })
+        return config
+    },
+    (error) => Promise.reject(error)
+)
 
 httpClient.interceptors.response.use(
     (response) => response,
     (error) => {
-        return error
+        return Promise.reject(error)
     }
 )
 

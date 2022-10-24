@@ -1,2 +1,2 @@
-export * from './FeedabackModel'
-export * from './UserModel'
+export * from './FeedabackRepository'
+export * from './UserRepository'

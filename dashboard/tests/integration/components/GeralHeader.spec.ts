@@ -1,5 +1,5 @@
 import GeralHeader from '@/components/GeralHeader.vue'
-import { IEstadoStore } from '@/interfaces'
+import { StateStoreShape } from '@/interfaces'
 import { routes } from '@/router'
 import { key } from '@/store'
 import { mount, VueWrapper } from '@vue/test-utils'
@@ -13,7 +13,7 @@ describe('GeralHeader', () => {
         routes,
     })
 
-    const mockStore = createStore<Pick<IEstadoStore, 'isLogged' | 'userLogged'>>({
+    const mockStore = createStore<Pick<StateStoreShape, 'isLogged' | 'userLogged'>>({
         state: {
             isLogged: false,
             userLogged: {

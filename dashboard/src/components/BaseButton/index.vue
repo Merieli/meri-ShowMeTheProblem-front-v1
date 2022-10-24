@@ -15,7 +15,7 @@
 /** @author Merieli Manzano
  * @version 1.0.0
  */
-import { ButtonColors, ButtonTypes, TColorsButton, TButton } from './module'
+import { ButtonTypes, TColorsButton, TButton } from './module'
 import { defineComponent, computed, ComputedRef, PropType } from 'vue'
 
 export default defineComponent({
@@ -27,7 +27,7 @@ export default defineComponent({
          */
         color: {
             type: String as PropType<TColorsButton>,
-            default: ButtonColors.LIGHT,
+            default: 'light',
         },
         /**
          * Define se o botão é normal ou é um botão de formulário.
@@ -50,9 +50,9 @@ export default defineComponent({
          * @type {computed}
          */
         const classByColor: ComputedRef<string> = computed(() => {
-            return props.color === ButtonColors.DARK
+            return props.color === 'dark'
                 ? 'base-button_dark'
-                : ButtonColors.LIGHT
+                : props.color === 'light'
                 ? 'base-button_light'
                 : 'base-button_dark'
         })

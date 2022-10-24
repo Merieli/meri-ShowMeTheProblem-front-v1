@@ -36,7 +36,6 @@ export default defineComponent({
             await store.dispatch(Actions.GET_SUMMARY_FEEDBACK)
         } catch (error) {
             hasError.value = true
-            console.error(error)
         }
 
         const handleSelect = ({ type }: IConfiguredFilters) => {

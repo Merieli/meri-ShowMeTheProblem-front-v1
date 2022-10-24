@@ -1,4 +1,4 @@
-export interface IUserApiClientUrls {
+export interface UserApiClientUrls {
     register: string
     login: string
     show: string

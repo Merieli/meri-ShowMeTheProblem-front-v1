@@ -1,10 +1,13 @@
-import { IUserApiClientUrls, IUserLogged, IUserModelApi, IUserApiRegister } from '@/interfaces'
-import httpClient from '@/services/index'
+import httpClient from '@/http/index'
+import apiClient from '@/http/server.json'
+import { UserApiClientUrls, IUserLogged, UserRepositoryShape, IUserApiRegister, IUser } from '@/interfaces'
 
-//Service pattern é a logica usada nas actions para guardar as regras de negócio da criação de um usuário
-//Repository Pattern:
-export class UserModel implements IUserModelApi {
-    constructor(private readonly url: IUserApiClientUrls) {}
+export class UserRepository implements UserRepositoryShape {
+    private readonly url: UserApiClientUrls = apiClient.user
+
+    constructor() {
+        this.url
+    }
 
     /**
      * @name register
@@ -29,8 +32,8 @@ export class UserModel implements IUserModelApi {
      * @name login
      * @description método que realiza autenticação e efetua login
      * de um usuário no projeto
-     * @param email do usuário que deseja efetuar login
-     * @param password do usuário que deseja efetuar login
+     * @param {string} email do usuário que deseja efetuar login
+     * @param {string} password do usuário que deseja efetuar login
      */
     async login(email: string, password: string): Promise<IUserLogged> {
         const params = {
@@ -49,7 +52,7 @@ export class UserModel implements IUserModelApi {
      * @param token chave de acesso do usuário
      * @returns id, name, email, apiKey e createAt do usuário
      */
-    async findByToken(token: string): Promise<IUserApiRegister> {
+    findByToken(token: string): Promise<IUser> {
         const params = {
             url: this.url.show,
             payload: {

@@ -1,9 +1,13 @@
-import { TFeedback } from '@/interfaces'
-import { IFeedbackApiClientUrls } from '@/interfaces/IFeedbackApiClientUrls'
-import httpClient from '@/services'
+import httpClient from '@/http'
+import apiClient from '@/http/server.json'
+import { TFeedback, FeedbackApiClientUrls } from '@/interfaces'
 
-export class FeedbackModel {
-    constructor(private readonly url: IFeedbackApiClientUrls) {}
+export class FeedbackRepository {
+    private readonly url: FeedbackApiClientUrls = apiClient.feedback
+
+    constructor() {
+        this.url
+    }
 
     async create(type: string, text: string, fingerprint: string, apiKey: string) {
         const params = {

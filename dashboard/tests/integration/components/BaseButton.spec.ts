@@ -1,5 +1,5 @@
 import BaseButton from '@/components/BaseButton/index.vue'
-import { ButtonColors, ButtonTypes } from '@/components/BaseButton/module'
+import { ButtonTypes } from '@/components/BaseButton/module'
 import { mount, VueWrapper } from '@vue/test-utils'
 
 describe('BaseButton', () => {
@@ -35,13 +35,13 @@ describe('BaseButton', () => {
             })
 
             test('Dado a prop color quando definida como "dark" então possui a classe "base-button_dark"', async () => {
-                await wrapper.setProps({ color: ButtonColors.DARK })
+                await wrapper.setProps({ color: 'dark' })
 
                 expect(wrapper.classes()).toContain('base-button_dark')
             })
 
             test('Dado a prop color quando definida como "light" então possui a classe "base-button_light"', async () => {
-                await wrapper.setProps({ color: ButtonColors.LIGHT })
+                await wrapper.setProps({ color: 'light' })
 
                 expect(wrapper.classes()).toContain('base-button_light')
             })

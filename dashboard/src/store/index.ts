@@ -1,22 +1,23 @@
 import { Actions } from './type-actions'
 import { Mutations } from './type-mutations'
 import useNotifier from '@/hooks/notifier'
+import repositories from '@/http/repositories'
 import {
-    IEstadoStore,
+    StateStoreShape,
     IUser,
     INotification,
     TypeOfNotification,
     TFeedback,
     IFeedbacksPagination,
     IFeedback,
+    IUserLogged,
 } from '@/interfaces'
 import router from '@/router/index'
-import callApiClient from '@/services/callApiClient'
 import { applyFiltersStructure } from '@/views/Feedbacks/module'
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
 
-export const store = createStore<IEstadoStore>({
+export const store = createStore<StateStoreShape>({
     state: {
         users: [],
         notifications: [],
@@ -98,6 +99,7 @@ export const store = createStore<IEstadoStore>({
         [Mutations.LOGGOUT_USER](state) {
             state.userLogged.token = ''
             state.isLogged = false
+            state.hasErrors = false
             state.userLogged.name = ''
             state.userLogged.apiKey = ''
             state.userLogged.token = ''
@@ -105,7 +107,7 @@ export const store = createStore<IEstadoStore>({
             state.feedbacks.filters = []
             state.feedbacks.currentType = 'all'
         },
-        [Mutations.USER_LOGGED](state, data) {
+        [Mutations.USER_LOGGED](state, data: IUserLogged) {
             state.userLogged.name = data.name
             state.userLogged.apiKey = data.apiKey
         },
@@ -150,7 +152,7 @@ export const store = createStore<IEstadoStore>({
             const { notify } = useNotifier()
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
-                const response = await callApiClient.user.register(user.name, user.email, user.password)
+                const response = await repositories.user.register(user.name, user.email, user.password)
                 commit(Mutations.ADD_USER, response)
                 notify(
                     TypeOfNotification.SUCESSO,
@@ -177,7 +179,7 @@ export const store = createStore<IEstadoStore>({
             const { notify } = useNotifier()
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
-                const response = await callApiClient.user.login(user.email, user.password)
+                const response = await repositories.user.login(user.email, user.password)
                 window.localStorage.setItem('token', response.token)
                 dispatch(Actions.GET_USER)
                 router.push('/feedbacks')
@@ -208,8 +210,8 @@ export const store = createStore<IEstadoStore>({
                     token = tokenStorage
                     commit(Mutations.LOGIN_USER, token)
                 }
-                const response = await callApiClient.user.findByToken(token)
-                commit(Mutations.USER_LOGGED, response)
+                const user = await repositories.user.findByToken(token)
+                commit(Mutations.USER_LOGGED, user)
             } catch (error) {
                 commit(Mutations.TOOGLE_ERROR, error)
                 throw new Error(`Não foi possível capturar os dados do usuário.`)
@@ -245,7 +247,7 @@ export const store = createStore<IEstadoStore>({
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
                 const token = window.localStorage.getItem('token') || ''
-                const response = await callApiClient.user.generateNewKey(token)
+                const response = await repositories.user.generateNewKey(token)
                 commit(Mutations.SAVE_NEW_KEY, response)
             } catch (error) {
                 commit(Mutations.TOOGLE_ERROR, error)
@@ -275,8 +277,7 @@ export const store = createStore<IEstadoStore>({
         async [Actions.GET_SUMMARY_FEEDBACK]({ commit, state }) {
             try {
                 commit(Mutations.TOOGLE_LOADING, true)
-                commit(Mutations.TOOGLE_ERROR, undefined)
-                const response = await callApiClient.feedback.showFilters(state.userLogged.token)
+                const response = await repositories.feedback.showFilters(state.userLogged.token)
                 commit(Mutations.ADD_CONFIGURED_FILTERS, { data: response })
             } catch (error) {
                 commit(Mutations.TOOGLE_ERROR, error)
@@ -323,7 +324,7 @@ export const store = createStore<IEstadoStore>({
                         commit(Mutations.CLEAR_PAGINATION_FEEDBACKS)
                     }
 
-                    const response = await callApiClient.feedback.show(token, type, limit, offset)
+                    const response = await repositories.feedback.show(token, type, limit, offset)
 
                     commit(Mutations.ADD_FEEDBACKS, response.results)
                     commit(Mutations.ADD_PAGINATION_FEEDBACKS, response.pagination)
@@ -341,8 +342,8 @@ export const store = createStore<IEstadoStore>({
     },
 })
 
-export const key: InjectionKey<Store<IEstadoStore>> = Symbol()
+export const key: InjectionKey<Store<StateStoreShape>> = Symbol()
 
-export function useStore(): Store<IEstadoStore> {
+export function useStore(): Store<StateStoreShape> {
     return baseUseStore(key)
 }

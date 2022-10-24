@@ -1,18 +1,18 @@
-import { IUserApiClientUrls, IUserModelApi } from '../../../src/interfaces'
-import { UserModel } from '@/models/UserModel'
-import httpClient from '@/services/index'
-import apiClient from '@/services/server.json'
+import { UserApiClientUrls, UserRepositoryShape } from '../../../src/interfaces'
+import httpClient from '@/http/index'
+import apiClient from '@/http/server.json'
+import { UserRepository } from '@/models/UserRepository'
 
-describe('Class UserModel.ts', () => {
+describe('Class UserRepository.ts', () => {
     jest.mock('@/services/index')
     const mockHttp = httpClient as jest.Mocked<typeof httpClient>
 
-    let sut: IUserModelApi
-    let urlUser: IUserApiClientUrls
+    let sut: UserRepositoryShape
+    let urlUser: UserApiClientUrls
 
     const sutFactory = () => {
         urlUser = apiClient.user
-        return new UserModel(urlUser)
+        return new UserRepository()
     }
 
     const name = 'Jolie'

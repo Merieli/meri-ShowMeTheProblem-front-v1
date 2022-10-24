@@ -24,6 +24,7 @@
                         <div class="modal__content">
                             <form
                                 v-if="typeModal == 'create'"
+                                id="modal-create-account"
                                 class="modal__form mx-12 my-10 mt-0"
                                 @submit.prevent="createUser"
                             >
@@ -84,7 +85,7 @@
                                 <BaseButton
                                     data-button="createAccount"
                                     color="dark"
-                                    type-button="submit"
+                                    :type-button="ButtonTypes.SUBMIT"
                                     :isDisabled="isLoading"
                                     class="mt-6"
                                     :class="{
@@ -97,6 +98,7 @@
                             </form>
                             <form
                                 v-else
+                                id="modal-login-account"
                                 class="modal__form mx-12 my-10 mt-0"
                                 @submit.prevent="loginUser"
                                 data-modal-form
@@ -141,7 +143,7 @@
                                 </fieldset>
                                 <BaseButton
                                     color="dark"
-                                    type-button="submit"
+                                    :type-button="ButtonTypes.SUBMIT"
                                     :isDisabled="isLoading"
                                     class="mt-6"
                                     :class="{
@@ -168,6 +170,7 @@ import { useStore } from '../store'
 import { Actions } from '../store/type-actions'
 import { validateEmptyAndLenght6, validateEmptyAndEmail } from '../utils/validators'
 import BaseButton from './BaseButton/index.vue'
+import { ButtonTypes } from './BaseButton/module'
 import UseIcon from './UseIcon/UseIcon.vue'
 import { useField } from 'vee-validate'
 import { defineComponent, computed, reactive, ref } from 'vue'
@@ -293,6 +296,7 @@ export default defineComponent({
             loginUser,
             showModal,
             closeModal,
+            ButtonTypes,
         }
     },
 })

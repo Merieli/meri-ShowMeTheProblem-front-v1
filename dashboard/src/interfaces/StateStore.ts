@@ -6,9 +6,9 @@ import {
     IFeedback,
     IConfiguredFilters,
     IFeedbacksPagination,
-} from './'
+} from '.'
 
-export interface IEstadoStore {
+export interface StateStoreShape {
     users: IUser[]
     notifications: INotification[]
     isLogged: boolean

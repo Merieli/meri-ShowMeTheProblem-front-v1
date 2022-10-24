@@ -106,6 +106,7 @@
                                 <fieldset class="flex flex-col">
                                     <label for="email" class="font-bold text-lg">E-mail</label>
                                     <input
+                                        id="modal-email-field"
                                         class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
                                         :class="{
                                             'border-brand-danger': !!state.email.errorMessage,
@@ -117,11 +118,16 @@
                                         autocomplete="on"
                                         required
                                     />
-                                    <span v-if="!!state.email.errorMessage" class="block font-medium text-brand-danger">
+                                    <span
+                                        v-if="!!state.email.errorMessage"
+                                        id="email-error"
+                                        class="block font-medium text-brand-danger"
+                                    >
                                         {{ state.email.errorMessage }}
                                     </span>
                                     <label for="password" class="font-bold text-lg mt-6">Senha</label>
                                     <input
+                                        id="modal-password-field"
                                         class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
                                         :class="{
                                             'border-brand-danger': !!state.password.errorMessage,
@@ -142,6 +148,7 @@
                                     </span>
                                 </fieldset>
                                 <BaseButton
+                                    id="submit-button-login"
                                     color="dark"
                                     :type-button="ButtonTypes.SUBMIT"
                                     :isDisabled="isLoading"

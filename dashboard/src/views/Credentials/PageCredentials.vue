@@ -8,10 +8,11 @@
         <section class="credentials__all mt-8 flex flex-col w-full h-full">
             <h4 class="text-3xl font-black text-brand-darkgray">Instalação e configuração</h4>
 
-            <p class="mt-10 text-lg text-left text-gray-800 font-regular">Este aqui é sua chave de api</p>
+            <p class="mt-10 text-lg text-left text-gray-800 font-regular">Esta aqui é sua chave de api</p>
             <ContentLoader v-if="isLoading" class="rounded" width="600px" height="50px" />
             <div
                 v-else
+                id="api-key"
                 class="credentials__apiKey bg-brand-gray py-3 px-5 mt-2 flex justify-between items-center rounded max-w-2xl"
             >
                 {{ apiKey }}
@@ -19,7 +20,12 @@
                     <button type="button" class="credentials__button cursor-pointer" @click="handleCopyText(apiKey)">
                         <UseIcon name="IconCopy" color="#A9A9A9" size="24" />
                     </button>
-                    <button type="button" class="credentials__button cursor-pointer ml-4" @click="generateNewKey">
+                    <button
+                        id="button-generate-api-key"
+                        type="button"
+                        class="credentials__button cursor-pointer ml-4"
+                        @click="generateNewKey"
+                    >
                         <UseIcon name="IconLoading" color="#A9A9A9" size="24" />
                     </button>
                 </div>

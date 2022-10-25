@@ -4,6 +4,7 @@ import { mount } from '@vue/test-utils'
 import { createStore } from 'vuex'
 
 describe('PartModal', () => {
+    jest.mock('@/http/index')
     const mockLoading = () => mockState.isLoading
     const mockState = {
         users: [

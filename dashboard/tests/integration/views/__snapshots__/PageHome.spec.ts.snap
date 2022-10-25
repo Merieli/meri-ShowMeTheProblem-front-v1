@@ -7,7 +7,7 @@ exports[`PageHome.vue Integração/Componente 👀 Renderização: Dado o compon
     <div class=\\"home__content flex flex-col mt-28\\">
       <h2 class=\\"home__title home__title_light\\"> Tenha um feedback. <br class=\\"hidden lg:inline-block\\"> E faça seus clientes mais felizes! </h2>
       <p class=\\"home__text home__text_light\\"> Receba ideias, reclamações e feedbacks com um simples widget na página. </p>
-      <base-button-stub color=\\"light\\" typebutton=\\"button\\" isdisabled=\\"false\\"></base-button-stub>
+      <base-button-stub color=\\"light\\" typebutton=\\"button\\" isdisabled=\\"false\\" id=\\"create-account-button\\"></base-button-stub>
     </div>
   </section>
   <section class=\\"home__contact\\">

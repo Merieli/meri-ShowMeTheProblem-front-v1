@@ -4,7 +4,7 @@ import apiClient from '@/http/server.json'
 import { UserRepository } from '@/models/UserRepository'
 
 describe('Class UserRepository.ts', () => {
-    jest.mock('@/services/index')
+    jest.mock('@/http/index')
     const mockHttp = httpClient as jest.Mocked<typeof httpClient>
 
     let sut: UserRepositoryShape

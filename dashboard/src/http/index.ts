@@ -1,6 +1,10 @@
 import axios, { AxiosInstance } from 'axios'
 
-const API_ENVS = {
+export interface UrlEnvs {
+    [key: string]: string
+}
+
+const API_ENVS: UrlEnvs = {
     production: 'https://backend-show-me-the-problem.vercel.app/',
     development: '',
     local: 'http://localhost:3000',

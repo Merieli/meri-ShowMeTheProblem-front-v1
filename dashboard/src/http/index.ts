@@ -5,8 +5,8 @@ export interface UrlEnvs {
 }
 
 const API_ENVS: UrlEnvs = {
-    production: 'https://backend-show-me-the-problem.vercel.app/',
-    development: '',
+    production: 'https://backend-show-me-the-problem-4899d5bg5-merieli.vercel.app/',
+    development: 'http://localhost:3000',
     local: 'http://localhost:3000',
 }
 

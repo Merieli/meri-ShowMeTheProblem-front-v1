@@ -10,9 +10,9 @@
                 @click="handleSelect(filter)"
             >
                 <span>
-                    <i :class="`bg-${filter.color}`" class="feedbacks-filter__circle"></i>
+                    <i :class="filter.color.bg" class="feedbacks-filter__circle"></i>
                     {{ filter.label }} </span
-                ><span :class="filter.active ? `text-${filter.color}` : 'text-brand-graydark'" class="font-bold">{{
+                ><span :class="filter.active ? filter.color.text : 'text-brand-graydark'" class="font-bold">{{
                     filter.amount
                 }}</span>
             </li>

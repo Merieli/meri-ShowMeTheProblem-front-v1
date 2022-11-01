@@ -1,6 +1,6 @@
 export interface IConfiguredFilters {
     label: string
-    color: string
+    color: object
     amount: number
     active: boolean
     type: string

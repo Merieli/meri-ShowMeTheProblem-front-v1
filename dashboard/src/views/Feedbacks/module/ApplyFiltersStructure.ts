@@ -13,7 +13,10 @@ export const applyFiltersStructure = (summary: IFeedbackFilters, filterActive?: 
 
         const currentFilter: IConfiguredFilters = {
             label: feedbackFilterLabels[typeOfFeedback as keyof IFeedbackFilters],
-            color: feedbackFilterColors[typeOfFeedback as keyof IFeedbackFilters],
+            color: {
+                text: `text-${feedbackFilterColors[typeOfFeedback as keyof IFeedbackFilters]}`,
+                bg: `bg-${feedbackFilterColors[typeOfFeedback as keyof IFeedbackFilters]}`,
+            },
             amount: summary[typeOfFeedback as keyof IFeedbackFilters],
             active: checkActive(),
             type: typeOfFeedback,

@@ -6,15 +6,20 @@
                 class="feedbacks-filter__item animate__animated animate__fadeIn animate__faster"
                 v-for="filter in filters"
                 :key="filter.label"
+                :data-filter="filter.label"
                 :class="{ 'feedbacks-filter__item--selected': filter.active }"
                 @click="handleSelect(filter)"
             >
-                <span>
+                <span data-filter="label">
                     <i :class="filter.color.bg" class="feedbacks-filter__circle"></i>
                     {{ filter.label }} </span
-                ><span :class="filter.active ? filter.color.text : 'text-brand-graydark'" class="font-bold">{{
-                    filter.amount
-                }}</span>
+                ><span
+                    :class="filter.active ? filter.color.text : 'text-brand-graydark'"
+                    class="font-bold"
+                    data-filter="amount"
+                >
+                    {{ filter.amount }}
+                </span>
             </li>
         </ul>
     </div>

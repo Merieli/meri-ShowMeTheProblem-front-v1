@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BaseButton Integração/Componente Renderização: Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado 1`] = `
+exports[`BaseButton Integração/Componente 👀 Renderização: Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado 1`] = `
 "<button class=\\"base-button rounded-full font-bold text-xl transition-all duration-150 base-button_light\\" type=\\"button\\" data-button=\\"base\\">
   <!-- @slot Texto de conteúdo do botão -->Ação X
 </button>"

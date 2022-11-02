@@ -98,7 +98,7 @@ describe('GeralHeader', () => {
             })
         })
         describe('🐇 Navegação:', () => {
-            test.skip('Dado o botão para página de Credenciais Quando clicado Então deve carregar a página', async () => {
+            test('Dado o botão para página de Credenciais Quando clicado Então deve carregar a página', async () => {
                 mockStore.state.isLogged = true
                 await nextTick()
                 const push = jest.spyOn(router, 'push')

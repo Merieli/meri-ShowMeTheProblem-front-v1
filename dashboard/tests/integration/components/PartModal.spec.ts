@@ -1,12 +1,15 @@
 import PartModal from '@/components/PartModal.vue'
+import { StateStoreShape } from '@/interfaces'
 import { key } from '@/store'
 import { mount } from '@vue/test-utils'
-import { createStore } from 'vuex'
+import { createStore, Store } from 'vuex'
 
 describe('PartModal', () => {
     jest.mock('@/http/index')
     const mockLoading = () => mockState.isLoading
-    const mockState = {
+    type TStoreState = Pick<StateStoreShape, 'users' | 'isLoading'>
+
+    const mockState: TStoreState = {
         users: [
             {
                 name: 'SUCESSO',
@@ -16,17 +19,17 @@ describe('PartModal', () => {
         ],
         isLoading: false,
     }
-    let mockVuexStore: any
+    let mockVuexStore: Store<TStoreState>
 
     beforeEach(() => {
-        mockVuexStore = createStore({
+        mockVuexStore = createStore<TStoreState>({
             state: mockState,
             getters: { notifications: mockLoading },
             actions: {},
         })
     })
 
-    function factory(storeMock: any, type: string) {
+    function factory(storeMock: Store<TStoreState>, type: string) {
         return mount(PartModal, {
             global: {
                 plugins: [[storeMock, key]],

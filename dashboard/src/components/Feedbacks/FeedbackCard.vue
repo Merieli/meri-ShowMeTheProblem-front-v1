@@ -1,5 +1,5 @@
 <template>
-    <div class="feedback-card cursor-pointer" @click="handleToggle">
+    <div class="feedback-card cursor-pointer" data-feedback="card" @click="handleToggle">
         <header class="feedback__top flex justify-between mb-6">
             <div
                 class="feedbacks__badge p-2 text-xs font-black text-white uppercase rounded-full"

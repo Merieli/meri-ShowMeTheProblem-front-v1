@@ -4,6 +4,7 @@
     <br>
     <br>
     Show me the Problem
+    https://merieli-showmetheproblem-dashboard.netlify.app/
 </h1>
 
 <p align="center">Projeto para gerar script de captura de feedbacks para ser inserido em sites e visualizar os comentários recebidos. Desenvolvimento para estudo com base no projeto do curso da comunidade VueJS Brasil</p>
@@ -63,8 +64,8 @@ https://thirsty-clarke-9a6686.netlify.app/
 - [X] Testes com Jest
     - [X] Testes unitários
     - [X] Testes de integração
-    - [ ] Testes de snapshot
-- [ ] Testes com Cypress
+    - [X] Testes de snapshot
+- [X] Testes com Cypress
 - [ ] Utilizar conceitos de SOLID e clean Codde
 - [X] Consumir API
     - [X] Tratar Dados da API

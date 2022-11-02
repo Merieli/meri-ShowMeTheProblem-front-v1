@@ -19,7 +19,7 @@ describe('BaseButton', () => {
     })
 
     describe('Integração/Componente', () => {
-        describe('Renderização:', () => {
+        describe('👀 Renderização:', () => {
             test('Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado', () => {
                 expect(wrapper.html()).toMatchSnapshot()
             })
@@ -33,7 +33,9 @@ describe('BaseButton', () => {
 
                 expect(button.html()).toContain('Ação X')
             })
+        })
 
+        describe('🧠 Comportamento:', () => {
             test('Dado a prop color quando definida como "dark" então possui a classe "base-button_dark"', async () => {
                 await wrapper.setProps({ color: 'dark' })
 

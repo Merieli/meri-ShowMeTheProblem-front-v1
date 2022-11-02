@@ -1,7 +1,7 @@
 import { IFeedbackFilters, IConfiguredFilters } from '@/interfaces'
 import { feedbackFilterColors, feedbackFilterLabels } from '@/views/Feedbacks/module'
 
-export const applyFiltersStructure = (summary: IFeedbackFilters, filterActive?: string) => {
+export const applyFiltersStructure = (summary: IFeedbackFilters, filterActive?: string): IConfiguredFilters[] => {
     return Object.keys(summary).map((typeOfFeedback) => {
         const checkActive = (): boolean => {
             if (!filterActive && typeOfFeedback === 'all') return true

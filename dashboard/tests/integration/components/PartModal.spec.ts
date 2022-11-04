@@ -33,6 +33,10 @@ describe('PartModal', () => {
         return mount(PartModal, {
             global: {
                 plugins: [[storeMock, key]],
+                stubs: {
+                    teleport: true,
+                    transition: true,
+                },
             },
             props: {
                 open: true,
@@ -46,6 +50,7 @@ describe('PartModal', () => {
             test('Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado', () => {
                 const wrapper = factory(mockVuexStore, 'create')
                 expect(wrapper.html()).toMatchSnapshot()
+                console.log('>>>>', wrapper.html())
             })
         })
         describe('Comportamento:', () => {

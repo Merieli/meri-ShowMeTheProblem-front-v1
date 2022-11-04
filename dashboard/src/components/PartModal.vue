@@ -2,6 +2,7 @@
     <teleport to="body">
         <div
             class="overlay fixed top-0 left-0 z-1 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
+            data-modal="main"
             v-show="open"
             @click="closeModal"
         >
@@ -58,6 +59,7 @@
                                         v-model="state.email.value"
                                         autocomplete="on"
                                         required
+                                        data-form-email
                                     />
                                     <span v-if="!!state.email.errorMessage" class="block font-medium text-brand-danger">
                                         {{ state.email.errorMessage }}
@@ -73,6 +75,7 @@
                                         placeholder="******"
                                         v-model="state.password.value"
                                         required
+                                        data-form-password
                                     />
                                     <span
                                         v-if="!!state.password.errorMessage"

@@ -19,17 +19,25 @@ describe('PartModal', () => {
         ],
         isLoading: false,
     }
+    const actions = {
+        LOGIN_USER: jest.fn(),
+        REGISTER_USER: jest.fn(),
+    }
+
     let mockVuexStore: Store<TStoreState>
 
     beforeEach(() => {
         mockVuexStore = createStore<TStoreState>({
             state: mockState,
-            getters: { notifications: mockLoading },
-            actions: {},
+            actions,
         })
     })
 
-    function factory(storeMock: Store<TStoreState>, type: string) {
+    afterEach(() => {
+        jest.clearAllMocks()
+    })
+
+    function factory(storeMock: Store<TStoreState> = mockVuexStore, type = 'create') {
         return mount(PartModal, {
             global: {
                 plugins: [[storeMock, key]],
@@ -48,13 +56,44 @@ describe('PartModal', () => {
     describe('Integração/Componente', () => {
         describe('Renderização:', () => {
             test('Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado', () => {
-                const wrapper = factory(mockVuexStore, 'create')
+                const wrapper = factory()
+
                 expect(wrapper.html()).toMatchSnapshot()
-                console.log('>>>>', wrapper.html())
+            })
+
+            test('Dado um modal Quando renderizado Então deve possuir as props com valores', () => {
+                const wrapper = factory()
+
+                expect(wrapper.props('typeModal')).toBe('create')
+                expect(wrapper.props('open')).toBeTruthy()
             })
         })
         describe('Comportamento:', () => {
-            return
+            test('Dado um modal aberto Quando clicar em fechar Então deve emitir um método close', async () => {
+                const wrapper = factory()
+                const button = wrapper.find('[data-modal="main"]')
+                await button.trigger('click')
+
+                expect(wrapper.emitted()).toHaveProperty('close')
+                expect(wrapper.emitted().close).toHaveLength(1)
+            })
+
+            test('Dado um modal para criar usuário Quando preenchido com nome, email e senha e clicado em "Criar conta" Então deve executar a Action de registro uma vez e fechar o modal', async () => {
+                const wrapper = factory()
+                const actionCreate = actions.REGISTER_USER
+                const name = wrapper.find('[data-form-name]')
+                const email = wrapper.find('[data-form-email]')
+                const password = wrapper.find('[data-form-password]')
+                const buttonCreate = wrapper.find('[data-button="createAccount"]')
+                name.setValue('João Joaquim Enambrio')
+                email.setValue('joao.enambrio@gmail.com')
+                password.setValue('abcds12356')
+                await buttonCreate.trigger('submit')
+
+                expect(actionCreate).toHaveBeenCalled()
+                expect(actionCreate).toHaveBeenCalledTimes(1)
+                expect(wrapper.emitted()).toHaveProperty('close')
+            })
         })
         describe('Navegação:', () => {
             return

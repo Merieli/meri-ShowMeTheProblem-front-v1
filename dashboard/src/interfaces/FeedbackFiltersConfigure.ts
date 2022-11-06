@@ -1,6 +1,6 @@
-import { IFeedbackFilters, TFeedback } from './'
+import { IFeedbackFilters, TFeedback } from './';
 
 export interface FeedbackFiltersConfigure {
-    data: IFeedbackFilters
-    typeActive: TFeedback
+    data: IFeedbackFilters;
+    typeActive: TFeedback;
 }

@@ -1,50 +1,50 @@
 export function getDiffTimeBetweenCurrentDate(dateString = '', now: Date = new Date()) {
-    const dayInMilliseconds = 86400000
+    const dayInMilliseconds = 86400000;
     if ([null, undefined, false, true, ''].includes(dateString)) {
-        return dateString
+        return dateString;
     }
-    const date = new Date(dateString)
-    const isInvalidDate = isNaN(date.getTime())
+    const date = new Date(dateString);
+    const isInvalidDate = isNaN(date.getTime());
 
     if (isInvalidDate) {
-        return dateString
+        return dateString;
     }
 
-    const year = date.getFullYear()
-    const month = date.getMonth()
-    const day = date.getDate()
-    const hour = date.getHours()
-    const minutes = date.getMinutes()
-    const seconds = date.getSeconds()
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
 
     const buildMessage = (label: string, value: number) => {
         if (value !== 1) {
-            return `${value} ${label}s atrás`
+            return `${value} ${label}s atrás`;
         }
 
-        return `${value} ${label} atrás`
-    }
-    const notZero = (value: number): boolean => value !== 0
+        return `${value} ${label} atrás`;
+    };
+    const notZero = (value: number): boolean => value !== 0;
 
     if (month !== now.getMonth() || year < now.getFullYear()) {
-        const diff = Math.abs(Number(now) - Number(date))
-        const days = Math.ceil(diff / dayInMilliseconds)
+        const diff = Math.abs(Number(now) - Number(date));
+        const days = Math.ceil(diff / dayInMilliseconds);
 
-        return buildMessage('dia', days)
+        return buildMessage('dia', days);
     }
 
     if (day < now.getDate() && notZero(day)) {
-        return buildMessage('dia', now.getDate() - day)
+        return buildMessage('dia', now.getDate() - day);
     }
     if (hour < now.getHours() && notZero(hour)) {
-        return buildMessage('hora', now.getHours() - hour)
+        return buildMessage('hora', now.getHours() - hour);
     }
     if (minutes < now.getMinutes() && notZero(minutes)) {
-        return buildMessage('minuto', now.getMinutes() - minutes)
+        return buildMessage('minuto', now.getMinutes() - minutes);
     }
     if (seconds < now.getSeconds() && notZero(seconds)) {
-        return buildMessage('segundo', now.getSeconds() - seconds)
+        return buildMessage('segundo', now.getSeconds() - seconds);
     }
 
-    return buildMessage('segundo', 1)
+    return buildMessage('segundo', 1);
 }

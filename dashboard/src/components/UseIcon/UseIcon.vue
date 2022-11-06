@@ -3,12 +3,12 @@
 </template>
 
 <script lang="ts">
-import IconChevron from './IconChevron.vue'
-import IconCopy from './IconCopy.vue'
-import IconLoading from './IconLoading.vue'
-import { defineComponent, PropType } from 'vue'
+import IconChevron from './IconChevron.vue';
+import IconCopy from './IconCopy.vue';
+import IconLoading from './IconLoading.vue';
+import { defineComponent, PropType } from 'vue';
 
-export type IconsName = 'IconLoading' | 'IconCopy' | 'IconChevron'
+export type IconsName = 'IconLoading' | 'IconCopy' | 'IconChevron';
 
 /**
  * Componente para utilização dos ícones configurados no projeto.
@@ -28,7 +28,7 @@ export default defineComponent({
             required: true,
         },
     },
-})
+});
 </script>
 
 <docs lang="md">

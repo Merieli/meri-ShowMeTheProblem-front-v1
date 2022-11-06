@@ -1,12 +1,12 @@
-import httpClient from '@/http/index'
-import apiClient from '@/http/server.json'
-import { UserApiClientUrls, IUserLogged, UserRepositoryShape, IUserApiRegister, IUser } from '@/interfaces'
+import httpClient from '@/http/index';
+import apiClient from '@/http/server.json';
+import { UserApiClientUrls, IUserLogged, UserRepositoryShape, IUserApiRegister, IUser } from '@/interfaces';
 
 export class UserRepository implements UserRepositoryShape {
-    private readonly url: UserApiClientUrls = apiClient.user
+    private readonly url: UserApiClientUrls = apiClient.user;
 
     constructor() {
-        this.url
+        this.url;
     }
 
     /**
@@ -24,8 +24,8 @@ export class UserRepository implements UserRepositoryShape {
                 email,
                 password,
             },
-        }
-        return httpClient.post(params.url, params.payload).then((response) => response.data)
+        };
+        return httpClient.post(params.url, params.payload).then((response) => response.data);
     }
 
     /**
@@ -42,8 +42,8 @@ export class UserRepository implements UserRepositoryShape {
                 email,
                 password,
             },
-        }
-        return httpClient.post(params.url, params.payload).then((response) => response.data)
+        };
+        return httpClient.post(params.url, params.payload).then((response) => response.data);
     }
 
     /**
@@ -60,8 +60,8 @@ export class UserRepository implements UserRepositoryShape {
                     Authorization: `Bearer ${token}`,
                 },
             },
-        }
-        return httpClient.get(params.url, params.payload).then((response) => response.data)
+        };
+        return httpClient.get(params.url, params.payload).then((response) => response.data);
     }
 
     /**
@@ -78,7 +78,7 @@ export class UserRepository implements UserRepositoryShape {
                     Authorization: `Bearer ${token}`,
                 },
             },
-        }
-        return httpClient.post(params.url, {}, params.payload).then((response) => response.data.apiKey)
+        };
+        return httpClient.post(params.url, {}, params.payload).then((response) => response.data.apiKey);
     }
 }

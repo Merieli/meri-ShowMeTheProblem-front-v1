@@ -15,8 +15,8 @@
 /** @author Merieli Manzano
  * @version 1.0.0
  */
-import { ButtonTypes, TColorsButton, TButton } from './module'
-import { defineComponent, computed, ComputedRef, PropType } from 'vue'
+import { ButtonTypes, TColorsButton, TButton } from './module';
+import { defineComponent, computed, ComputedRef, PropType } from 'vue';
 
 export default defineComponent({
     name: 'BaseButton',
@@ -57,14 +57,14 @@ export default defineComponent({
                 ? 'base-button_dark'
                 : props.color === 'light'
                 ? 'base-button_light'
-                : 'base-button_dark'
-        })
+                : 'base-button_dark';
+        });
 
         return {
             classByColor,
-        }
+        };
     },
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -91,7 +91,7 @@ Botão base que pode ser utilizado em qualquer parte do projeto.
 
 ## Exemplos
 
-### Botão Dark:
+**Botão Dark:**
 
 ```jsx
 <BaseButton color="dark" type-button="submit">
@@ -99,7 +99,7 @@ Botão base que pode ser utilizado em qualquer parte do projeto.
 </BaseButton>
 ```
 
-Botão Light:
+**Botão Light:**
 
 ```jsx
 <BaseButton color="light"> Teste </BaseButton>

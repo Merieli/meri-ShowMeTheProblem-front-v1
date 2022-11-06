@@ -1,2 +1,2 @@
-export * from './FeedbackFilterColorsAndLabels'
-export * from './ApplyFiltersStructure'
+export * from './FeedbackFilterColorsAndLabels';
+export * from './ApplyFiltersStructure';

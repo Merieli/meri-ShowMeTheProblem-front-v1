@@ -30,7 +30,7 @@
                                 @submit.prevent="createUser"
                             >
                                 <fieldset class="flex flex-col">
-                                    <label for="name" class="font-bold text-lg" id="create-name"> Nome </label>
+                                    <label for="name" class="font-bold text-lg" id="create-name">Nome</label>
                                     <input
                                         class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
                                         :class="{
@@ -183,16 +183,16 @@
 <script lang="ts">
 /** @version 1.0.0
  */
-import { IAccount } from '../interfaces'
-import { useStore } from '../store'
-import { Actions } from '../store/type-actions'
-import { validateEmptyAndLenght6, validateEmptyAndEmail } from '../utils/validators'
-import BaseButton from './BaseButton/index.vue'
-import { ButtonTypes } from './BaseButton/module'
-import UseIcon from './UseIcon/UseIcon.vue'
-import { useField } from 'vee-validate'
-import { defineComponent, computed, reactive, ref } from 'vue'
-import * as yup from 'yup'
+import { IAccount } from '../interfaces';
+import { useStore } from '../store';
+import { Actions } from '../store/type-actions';
+import { validateEmptyAndLenght6, validateEmptyAndEmail } from '../utils/validators';
+import BaseButton from './BaseButton/index.vue';
+import { ButtonTypes } from './BaseButton/module';
+import UseIcon from './UseIcon/UseIcon.vue';
+import { useField } from 'vee-validate';
+import { defineComponent, computed, reactive, ref } from 'vue';
+import * as yup from 'yup';
 
 export default defineComponent({
     name: 'PartModal',
@@ -220,20 +220,20 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        const store = useStore()
-        const isActive = ref(true)
+        const store = useStore();
+        const isActive = ref(true);
 
         const { value: nameValue, errorMessage: nameErrorMessage } = useField<string>(
             'name',
             yup.string().required().min(6)
-        )
+        );
 
-        const { errorMessage: emailErrorMessage, value: emailValue } = useField<string>('email', validateEmptyAndEmail)
+        const { errorMessage: emailErrorMessage, value: emailValue } = useField<string>('email', validateEmptyAndEmail);
 
         const { errorMessage: passwordErrorMessage, value: passwordValue } = useField<string>(
             'password',
             validateEmptyAndLenght6
-        )
+        );
 
         const state: IAccount = reactive({
             name: {
@@ -248,38 +248,38 @@ export default defineComponent({
                 value: passwordValue,
                 errorMessage: passwordErrorMessage,
             },
-        })
+        });
 
         /** Acionado quando o modal tiver o valor true.
          * @event open
          * @type {Event}
          */
         const showModal = (active: boolean) => {
-            isActive.value = active
-            emit('open', active)
-        }
+            isActive.value = active;
+            emit('open', active);
+        };
 
         /** Acionado para fechar o modal.
          * @event open
          * @type {Event}
          */
         const closeModal = () => {
-            emit('close')
-        }
+            emit('close');
+        };
 
         /** Limpa os campos do modal
          * @event success
          */
         const cleanAll = () => {
-            state.name.value = ''
+            state.name.value = '';
             // state.name.errorMessage = ''
 
-            state.email.value = ''
+            state.email.value = '';
             // state.email.errorMessage = ''
 
-            state.password.value = ''
+            state.password.value = '';
             // state.password.errorMessage =
-        }
+        };
 
         const createUser = () => {
             store
@@ -289,10 +289,10 @@ export default defineComponent({
                     password: state.password.value,
                 })
                 .then(() => {
-                    cleanAll()
-                    closeModal()
-                })
-        }
+                    cleanAll();
+                    closeModal();
+                });
+        };
 
         const loginUser = () => {
             store
@@ -301,10 +301,10 @@ export default defineComponent({
                     password: state.password.value,
                 })
                 .then(() => {
-                    cleanAll()
-                    closeModal()
-                })
-        }
+                    cleanAll();
+                    closeModal();
+                });
+        };
 
         return {
             state,
@@ -315,9 +315,9 @@ export default defineComponent({
             showModal,
             closeModal,
             ButtonTypes,
-        }
+        };
     },
-})
+});
 </script>
 
 <style lang="scss" scoped>

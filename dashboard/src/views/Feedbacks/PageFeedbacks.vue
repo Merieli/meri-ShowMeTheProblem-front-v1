@@ -49,15 +49,15 @@
 </template>
 
 <script lang="ts">
-import FeedbackCard from '../../components/Feedbacks/FeedbackCard.vue'
-import FeedbackCardLoading from '../../components/Feedbacks/FeedbackCardLoading.vue'
-import FeedbackFilters from '../../components/Feedbacks/FeedbackFilters.vue'
-import FiltersLoading from '../../components/Feedbacks/FiltersLoading.vue'
-import GeralHeader from '../../components/GeralHeader.vue'
-import { TFeedback } from '../../interfaces'
-import { useStore } from '../../store'
-import { Actions } from '../../store/type-actions'
-import { computed, defineComponent, onErrorCaptured, onMounted, onUnmounted, reactive, ref } from 'vue'
+import FeedbackCard from '../../components/Feedbacks/FeedbackCard.vue';
+import FeedbackCardLoading from '../../components/Feedbacks/FeedbackCardLoading.vue';
+import FeedbackFilters from '../../components/Feedbacks/FeedbackFilters.vue';
+import FiltersLoading from '../../components/Feedbacks/FiltersLoading.vue';
+import GeralHeader from '../../components/GeralHeader.vue';
+import { TFeedback } from '../../interfaces';
+import { useStore } from '../../store';
+import { Actions } from '../../store/type-actions';
+import { computed, defineComponent, onErrorCaptured, onMounted, onUnmounted, reactive, ref } from 'vue';
 
 export default defineComponent({
     name: 'PageFeedbacks',
@@ -69,93 +69,93 @@ export default defineComponent({
         FeedbackCardLoading,
     },
     setup() {
-        const store = useStore()
-        const hasErrors = computed(() => store.getters.hasErrors)
-        const feedbacks = computed(() => store.getters.feedbacks)
-        const currentFeedbackType = computed(() => store.getters.feedbackCurrentType)
+        const store = useStore();
+        const hasErrors = computed(() => store.getters.hasErrors);
+        const feedbacks = computed(() => store.getters.feedbacks);
+        const currentFeedbackType = computed(() => store.getters.feedbackCurrentType);
 
-        const paginationLimit = computed(() => store.getters.paginationFeedbacksLimit)
-        const paginationOffset = computed(() => store.getters.paginationFeedbacksOffset)
-        const paginationTotal = computed(() => store.getters.paginationFeedbacksTotal)
+        const paginationLimit = computed(() => store.getters.paginationFeedbacksLimit);
+        const paginationOffset = computed(() => store.getters.paginationFeedbacksOffset);
+        const paginationTotal = computed(() => store.getters.paginationFeedbacksTotal);
 
         const state = reactive({
             isLoadingFeedbacks: true,
             isLoadingMoreFeedbacks: false,
-        })
+        });
 
-        const hasErrorComponent = ref(false)
+        const hasErrorComponent = ref(false);
 
         function handleErrors(error: unknown) {
-            state.isLoadingFeedbacks = false
-            state.isLoadingMoreFeedbacks = false
-            hasErrorComponent.value = !!error
+            state.isLoadingFeedbacks = false;
+            state.isLoadingMoreFeedbacks = false;
+            hasErrorComponent.value = !!error;
         }
 
         const setTheCorrectParameters = (type: TFeedback | string, offset?: number) => {
-            const isNewTypeFeedback = type != currentFeedbackType.value
-            let typeCorrect: Omit<TFeedback, 'all'> | ''
-            let offsetCorrect: number
+            const isNewTypeFeedback = type != currentFeedbackType.value;
+            let typeCorrect: Omit<TFeedback, 'all'> | '';
+            let offsetCorrect: number;
 
-            typeCorrect = type == 'all' ? '' : type
-            offsetCorrect = offset ? offset : paginationOffset.value
+            typeCorrect = type == 'all' ? '' : type;
+            offsetCorrect = offset ? offset : paginationOffset.value;
 
             if (isNewTypeFeedback) {
-                offsetCorrect = 0
-                state.isLoadingMoreFeedbacks = false
+                offsetCorrect = 0;
+                state.isLoadingMoreFeedbacks = false;
             }
 
             return {
                 typeCorrect,
                 offsetCorrect,
-            }
-        }
+            };
+        };
 
         async function fetchFeedbacks(type: TFeedback | string, offset?: number) {
             try {
-                state.isLoadingFeedbacks = true
-                const { typeCorrect, offsetCorrect } = setTheCorrectParameters(type, offset)
+                state.isLoadingFeedbacks = true;
+                const { typeCorrect, offsetCorrect } = setTheCorrectParameters(type, offset);
                 return await store.dispatch(Actions.GET_ALL_FEEDBACKS, {
                     type: typeCorrect,
                     limit: paginationLimit.value,
                     offset: offsetCorrect,
-                })
+                });
             } catch (e) {
-                handleErrors(e)
+                handleErrors(e);
             } finally {
-                state.isLoadingFeedbacks = false
+                state.isLoadingFeedbacks = false;
             }
         }
 
         async function handleScroll() {
             const isBottomOfWindow =
                 Math.ceil(document.documentElement.scrollTop + window.innerHeight) >=
-                document.documentElement.scrollHeight
+                document.documentElement.scrollHeight;
 
-            if (state.isLoadingFeedbacks || state.isLoadingMoreFeedbacks) return
+            if (state.isLoadingFeedbacks || state.isLoadingMoreFeedbacks) return;
             if (feedbacks.value.length >= paginationTotal.value) {
-                state.isLoadingMoreFeedbacks = false
-                return
+                state.isLoadingMoreFeedbacks = false;
+                return;
             }
-            if (!isBottomOfWindow) return
+            if (!isBottomOfWindow) return;
 
-            const newPage = paginationOffset.value + paginationLimit.value
+            const newPage = paginationOffset.value + paginationLimit.value;
             try {
-                state.isLoadingMoreFeedbacks = true
-                fetchFeedbacks(currentFeedbackType.value, newPage)
+                state.isLoadingMoreFeedbacks = true;
+                fetchFeedbacks(currentFeedbackType.value, newPage);
             } catch (e) {
-                handleErrors(e)
+                handleErrors(e);
             }
         }
 
         onMounted(() => {
-            fetchFeedbacks('all', 0)
-            window.addEventListener('scroll', handleScroll, false)
-        })
+            fetchFeedbacks('all', 0);
+            window.addEventListener('scroll', handleScroll, false);
+        });
         onUnmounted(() => {
-            window.removeEventListener('scroll', handleScroll, false)
-        })
+            window.removeEventListener('scroll', handleScroll, false);
+        });
 
-        onErrorCaptured(handleErrors)
+        onErrorCaptured(handleErrors);
 
         return {
             feedbacks,
@@ -164,9 +164,9 @@ export default defineComponent({
             hasErrors,
             fetchFeedbacks,
             paginationTotal,
-        }
+        };
     },
-})
+});
 </script>
 
 <style lang="scss" scoped>

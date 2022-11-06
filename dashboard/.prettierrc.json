@@ -8,5 +8,5 @@
     "arrowParens": "always",
     "htmlWhitespaceSensitivity": "ignore",
     "vueIndentScriptAndStyle": false,
-    "singleAttributePerLine": true
+    "singleAttributePerLine": false
 }

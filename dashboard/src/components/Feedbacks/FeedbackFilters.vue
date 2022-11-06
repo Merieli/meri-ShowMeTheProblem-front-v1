@@ -12,8 +12,9 @@
             >
                 <span data-filter="label">
                     <i :class="filter.color.bg" class="feedbacks-filter__circle"></i>
-                    {{ filter.label }} </span
-                ><span
+                    {{ filter.label }}
+                </span>
+                <span
                     :class="filter.active ? filter.color.text : 'text-brand-graydark'"
                     class="font-bold"
                     data-filter="amount"
@@ -26,42 +27,42 @@
 </template>
 
 <script lang="ts">
-import { IConfiguredFilters } from '../../interfaces'
-import { useStore } from '../../store'
-import { Actions } from '../../store/type-actions'
-import { computed, defineComponent, ref } from 'vue'
+import { IConfiguredFilters } from '../../interfaces';
+import { useStore } from '../../store';
+import { Actions } from '../../store/type-actions';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent({
     async setup(_, { emit }) {
-        const store = useStore()
-        const isLoading = computed(() => store.getters.isLoading)
-        const hasError = ref(false)
+        const store = useStore();
+        const isLoading = computed(() => store.getters.isLoading);
+        const hasError = ref(false);
 
         try {
-            await store.dispatch(Actions.GET_SUMMARY_FEEDBACK)
+            await store.dispatch(Actions.GET_SUMMARY_FEEDBACK);
         } catch (error) {
-            hasError.value = true
+            hasError.value = true;
         }
 
         const handleSelect = ({ type }: IConfiguredFilters) => {
-            if (isLoading.value) return
+            if (isLoading.value) return;
 
             /** Ativado quando um determinado filtro é clicado/selectionado
              * @event select
              * @type {Event}
              */
-            emit('select', type)
+            emit('select', type);
 
-            store.dispatch(Actions.CHANGE_ACTIVE_FEEDBACK, type)
-        }
+            store.dispatch(Actions.CHANGE_ACTIVE_FEEDBACK, type);
+        };
 
         return {
             store,
             handleSelect,
             filters: computed(() => store.getters.feedbackFilters),
-        }
+        };
     },
-})
+});
 </script>
 
 <style lang="scss" scoped>

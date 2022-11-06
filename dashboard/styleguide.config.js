@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 /** @type import("vue-styleguidist").Config */
 module.exports = {
@@ -9,16 +9,25 @@ module.exports = {
     simpleEditor: false,
     sections: [
         {
-            name: 'Componentes Geral:',
-            components: 'src/components/**/!(Feedback|Base)*.vue',
+            name: '⬜ Introdução',
+            content: 'docs/introduction.md',
         },
         {
-            name: 'Componentes Base:',
-            components: 'src/components/**/+(Base|BaseButton)*.vue',
-        },
-        {
-            name: 'Componentes Feedbacks:',
-            components: 'src/components/**/Feedback*.vue',
+            name: '📚 Documentação',
+            sections: [
+                {
+                    name: 'Componentes Geral:',
+                    components: 'src/components/**/!(Feedback|Base)*.vue',
+                },
+                {
+                    name: 'Componentes Base:',
+                    components: 'src/components/**/+(Base|BaseButton)*.vue',
+                },
+                {
+                    name: 'Componentes Feedbacks:',
+                    components: 'src/components/**/Feedback*.vue',
+                },
+            ],
         },
     ],
     renderRootJsx: path.join(__dirname, 'config/styleguide.root.js'),
@@ -28,4 +37,4 @@ module.exports = {
         text: 'Fork me on GitHub',
         url: `http://example.com`,
     },
-}
+};

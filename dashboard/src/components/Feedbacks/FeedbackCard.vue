@@ -41,11 +41,11 @@
 </template>
 
 <script lang="ts">
-import { IFeedback } from '../../interfaces'
-import { getDiffTimeBetweenCurrentDate } from '../../utils/generateDate'
-import { wait } from '../../utils/timeout'
-import UseIcon from '../UseIcon/UseIcon.vue'
-import { computed, defineComponent, PropType, reactive } from 'vue'
+import { IFeedback } from '../../interfaces';
+import { getDiffTimeBetweenCurrentDate } from '../../utils/generateDate';
+import { wait } from '../../utils/timeout';
+import UseIcon from '../UseIcon/UseIcon.vue';
+import { computed, defineComponent, PropType, reactive } from 'vue';
 
 /**
  * Componente de cartão do feedback exibido na página de Feedbacks.
@@ -74,34 +74,34 @@ export default defineComponent({
         const state = reactive({
             isOpen: props.isOpened,
             isClosing: !props.isOpened,
-        })
+        });
 
         const label = computed(() => {
-            if (props.feedback.type === 'ISSUE') return 'problema'
+            if (props.feedback.type === 'ISSUE') return 'problema';
 
-            if (props.feedback.type === 'IDEA') return 'ideia'
+            if (props.feedback.type === 'IDEA') return 'ideia';
 
-            return 'outro'
-        })
+            return 'outro';
+        });
 
         const classColor = computed(() => {
-            if (props.feedback.type === 'ISSUE') return 'danger'
+            if (props.feedback.type === 'ISSUE') return 'danger';
 
-            if (props.feedback.type === 'IDEA') return 'warning'
+            if (props.feedback.type === 'IDEA') return 'warning';
 
-            return 'graydark'
-        })
+            return 'graydark';
+        });
 
         /**
          * Ativado quando o card é clicado
          */
         const handleToggle = async () => {
-            state.isClosing = true
-            await wait(250)
-            state.isOpen = !state.isOpen
+            state.isClosing = true;
+            await wait(250);
+            state.isOpen = !state.isOpen;
 
-            state.isClosing = false
-        }
+            state.isClosing = false;
+        };
 
         return {
             state,
@@ -109,9 +109,9 @@ export default defineComponent({
             classColor,
             getDiffTimeBetweenCurrentDate,
             handleToggle,
-        }
+        };
     },
-})
+});
 </script>
 
 <style lang="scss" scoped>

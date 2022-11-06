@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts">
-import ContentLoader from '../ContentLoader.vue'
-import { defineComponent } from 'vue'
+import ContentLoader from '../ContentLoader.vue';
+import { defineComponent } from 'vue';
 
 /**
  * Componente com a animação de carregamento dos filtros de Feedacks.
@@ -22,7 +22,7 @@ export default defineComponent({
     components: {
         ContentLoader,
     },
-})
+});
 </script>
 
 <style></style>

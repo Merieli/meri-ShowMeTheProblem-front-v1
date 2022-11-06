@@ -13,4 +13,4 @@ module.exports = {
     ],
     resolver: undefined,
     testEnvironment: 'jsdom',
-}
+};

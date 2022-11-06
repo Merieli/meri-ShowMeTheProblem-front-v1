@@ -1,7 +1,7 @@
-import { IUser } from './IUser'
+import { IUser } from './IUser';
 
 export interface IUserApiRegister extends IUser {
-    id: string
-    apiKey: string[]
-    createdAt: number
+    id: string;
+    apiKey: string[];
+    createdAt: number;
 }

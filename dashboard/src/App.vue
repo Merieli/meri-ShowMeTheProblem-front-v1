@@ -6,9 +6,9 @@
 </template>
 
 <script lang="ts">
-import BaseNotification from './components/BaseNotification.vue'
-import { defineComponent, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import BaseNotification from './components/BaseNotification.vue';
+import { defineComponent, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'App',
@@ -16,22 +16,22 @@ export default defineComponent({
         BaseNotification,
     },
     setup() {
-        const router = useRouter()
-        const route = useRoute()
+        const router = useRouter();
+        const route = useRoute();
 
         watch(
             () => route.path,
             async () => {
                 if (route.meta.hasAuth) {
-                    const token = window.localStorage.getItem('token')
+                    const token = window.localStorage.getItem('token');
 
                     if (!token) {
-                        router.push({ name: 'home' })
-                        return
+                        router.push({ name: 'home' });
+                        return;
                     }
                 }
             }
-        )
+        );
     },
-})
+});
 </script>

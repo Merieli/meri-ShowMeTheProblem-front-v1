@@ -4,7 +4,8 @@
         <section class="home__presentation">
             <div class="home__content flex flex-col mt-28">
                 <h2 class="home__title home__title_light">
-                    Tenha um feedback. <br class="hidden lg:inline-block" />
+                    Tenha um feedback.
+                    <br class="hidden lg:inline-block" />
                     E faça seus clientes mais felizes!
                 </h2>
                 <p class="home__text home__text_light">
@@ -30,10 +31,10 @@
 </template>
 
 <script lang="ts">
-import BaseButton from '../../components/BaseButton/index.vue'
-import GeralHeader from '../../components/GeralHeader.vue'
-import PartModal from '../../components/PartModal.vue'
-import { defineComponent, ref } from 'vue'
+import BaseButton from '../../components/BaseButton/index.vue';
+import GeralHeader from '../../components/GeralHeader.vue';
+import PartModal from '../../components/PartModal.vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
     name: 'PageHome',
@@ -43,18 +44,18 @@ export default defineComponent({
         PartModal,
     },
     setup() {
-        const openCreateModal = ref(false)
+        const openCreateModal = ref(false);
 
         const toggleModalCreate = () => {
-            openCreateModal.value = !openCreateModal.value
-        }
+            openCreateModal.value = !openCreateModal.value;
+        };
 
         return {
             openCreateModal,
             toggleModalCreate,
-        }
+        };
     },
-})
+});
 </script>
 
 <style scoped lang="scss">

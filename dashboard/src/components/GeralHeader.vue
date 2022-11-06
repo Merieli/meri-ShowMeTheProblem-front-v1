@@ -6,7 +6,7 @@
                 <button id="button-create" class="geral-header__link font-bold" data-create @click="toggleModalCreate">
                     Crie uma conta
                 </button>
-                <BaseButton id="button-login" @click="toggleModalLogin" data-login> Entrar </BaseButton>
+                <BaseButton id="button-login" @click="toggleModalLogin" data-login>Entrar</BaseButton>
             </nav>
             <nav class="geral-header__navigation" v-else>
                 <button
@@ -32,12 +32,12 @@
  * Cabeçalho para todas as páginas da aplicação.
  * @displayName Geral Header
  */
-import router from '../router/index'
-import { useStore } from '../store'
-import { Actions } from '../store/type-actions'
-import BaseButton from './BaseButton/index.vue'
-import PartModal from './PartModal.vue'
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import router from '../router/index';
+import { useStore } from '../store';
+import { Actions } from '../store/type-actions';
+import BaseButton from './BaseButton/index.vue';
+import PartModal from './PartModal.vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 
 export default defineComponent({
     name: 'GeralHeader',
@@ -46,24 +46,24 @@ export default defineComponent({
         PartModal,
     },
     setup() {
-        const store = useStore()
-        const openCreateModal = ref(false)
-        const openLoginModal = ref(false)
-        const logged = computed(() => store.state.isLogged)
+        const store = useStore();
+        const openCreateModal = ref(false);
+        const openLoginModal = ref(false);
+        const logged = computed(() => store.state.isLogged);
 
         /**
          * Method Alterna o modal de criação de conta para ser oculto ou visivel
          */
         const toggleModalCreate = () => {
-            openCreateModal.value = !openCreateModal.value
-        }
+            openCreateModal.value = !openCreateModal.value;
+        };
 
         /**
          * Alterna o modal de login para ser oculto ou visivel
          */
         const toggleModalLogin = () => {
-            openLoginModal.value = !openLoginModal.value
-        }
+            openLoginModal.value = !openLoginModal.value;
+        };
 
         /**
          * Alterna a página atual
@@ -71,13 +71,13 @@ export default defineComponent({
          * botões do menu.
          */
         const changePage = (rota: string): void => {
-            router.push(rota)
-        }
+            router.push(rota);
+        };
 
         const loggout = (): void => {
-            changePage('/')
-            store.dispatch(Actions.LOGGOUT_USER)
-        }
+            changePage('/');
+            store.dispatch(Actions.LOGGOUT_USER);
+        };
 
         /**
          * Captura os dados do usuário logado
@@ -85,9 +85,9 @@ export default defineComponent({
          */
         onMounted(() => {
             if (window.localStorage.getItem('token') && logged.value == false) {
-                store.dispatch(Actions.GET_USER)
+                store.dispatch(Actions.GET_USER);
             }
-        })
+        });
 
         return {
             openCreateModal,
@@ -98,9 +98,9 @@ export default defineComponent({
             loggout,
             logged,
             nameUser: computed(() => store.state.userLogged.name),
-        }
+        };
     },
-})
+});
 </script>
 
 <style lang="scss" scoped>

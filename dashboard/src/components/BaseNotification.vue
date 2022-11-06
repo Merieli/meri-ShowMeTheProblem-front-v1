@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import { TypeOfNotification } from '../interfaces'
-import { useStore } from '../store'
-import { defineComponent, computed } from 'vue'
+import { TypeOfNotification } from '../interfaces';
+import { useStore } from '../store';
+import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
     name: 'BaseNotification',
@@ -26,17 +26,17 @@ export default defineComponent({
                 [TypeOfNotification.ATENCAO]: 'notification__warning',
                 [TypeOfNotification.FALHA]: 'notification__danger',
             },
-        }
+        };
     },
 
     setup() {
-        const store = useStore()
+        const store = useStore();
 
         return {
             notifications: computed(() => store.getters.notifications),
-        }
+        };
     },
-})
+});
 </script>
 
 <style scoped lang="scss">

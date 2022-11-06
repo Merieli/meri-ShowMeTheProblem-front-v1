@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import ContentLoader from '../ContentLoader.vue'
-import { defineComponent } from 'vue'
+import ContentLoader from '../ContentLoader.vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     components: { ContentLoader },
@@ -26,5 +26,5 @@ export default defineComponent({
             default: false,
         },
     },
-})
+});
 </script>

@@ -1,12 +1,12 @@
-import httpClient from '@/http'
-import apiClient from '@/http/server.json'
-import { TFeedback, FeedbackApiClientUrls } from '@/interfaces'
+import httpClient from '@/http';
+import apiClient from '@/http/server.json';
+import { TFeedback, FeedbackApiClientUrls } from '@/interfaces';
 
 export class FeedbackRepository {
-    private readonly url: FeedbackApiClientUrls = apiClient.feedback
+    private readonly url: FeedbackApiClientUrls = apiClient.feedback;
 
     constructor() {
-        this.url
+        this.url;
     }
 
     async create(type: string, text: string, fingerprint: string, apiKey: string) {
@@ -20,8 +20,8 @@ export class FeedbackRepository {
                     apiKey,
                 },
             },
-        }
-        return httpClient.post(params.url)
+        };
+        return httpClient.post(params.url);
     }
 
     async showFilters(token: string) {
@@ -32,8 +32,8 @@ export class FeedbackRepository {
                     Authorization: `Bearer ${token}`,
                 },
             },
-        }
-        return httpClient.get(params.url, params.payload).then((response) => response.data)
+        };
+        return httpClient.get(params.url, params.payload).then((response) => response.data);
     }
 
     async show(token: string, type: TFeedback, limit: number, offset: number) {
@@ -49,7 +49,7 @@ export class FeedbackRepository {
                     offset,
                 },
             },
-        }
-        return httpClient.get(params.url, params.payload).then((response) => response.data)
+        };
+        return httpClient.get(params.url, params.payload).then((response) => response.data);
     }
 }

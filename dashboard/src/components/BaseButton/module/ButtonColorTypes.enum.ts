@@ -1,1 +1,1 @@
-export type TColorsButton = 'light' | 'dark'
+export type TColorsButton = 'light' | 'dark';

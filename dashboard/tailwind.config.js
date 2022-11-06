@@ -1,4 +1,4 @@
-const palette = require('./palette')
+const palette = require('./palette');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -960,4 +960,4 @@ module.exports = {
         'disabled',
     ],
     plugins: [],
-}
+};

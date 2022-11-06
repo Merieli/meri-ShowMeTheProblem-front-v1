@@ -1,8 +1,8 @@
-import { IConfiguredFilters, IFeedback, IFeedbacksPagination } from './'
+import { IConfiguredFilters, IFeedback, IFeedbacksPagination } from './';
 
 export interface IFeedbacks {
-    data: IFeedback[]
-    filters: IConfiguredFilters[]
-    pagination: IFeedbacksPagination
-    currentType: string
+    data: IFeedback[];
+    filters: IConfiguredFilters[];
+    pagination: IFeedbacksPagination;
+    currentType: string;
 }

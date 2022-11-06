@@ -55,13 +55,13 @@
 </template>
 
 <script lang="ts">
-import ContentLoader from '../../components/ContentLoader.vue'
-import GeralHeader from '../../components/GeralHeader.vue'
-import UseIcon from '../../components/UseIcon/UseIcon.vue'
-import { useStore } from '../../store'
-import { Actions } from '../../store/type-actions'
-import { computed, defineComponent } from '@vue/runtime-core'
-import { ref } from 'vue'
+import ContentLoader from '../../components/ContentLoader.vue';
+import GeralHeader from '../../components/GeralHeader.vue';
+import UseIcon from '../../components/UseIcon/UseIcon.vue';
+import { useStore } from '../../store';
+import { Actions } from '../../store/type-actions';
+import { computed, defineComponent } from '@vue/runtime-core';
+import { ref } from 'vue';
 
 export default defineComponent({
     name: 'PageCredencials',
@@ -71,22 +71,22 @@ export default defineComponent({
         ContentLoader,
     },
     setup() {
-        const store = useStore()
-        const apiKey = computed(() => store.getters.getApiKey)
-        const linkScript = ref(`https://merieli-feedbacker-widget.netifly.app?api_key=${apiKey.value}`)
+        const store = useStore();
+        const apiKey = computed(() => store.getters.getApiKey);
+        const linkScript = ref(`https://merieli-feedbacker-widget.netifly.app?api_key=${apiKey.value}`);
 
         const generateNewKey = () => {
-            store.dispatch(Actions.GENERATE_NEW_KEY)
-        }
+            store.dispatch(Actions.GENERATE_NEW_KEY);
+        };
 
         const handleCopyText = (text: string) => {
-            store.dispatch(Actions.HANDLE_COPY_TEXT, text)
-        }
+            store.dispatch(Actions.HANDLE_COPY_TEXT, text);
+        };
 
         const getScript = (): string => {
-            const element = document.getElementById('script')
-            return element?.textContent || ''
-        }
+            const element = document.getElementById('script');
+            return element?.textContent || '';
+        };
 
         return {
             apiKey,
@@ -95,9 +95,9 @@ export default defineComponent({
             generateNewKey,
             handleCopyText,
             getScript,
-        }
+        };
     },
-})
+});
 </script>
 
 <style lang="scss" scoped>

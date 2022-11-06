@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
-const Home = () => import('../views/Home/PageHome.vue')
-const Feedbacks = () => import('../views/Feedbacks/PageFeedbacks.vue')
-const Credentials = () => import('../views/Credentials/PageCredentials.vue')
+const Home = () => import('../views/Home/PageHome.vue');
+const Feedbacks = () => import('../views/Feedbacks/PageFeedbacks.vue');
+const Credentials = () => import('../views/Credentials/PageCredentials.vue');
 
 export const routes: Array<RouteRecordRaw> = [
     {
@@ -30,11 +30,11 @@ export const routes: Array<RouteRecordRaw> = [
         path: '/:pathMatch(.*)*',
         redirect: { name: 'Home' },
     },
-]
+];
 
 const router = createRouter({
     history: createWebHistory('/'),
     routes,
-})
+});
 
-export default router
+export default router;

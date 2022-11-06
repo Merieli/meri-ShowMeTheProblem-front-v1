@@ -1,18 +1,18 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance } from 'axios';
 
 export interface UrlEnvs {
-    [key: string]: string
+    [key: string]: string;
 }
 
 const API_ENVS: UrlEnvs = {
     production: 'https://backend-show-me-the-problem-etg6ezsb2-merieli.vercel.app/',
     development: 'http://localhost:3000',
     local: 'http://localhost:3000',
-}
+};
 
 const httpClient: AxiosInstance = axios.create({
     baseURL: API_ENVS[process.env.NODE_ENV] ?? API_ENVS.local,
-})
+});
 
 httpClient.interceptors.request.use(
     (config) => {
@@ -21,17 +21,17 @@ httpClient.interceptors.request.use(
         //     config.headers?.Authorization = `Bearer ${token}`
         // }
 
-        return config
+        return config;
     },
     (error) => Promise.reject(error)
-)
+);
 
 httpClient.interceptors.response.use(
     (response) => response,
     (error) => {
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
-)
+);
 
 /*
 Error.status === 404
@@ -44,4 +44,4 @@ Error.status === 404
 Ocorreu um erro ao fazer o login
 */
 
-export default httpClient
+export default httpClient;

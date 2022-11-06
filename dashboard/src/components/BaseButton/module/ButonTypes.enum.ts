@@ -3,4 +3,4 @@ export enum ButtonTypes {
     SUBMIT = 'submit',
 }
 
-export type TButton = ButtonTypes.BUTTON | ButtonTypes.SUBMIT
+export type TButton = ButtonTypes.BUTTON | ButtonTypes.SUBMIT;

@@ -1,48 +1,31 @@
 const path = require('path')
-const vueLoader = require('vue-loader')
-
-const docSiteUrl = process.env.DEPLOY_PRIME_URL || 'https://vue-styleguidist.github.io'
 
 /** @type import("vue-styleguidist").Config */
 module.exports = {
-    title: 'Default Style Guide with Vuex',
+    title: 'Show Me The Problem',
     components: 'src/components/**/*.vue',
-    simpleEditor: true,
+    editorConfig: { theme: 'monokai' },
+    ignore: ['**/views/*.vue'],
+    simpleEditor: false,
     sections: [
         {
-            name: 'First Section',
-            components: 'src/components/**/[a-zA-Z]*.vue',
+            name: 'Componentes Geral:',
+            components: 'src/components/**/!(Feedback|Base)*.vue',
+        },
+        {
+            name: 'Componentes Base:',
+            components: 'src/components/**/+(Base|BaseButton)*.vue',
+        },
+        {
+            name: 'Componentes Feedbacks:',
+            components: 'src/components/**/Feedback*.vue',
         },
     ],
-    webpackConfig: {
-        module: {
-            rules: [
-                {
-                    test: /\.vue$/,
-                    loader: 'vue-loader',
-                },
-                {
-                    test: /\.ts?$/,
-                    exclude: /(node_modules|packages)/,
-                    loader: 'babel-loader',
-                },
-                {
-                    test: /\.css$/,
-                    use: ['style-loader', 'css-loader', 'sass-loader'],
-                },
-                {
-                    test: /\.scss$/,
-                    use: ['style-loader', 'css-loader', 'sass-loader'],
-                },
-            ],
-        },
-        plugins: [new vueLoader.VueLoaderPlugin()],
-    },
     renderRootJsx: path.join(__dirname, 'config/styleguide.root.js'),
     usageMode: 'expand',
-    styleguideDir: 'dist',
+    styleguideDir: 'dist-docs',
     ribbon: {
-        text: 'Back to examples',
-        url: `${docSiteUrl}/Examples.html`,
+        text: 'Fork me on GitHub',
+        url: `http://example.com`,
     },
 }

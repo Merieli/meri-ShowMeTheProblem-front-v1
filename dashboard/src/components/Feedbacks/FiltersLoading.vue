@@ -14,6 +14,9 @@
 import ContentLoader from '../ContentLoader.vue'
 import { defineComponent } from 'vue'
 
+/**
+ * Componente com a animação de carregamento dos filtros de Feedacks.
+ */
 export default defineComponent({
     name: 'FiltersLoading',
     components: {
@@ -23,3 +26,13 @@ export default defineComponent({
 </script>
 
 <style></style>
+
+<docs lang="md">
+### 📲 Exemplos de uso
+
+Carregamento de filtros:
+
+```vue
+<FiltersLoading />
+```
+</docs>

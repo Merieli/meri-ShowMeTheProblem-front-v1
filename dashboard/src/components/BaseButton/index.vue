@@ -37,7 +37,10 @@ export default defineComponent({
             type: String as PropType<TButton>,
             default: ButtonTypes.BUTTON,
         },
-
+        /**
+         * Define se o botão está desabilitado ou não.
+         * @values true, false
+         */
         isDisabled: {
             type: Boolean,
             default: false,

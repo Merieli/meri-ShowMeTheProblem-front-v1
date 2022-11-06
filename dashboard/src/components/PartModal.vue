@@ -95,7 +95,12 @@
                                         'opacity-50': isLoading,
                                     }"
                                 >
-                                    <UseIcon v-if="isLoading" name="IconLoading" class="animate-spin" />
+                                    <UseIcon
+                                        v-if="isLoading"
+                                        name="IconLoading"
+                                        class="animate-spin"
+                                        data-register="icon-loading"
+                                    />
                                     <span v-else>Criar conta</span>
                                 </BaseButton>
                             </form>
@@ -110,6 +115,7 @@
                                     <label for="email" class="font-bold text-lg">E-mail</label>
                                     <input
                                         id="modal-email-field"
+                                        data-form-email
                                         class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
                                         :class="{
                                             'border-brand-danger': !!state.email.errorMessage,
@@ -131,6 +137,7 @@
                                     <label for="password" class="font-bold text-lg mt-6">Senha</label>
                                     <input
                                         id="modal-password-field"
+                                        data-form-password
                                         class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded"
                                         :class="{
                                             'border-brand-danger': !!state.password.errorMessage,
@@ -152,6 +159,7 @@
                                 </fieldset>
                                 <BaseButton
                                     id="submit-button-login"
+                                    data-button="loginAccount"
                                     color="dark"
                                     :type-button="ButtonTypes.SUBMIT"
                                     :isDisabled="isLoading"
@@ -301,7 +309,7 @@ export default defineComponent({
         return {
             state,
             isActive,
-            isLoading: computed(() => store.state.isLoading),
+            isLoading: computed(() => store.getters.isLoading),
             createUser,
             loginUser,
             showModal,
@@ -348,7 +356,7 @@ Modal que pode ser utilizado para login ou criação de conta de usuário.
 
 Modal de Login:
 
-```vue
+```js
 <PartModal typeModal="login" @open="true" />
 ```
 </docs>

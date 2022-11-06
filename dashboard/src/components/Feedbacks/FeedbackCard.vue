@@ -41,19 +41,30 @@
 </template>
 
 <script lang="ts">
+import { IFeedback } from '../../interfaces'
 import { getDiffTimeBetweenCurrentDate } from '../../utils/generateDate'
 import { wait } from '../../utils/timeout'
 import UseIcon from '../UseIcon/UseIcon.vue'
-import { computed, defineComponent, reactive } from 'vue'
+import { computed, defineComponent, PropType, reactive } from 'vue'
 
+/**
+ * Componente de cartão do feedback exibido na página de Feedbacks.
+ * @author Meriéli Manzano
+ */
 export default defineComponent({
     name: 'FeedbackCard',
     components: { UseIcon },
     props: {
+        /**
+         * Define o feedback a ser exibido no Card.
+         */
         feedback: {
-            type: Object,
+            type: {} as PropType<IFeedback>,
             required: true,
         },
+        /**
+         * Define se o Card está aberto.
+         */
         isOpened: {
             type: Boolean,
             default: false,
@@ -81,6 +92,9 @@ export default defineComponent({
             return 'graydark'
         })
 
+        /**
+         * Ativado quando o card é clicado
+         */
         const handleToggle = async () => {
             state.isClosing = true
             await wait(250)
@@ -137,3 +151,24 @@ export default defineComponent({
     }
 }
 </style>
+
+<docs lang="md">
+### ⚙ Exemplos de uso
+
+Cartão de Feedback **aberto**:
+
+```jsx
+const feedbackExample = {
+    "text": "Podia ter um botão de solicitar demo 1",
+    "fingerprint": "490135491",
+    "id": "eab759f8-f238-4ff9-ae91-ee1558982329",
+    "apiKey": "fcd5015c-10d3-4e9c-b395-ec7ed8850165",
+    "type": "IDEA",
+    "device": "Chrome 85.0, macOS 10.14",
+    "page": "https://feedbacker.com/pricing",
+    "createdAt": 1608681600000
+}
+
+<FeedbackCard is-opened="true" feedback="feedbackExample" >Push Me</FeedbackCard>
+```
+</docs>

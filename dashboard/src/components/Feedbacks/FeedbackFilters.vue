@@ -45,7 +45,13 @@ export default defineComponent({
 
         const handleSelect = ({ type }: IConfiguredFilters) => {
             if (isLoading.value) return
+
+            /** Ativado quando um determinado filtro é clicado/selectionado
+             * @event select
+             * @type {Event}
+             */
             emit('select', type)
+
             store.dispatch(Actions.CHANGE_ACTIVE_FEEDBACK, type)
         }
 

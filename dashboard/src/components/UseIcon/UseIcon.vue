@@ -32,7 +32,7 @@ export default defineComponent({
 </script>
 
 <docs lang="md">
-### 📲 Exemplos de uso
+#### 📲 **_Exemplos de uso_**
 
 Icone de cópia:
 

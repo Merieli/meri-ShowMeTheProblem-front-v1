@@ -81,7 +81,6 @@ export default defineComponent({
 
         /**
          * Captura os dados do usuário logado
-         *
          */
         onMounted(() => {
             if (window.localStorage.getItem('token') && logged.value == false) {
@@ -121,7 +120,7 @@ export default defineComponent({
 }
 </style>
 <docs lang="md">
-## Examples
+#### 📲 **_Exemplos de uso_**
 
 ```jsx
 <GeralHeader />

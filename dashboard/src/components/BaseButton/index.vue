@@ -12,9 +12,6 @@
 </template>
 
 <script lang="ts">
-/** @author Merieli Manzano
- * @version 1.0.0
- */
 import { ButtonTypes, TColorsButton, TButton } from './module';
 import { defineComponent, computed, ComputedRef, PropType } from 'vue';
 
@@ -89,7 +86,7 @@ export default defineComponent({
 <docs lang="md">
 Botão base que pode ser utilizado em qualquer parte do projeto.
 
-## Exemplos
+#### 📲 **_Exemplos de uso_**
 
 **Botão Dark:**
 
@@ -102,6 +99,6 @@ Botão base que pode ser utilizado em qualquer parte do projeto.
 **Botão Light:**
 
 ```jsx
-<BaseButton color="light"> Teste </BaseButton>
+<BaseButton color="light">Entrar</BaseButton>
 ```
 </docs>

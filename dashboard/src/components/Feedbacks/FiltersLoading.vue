@@ -28,7 +28,7 @@ export default defineComponent({
 <style></style>
 
 <docs lang="md">
-### 📲 Exemplos de uso
+#### 📲 **_Exemplos de uso_**
 
 Carregamento de filtros:
 

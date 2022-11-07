@@ -219,7 +219,7 @@ export default defineComponent({
             default: false,
         },
     },
-    setup(props, { emit }) {
+    setup(_, { emit }) {
         const store = useStore();
         const isActive = ref(true);
 
@@ -251,8 +251,6 @@ export default defineComponent({
         });
 
         /** Acionado quando o modal tiver o valor true.
-         * @event open
-         * @type {Event}
          */
         const showModal = (active: boolean) => {
             isActive.value = active;
@@ -260,8 +258,6 @@ export default defineComponent({
         };
 
         /** Acionado para fechar o modal.
-         * @event open
-         * @type {Event}
          */
         const closeModal = () => {
             emit('close');
@@ -352,7 +348,7 @@ export default defineComponent({
 <docs lang="md">
 Modal que pode ser utilizado para login ou criação de conta de usuário.
 
-## Exemplo
+#### 📲 **_Exemplos de uso_**
 
 Modal de Login:
 

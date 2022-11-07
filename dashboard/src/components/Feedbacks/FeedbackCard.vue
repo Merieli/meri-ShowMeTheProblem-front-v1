@@ -153,7 +153,7 @@ export default defineComponent({
 </style>
 
 <docs lang="md">
-### ⚙ Exemplos de uso
+#### 📲 **_Exemplos de uso_**
 
 Cartão de Feedback **aberto**:
 
@@ -169,6 +169,8 @@ const feedbackExample = {
     "createdAt": 1608681600000
 }
 
-<FeedbackCard is-opened="true" feedback="feedbackExample" >Push Me</FeedbackCard>
+''
+
+<FeedbackCard is-opened="true" feedback="text/Teste,fingerprint/490135491,id/eab759f8-f238,apiKey/fcd5015c-10d3,type/IDEA,device/Chrome,page/example.com,createdAt/1608681600000" >Push Me</FeedbackCard>
 ```
 </docs>

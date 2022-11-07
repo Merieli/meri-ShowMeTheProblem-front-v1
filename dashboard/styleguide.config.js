@@ -37,4 +37,5 @@ module.exports = {
         text: 'Fork me on GitHub',
         url: `http://example.com`,
     },
+    enhancePreviewApp: path.resolve(__dirname, 'config/styleguide.preview.js'),
 };

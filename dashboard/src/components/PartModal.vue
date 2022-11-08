@@ -1,5 +1,5 @@
 <template>
-    <teleport to="body">
+    <teleport to="#modal">
         <div
             class="overlay fixed top-0 left-0 z-1 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
             data-modal="main"
@@ -352,7 +352,25 @@ Modal que pode ser utilizado para login ou criação de conta de usuário.
 
 Modal de Login:
 
-```js
-<PartModal typeModal="login" @open="true" />
+```vue
+<div id="modal"></div>
+<button type="button" @click="toogleModal">Open Modal to See</button>
+
+<PartModal type-modal="create" :open="modalOpen" :close="!modalOpen" />
+
+<script>
+export default {
+    setup() {
+        const modalOpen = ref(false)
+        const toogleModal = () => {
+            modalOpen.value = !modalOpen.value
+        };
+
+        return {
+            modalOpen,
+        },
+    },
+}
+</script>
 ```
 </docs>

@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <div id="modal"></div>
         <BaseNotification />
         <router-view />
     </div>

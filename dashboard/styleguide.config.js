@@ -31,7 +31,6 @@ module.exports = {
         },
     ],
     renderRootJsx: path.join(__dirname, 'config/styleguide.root.js'),
-    enhancePreviewApp: path.resolve(__dirname, 'config/preview.js'),
     usageMode: 'expand',
     styleguideDir: 'dist-docs',
     ribbon: {

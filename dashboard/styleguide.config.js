@@ -38,4 +38,5 @@ module.exports = {
         text: 'Access the Project',
         url: `https://merieli-showmetheproblem-dashboard.netlify.app/`,
     },
+    enhancePreviewApp: path.resolve(__dirname, 'config/styleguide.preview.js'),
 };

@@ -5,6 +5,8 @@ module.exports = {
     title: 'Show Me The Problem',
     components: 'src/components/**/*.vue',
     editorConfig: { theme: 'monokai' },
+    theme: './styleguide/theme.js',
+    styles: './styleguide/styles.js',
     ignore: ['**/views/*.vue'],
     simpleEditor: false,
     sections: [
@@ -30,12 +32,12 @@ module.exports = {
             ],
         },
     ],
-    renderRootJsx: path.join(__dirname, 'config/styleguide.root.js'),
+    renderRootJsx: path.join(__dirname, 'styleguide/styleguide.root.js'),
     usageMode: 'expand',
     styleguideDir: 'dist-docs',
     ribbon: {
         text: 'Access the Project',
         url: `https://merieli-showmetheproblem-dashboard.netlify.app/`,
     },
-    enhancePreviewApp: path.resolve(__dirname, 'config/styleguide.preview.js'),
+    enhancePreviewApp: path.resolve(__dirname, 'styleguide/styleguide.preview.js'),
 };

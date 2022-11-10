@@ -7,6 +7,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+/**
+ * Cabeçalho para todas as páginas da aplicação.
+ * @displayName IconCopy [Componente do UseIcon]
+ */
 export default defineComponent({
     name: 'IconCopy',
     props: {

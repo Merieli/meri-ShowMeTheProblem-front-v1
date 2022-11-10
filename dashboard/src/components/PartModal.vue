@@ -1,5 +1,5 @@
 <template>
-    <teleport to="#modal">
+    <teleport to="body">
         <div
             class="overlay fixed top-0 left-0 z-1 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
             data-modal="main"
@@ -194,6 +194,9 @@ import { useField } from 'vee-validate';
 import { defineComponent, computed, reactive, ref } from 'vue';
 import * as yup from 'yup';
 
+/**
+ * Modal que pode ser utilizado para login ou criação de conta de usuário.
+ */
 export default defineComponent({
     name: 'PartModal',
     emits: ['close', 'open'],
@@ -254,7 +257,6 @@ export default defineComponent({
          */
         const showModal = (active: boolean) => {
             isActive.value = active;
-            emit('open', active);
         };
 
         /** Acionado para fechar o modal.
@@ -346,31 +348,15 @@ export default defineComponent({
 </style>
 
 <docs lang="md">
-Modal que pode ser utilizado para login ou criação de conta de usuário.
-
 #### 📲 **_Exemplos de uso_**
 
 Modal de Login:
 
-```vue
-<div id="modal"></div>
-<button type="button" @click="toogleModal">Open Modal to See</button>
+```vue { "className": "checks" }
+let isOpen = false;
+<button type="button" @click="isOpen = true">Open Modal to See</button>
+<!-- Uso do modal: -->
 
-<PartModal type-modal="create" :open="modalOpen" :close="!modalOpen" />
-
-<script>
-export default {
-    setup() {
-        const modalOpen = ref(false)
-        const toogleModal = () => {
-            modalOpen.value = !modalOpen.value
-        };
-
-        return {
-            modalOpen,
-        },
-    },
-}
-</script>
+<PartModal type-modal="create" :open="isOpen" @close="isOpen = false" />
 ```
 </docs>

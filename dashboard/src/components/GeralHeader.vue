@@ -28,10 +28,6 @@
 </template>
 
 <script lang="ts">
-/**
- * Cabeçalho para todas as páginas da aplicação.
- * @displayName Geral Header
- */
 import router from '../router/index';
 import { useStore } from '../store';
 import { Actions } from '../store/type-actions';
@@ -39,6 +35,10 @@ import BaseButton from './BaseButton/index.vue';
 import PartModal from './PartModal.vue';
 import { computed, defineComponent, onMounted, ref } from 'vue';
 
+/**
+ * Cabeçalho para todas as páginas da aplicação.
+ * @displayName Geral Header
+ */
 export default defineComponent({
     name: 'GeralHeader',
     components: {

@@ -98,7 +98,7 @@ Botão base que pode ser utilizado em qualquer parte do projeto.
 
 **Botão Light:**
 
-```jsx
+```js { "className": "checks" }
 <BaseButton color="light">Entrar</BaseButton>
 ```
 </docs>

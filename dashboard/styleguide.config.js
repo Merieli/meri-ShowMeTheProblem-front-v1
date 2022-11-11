@@ -4,10 +4,20 @@ const path = require('path');
 module.exports = {
     title: 'Show Me The Problem',
     components: 'src/components/**/*.vue',
-    editorConfig: { theme: 'monokai' },
-    theme: './styleguide/theme.js',
+    // Para usar tema com CSS:
+    jssThemedEditor: false,
+    // Arquivo css:
+    require: ['./styleguide/vsc-prism.css'],
+    // editorConfig: { theme: 'monokai' }, //tema anterior
+    editorConfig: { theme: './styleguide/theme.js' },
+    // theme: './styleguide/theme.js',
     styles: './styleguide/styles.js',
-    ignore: ['**/views/*.vue'],
+    // styleguideComponents: {
+    //     LogoRenderer: path.join(__dirname, 'styleguide/components/Logo'),
+    //     // StyleGuideRenderer: path.join(__dirname, 'styleguide/components/StyleGuide'),
+    //     // SectionsRenderer: path.join(__dirname, 'styleguide/components/SectionsRenderer'),
+    // },
+    ignore: ['**/views/*.vue'], // Não documenta os arquivos da pasta
     simpleEditor: false,
     sections: [
         {

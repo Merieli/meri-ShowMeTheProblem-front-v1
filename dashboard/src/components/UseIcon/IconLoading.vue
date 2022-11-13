@@ -10,6 +10,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+/**
+ * Icone de Loading
+ * @displayName IconLoading [Componente do UseIcon]
+ */
 export default defineComponent({
     name: 'IconLoading',
     props: {

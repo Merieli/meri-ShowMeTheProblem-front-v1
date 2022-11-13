@@ -1,7 +1,11 @@
 <template>
     <div class="bg-brand-main w-full justify-center flex">
         <header class="geral-header justify-between items-center flex">
-            <h1 class="geral-header__logo font-black"><a href="#" @click="changePage('/')">ShowMeTheProblem</a></h1>
+            <h1 class="geral-header__logo font-black">
+                <a href="#" @click="changePage('/')">
+                    <img src="../assets/icons/icon.png" alt="logo do site show me the problem" />
+                </a>
+            </h1>
             <nav class="geral-header__navigation" v-if="!logged">
                 <button id="button-create" class="geral-header__link font-bold" data-create @click="toggleModalCreate">
                     Crie uma conta

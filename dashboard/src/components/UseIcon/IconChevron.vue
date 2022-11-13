@@ -8,8 +8,8 @@
 import { defineComponent } from 'vue';
 
 /**
- * Cabeçalho para todas as páginas da aplicação.
- * @displayName IconCopy [Componente do UseIcon]
+ * Icone de seta.
+ * @displayName IconChevron [Componente do UseIcon]
  */
 export default defineComponent({
     name: 'IconCopy',

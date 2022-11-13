@@ -10,6 +10,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+/**
+ * Icone de Cópia.
+ * @displayName IconCopy [Componente do UseIcon]
+ */
 export default defineComponent({
     name: 'IconCopy',
     props: {

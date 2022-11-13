@@ -4,21 +4,36 @@ const path = require('path');
 module.exports = {
     title: 'Show Me The Problem',
     components: 'src/components/**/*.vue',
-    // Para usar tema com CSS:
-    jssThemedEditor: false,
-    // Arquivo css:
-    require: ['./styleguide/vsc-prism.css'],
-    // editorConfig: { theme: 'monokai' }, //tema anterior
-    editorConfig: { theme: './styleguide/theme.js' },
-    // theme: './styleguide/theme.js',
-    styles: './styleguide/styles.js',
-    // styleguideComponents: {
-    //     LogoRenderer: path.join(__dirname, 'styleguide/components/Logo'),
-    //     // StyleGuideRenderer: path.join(__dirname, 'styleguide/components/StyleGuide'),
-    //     // SectionsRenderer: path.join(__dirname, 'styleguide/components/SectionsRenderer'),
-    // },
-    ignore: ['**/views/*.vue'], // Não documenta os arquivos da pasta
+    editorConfig: { theme: 'dracula' }, //tema para codigo
+    theme: {
+        color: {
+            link: '#414045',
+            linkHover: '#8280F2',
+            baseBackground: '#FBFAFF',
+            sidebarBackground: '#F8F7FC',
+            ribbonBackground: '#997FDB',
+            ribbonText: '#fff',
+        },
+        fontFamily: {
+            base: '"Droid Sans", "Helvetica Neue", sans-serif',
+        },
+        fontSize: {
+            base: 15,
+            text: 16,
+            small: 13,
+            h1: 40,
+            h2: 32,
+            h3: 24,
+            h4: 18,
+            h5: 16,
+            h6: 16,
+        },
+    },
     simpleEditor: false,
+    template: {
+        favicon: 'https://s10.aconvert.com/convert/p3r68-cdx67/a9nty-2el3t-001.ico',
+    },
+    ignore: ['**/views/*.vue'], // Não documenta os arquivos da pasta
     sections: [
         {
             name: '⬜ Introdução',
@@ -43,7 +58,9 @@ module.exports = {
         },
     ],
     renderRootJsx: path.join(__dirname, 'styleguide/styleguide.root.js'),
-    usageMode: 'expand',
+    copyCodeButton: true,
+    usageMode: 'expand', //props e metodos expandido
+    exampleMode: 'expand', //Exemplo expandido
     styleguideDir: 'dist-docs',
     ribbon: {
         text: 'Access the Project',

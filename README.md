@@ -1,6 +1,6 @@
 <h1 align="center">
     <br>
-    <img src="[url da Logo do projeto]" alt="" width="120">
+    <img src="./assets/icons/icon.png" alt="" width="120">
     <br>
     <br>
     Show me the Problem
@@ -73,7 +73,7 @@ https://thirsty-clarke-9a6686.netlify.app/
 - [X] Usar Framework CSS Tailwind
 - [X] SASS
 - [X] Prettier
-- [ ] Docker para ambiente Dev
+- [ ] Configurar Docker
 - [X] Documentar com JS Docs e Vue Styleguidist
 
 
@@ -108,7 +108,7 @@ All kinds of contributions are very welcome and appreciated!
 
 -------------------------------------
 ```diff
-@@      🤍 Made by Merieli Manzano |\/|>    @@
+Made by 🤍 Merieli Manzano
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

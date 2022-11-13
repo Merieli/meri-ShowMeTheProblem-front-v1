@@ -74,11 +74,22 @@ export default defineComponent({
     &_dark {
         background-color: theme('colors.brand.main');
         color: theme('colors.brand.white');
+        transition: 0.3s ease;
+        opacity: 1;
+
+        &:hover {
+            opacity: 0.7;
+        }
     }
 
     &_light {
         background-color: theme('colors.brand.white');
         color: theme('colors.brand.main');
+        transition: 0.3s ease;
+
+        &:hover {
+            opacity: 0.7;
+        }
     }
 }
 </style>

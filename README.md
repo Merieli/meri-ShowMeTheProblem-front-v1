@@ -93,7 +93,7 @@ cd dashboard
 npm run serve
 
 # Iniciar documentação 
-npm run stylguide
+npm run doc
 ```
 
 ## :octocat: Contributing

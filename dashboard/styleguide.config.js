@@ -33,7 +33,7 @@ module.exports = {
     template: {
         favicon: 'https://s10.aconvert.com/convert/p3r68-cdx67/a9nty-2el3t-001.ico',
     },
-    ignore: ['**/views/*.vue'], // Não documenta os arquivos da pasta
+    //ignore: ['**/views/*.vue'], // Não documenta os arquivos da pasta
     sections: [
         {
             name: '⬜ Introdução',

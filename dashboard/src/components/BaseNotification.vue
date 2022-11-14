@@ -4,7 +4,7 @@
             class="rounded-md p-4 m-4"
             v-for="notication in notifications"
             :key="notication.id"
-            :class="classAlert[notication.type]"
+            :class="classAlert[notication.type as TypeOfNotification]"
         >
             <h6 class="notification__header font-bold" data-test="title">{{ notication.title }}</h6>
             <p class="notification__body font-normal">{{ notication.text }}</p>

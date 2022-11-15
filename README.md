@@ -61,10 +61,12 @@ https://thirsty-clarke-9a6686.netlify.app/
     - [X] Usar composition API
     - [X] Usar Vuex
     - [X] Usar Vue-router
+    - [ ] Handling Error Axios com interceptors
 - [X] TypeScript
 - [X] Testes com Jest
     - [X] Testes unitários
     - [X] Testes de integração
+      - [ ] Testes para a Store
     - [X] Testes de snapshot
 - [X] Testes com Cypress
 - [ ] Utilizar conceitos de SOLID e clean Codde

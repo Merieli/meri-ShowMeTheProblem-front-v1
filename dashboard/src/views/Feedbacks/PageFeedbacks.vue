@@ -19,21 +19,25 @@
                 </suspense>
             </aside>
             <section class="feedbacks__cards mt-12">
-                <div v-if="hasErrors" class="text-lg text-center text-gray-800 font-regular" data-feedbacks="error">
+                <div
+                    v-if="hasErrors || hasErrorComponent"
+                    class="text-lg text-center text-gray-800 font-regular"
+                    data-feedbacks="error"
+                >
                     ❌ Aconteceu um erro ao carregar os Feedbacks 😥, tente novamente mais tarde!
                 </div>
                 <div
-                    v-else-if="!isLoading && !state.isLoadingFeedbacks && !feedbacks.length && !hasErrors"
+                    v-else-if="!isLoading && !state.isLoadingFeedbacks && !feedbacks.length"
                     class="text-lg text-center text-gray-800 font-regular"
                     data-feedbacks="empty"
                 >
                     Ainda nenhum feedback recebido 🤓
                 </div>
                 <FeedbackCardLoading
-                    v-else-if="(isLoading || state.isLoadingFeedbacks) && !hasErrors && !state.isLoadingMoreFeedbacks"
+                    v-else-if="(isLoading || state.isLoadingFeedbacks) && !state.isLoadingMoreFeedbacks"
                 />
                 <FeedbackCard
-                    v-else-if="!hasErrors"
+                    v-else
                     v-for="(feedback, index) in feedbacks"
                     :key="feedback.id"
                     :is-opened="index === 0"
@@ -162,6 +166,7 @@ export default defineComponent({
             state,
             isLoading: computed(() => store.getters.isLoading),
             hasErrors,
+            hasErrorComponent,
             fetchFeedbacks,
             paginationTotal,
         };

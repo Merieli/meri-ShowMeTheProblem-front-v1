@@ -1,7 +1,8 @@
 import { Mutations } from '@/store/Mutations';
+import { MutationTree } from 'vuex';
 import { StateStore } from './StateStore';
 
-export interface MutationsStore {
+export interface MutationsStore extends MutationTree<StateStore> {
     [Mutations.SET_CURRENT_COMPONENT](state: StateStore, componentName: string): void;
     [Mutations.SET_MESSAGE](state: StateStore, message: string): void;
     [Mutations.SET_FEEDBACK_TYPE](state: StateStore, type: string): void;

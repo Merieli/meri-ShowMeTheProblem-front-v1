@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
+import FeedbacksService from './feedback';
 
-export interface UrlEnvs {
+interface UrlEnvs {
     [key: string]: string;
 }
 
@@ -16,20 +17,9 @@ const httpClient: AxiosInstance = axios.create({
 
 httpClient.interceptors.response.use(
     (response) => response,
-    (error) => {
-        return Promise.reject(error);
-    }
+    (error) => error
 );
 
-/*
-Error.status === 404
-E-mail não encontrado
-
-Error.status === 401
-E-mail/senha inválidos
-
-Error.status === 404
-Ocorreu um erro ao fazer o login
-*/
-
-export default httpClient;
+export default {
+    feedbacks: FeedbacksService(httpClient),
+};

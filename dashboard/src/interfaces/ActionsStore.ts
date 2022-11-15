@@ -2,15 +2,15 @@ import { FeedbackTypeAndPagination, IUser, StateStoreShape, TFeedback } from '.'
 import { Actions } from '@/store/type-actions';
 import { ActionContext, ActionTree } from 'vuex';
 
-type Context = ActionContext<StateStoreShape, any>;
+type Context = ActionContext<StateStoreShape, StateStoreShape>;
 
-export interface ActionsStore extends ActionTree<StateStoreShape, any> {
+export interface ActionsStore extends ActionTree<StateStoreShape, StateStoreShape> {
     /**
      * @name REGISTER_USER
      * @descripton efetua o registro do usuário e o adiciona a store
      * @param {IUser} user usuário com name, email e password
      */
-    [Actions.REGISTER_USER]: (context: Context, user: IUser) => Promise<void>;
+    [Actions.REGISTER_USER]: ({ commit }: Context, user: IUser) => Promise<void>;
 
     /**
      * @name LOGIN_USER

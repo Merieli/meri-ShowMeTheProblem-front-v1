@@ -1,4 +1,6 @@
-export function getDiffTimeBetweenCurrentDate(dateString = '', now: Date = new Date()) {
+export function getDiffTimeBetweenCurrentDate(dateToConvert: number, now: Date = new Date()) {
+    const dateString = dateToConvert.toString();
+
     const dayInMilliseconds = 86400000;
     if ([null, undefined, false, true, ''].includes(dateString)) {
         return dateString;

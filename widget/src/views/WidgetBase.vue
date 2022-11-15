@@ -1,20 +1,22 @@
 <template>
     <teleport to="body">
-        <component @open-box="handleOpenBox" @close-box="handleCloseBox" :is="currentComponent" />
+        <component @open-box="handleOpenBox" @close-box="handleCloseBox" :is="state.currentComponent" />
     </teleport>
 </template>
 <script lang="ts">
-import { defineComponent, computed, ComputedRef } from 'vue';
-import { useStore } from '../store';
+import { defineComponent, onMounted, reactive } from 'vue';
 import StandbyFeedback from './StandbyFeedback.vue';
 import BoxFeedback from './BoxFeedback.vue';
-import { Mutations } from '@/store/Mutations';
-import { StateStore } from '@/interfaces';
+import useIframeControl from '@/hooks/Iframe';
 
 interface SetupReturn {
-    currentComponent: ComputedRef<StateStore>;
+    state: State;
     handleOpenBox(): void;
     handleCloseBox(): void;
+}
+
+interface State {
+    currentComponent: string;
 }
 
 export default defineComponent({
@@ -23,21 +25,29 @@ export default defineComponent({
         BoxFeedback,
     },
     setup(): SetupReturn {
-        const store = useStore();
+        const iframe = useIframeControl();
+        const state = reactive<State>({
+            currentComponent: 'StandbyFeedback',
+        });
+
+        onMounted(() => {
+            iframe.updateCoreValuesOnStore();
+        });
 
         const handleOpenBox = () => {
-            store.commit(Mutations.SET_CURRENT_COMPONENT, 'BoxFeedback');
+            iframe.notifyOpen();
+            state.currentComponent = 'BoxFeedback';
         };
         const handleCloseBox = () => {
-            store.commit(Mutations.SET_CURRENT_COMPONENT, 'StandbyFeedback');
+            iframe.notifyClose();
+            state.currentComponent = 'StandbyFeedback';
         };
 
         return {
-            currentComponent: computed(() => store.getters.currentComponent),
+            state,
             handleOpenBox,
             handleCloseBox,
         };
     },
 });
 </script>
-<style lang="scss" scoped></style>

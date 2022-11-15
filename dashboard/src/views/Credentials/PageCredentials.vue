@@ -40,7 +40,7 @@
                 class="credentials__script bg-brand-gray py-3 px-5 mt-2 flex justify-between items-center rounded max-w-2xl"
             >
                 <p id="script" class="w-full overflow-x-scroll whitespace-pre">
-                    &lt;script src="{{ linkScript }}"&gt;&lt;/script&gt;"
+                    &lt;script defer async onload="init('{{ apiKey }}')" src="{{ linkScript }}" &gt;&lt;/script&gt;"
                 </p>
                 <button
                     type="button"
@@ -73,7 +73,7 @@ export default defineComponent({
     setup() {
         const store = useStore();
         const apiKey = computed(() => store.getters.getApiKey);
-        const linkScript = ref(`https://merieli-feedbacker-widget.netifly.app?api_key=${apiKey.value}`);
+        const linkScript = ref(`https://merieli-feedbacker-widget.netifly.app/init.js`);
 
         const generateNewKey = () => {
             store.dispatch(Actions.GENERATE_NEW_KEY);

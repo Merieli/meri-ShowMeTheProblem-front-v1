@@ -46,7 +46,7 @@ export default defineComponent({
     width: 300px;
     padding: 8px;
     z-index: 10;
-    top: 0;
+    bottom: 0;
 
     &__success {
         background-color: rgb(247 254 231);

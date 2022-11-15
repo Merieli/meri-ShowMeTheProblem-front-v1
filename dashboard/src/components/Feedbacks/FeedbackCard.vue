@@ -8,7 +8,7 @@
                 {{ label }}
             </div>
             <div class="font-regular text-sm text-brand-graydark">
-                {{ getDiffTimeBetweenCurrentDate(feedback.createdAt.toString()) }}
+                {{ getDiffTimeBetweenCurrentDate(feedback.createdAt) }}
             </div>
         </header>
         <p class="font-medium text-lg mb-4 text-gray-800">

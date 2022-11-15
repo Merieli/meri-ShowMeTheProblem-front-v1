@@ -1,7 +1,11 @@
+import httpClient from '@/http';
 import { GettersStore, MutationsStore, StateStore } from '@/interfaces/';
+import { ActionsStore } from '@/interfaces/ActionsStore';
 import { InjectionKey } from 'vue';
 import { createStore, Store, useStore as baseUseStore } from 'vuex';
+import { Actions } from './Actions';
 import { Mutations } from './Mutations';
+import useNavigation from '@/composables/Navigation';
 
 export const state: StateStore = {
     currentComponent: 'SelectFeedbackType',
@@ -45,13 +49,37 @@ export const getters: GettersStore = {
     currentComponent(state): string {
         return state.currentComponent;
     },
+    feedbackType(state): string {
+        return state.feedbackType;
+    },
+};
+
+export const actions: ActionsStore = {
+    async [Actions.SAVE_FEEDBACK]({ state, commit }, feedback): Promise<void> {
+        const { setError, setSuccess } = useNavigation();
+        try {
+            commit(Mutations.SET_MESSAGE, feedback);
+            await httpClient.feedbacks.create({
+                type: state.feedbackType,
+                text: state.message,
+                page: state.currentPage,
+                apiKey: state.apiKey,
+                device: window.navigator.userAgent,
+                fingerprint: state.fingerprint,
+            });
+            setSuccess();
+        } catch (error) {
+            setError();
+            throw new Error('Não foi possível salvar o feedback!');
+        }
+    },
 };
 
 export const store = createStore({
     state,
-    getters: {},
-    mutations: {},
-    actions: {},
+    getters,
+    mutations,
+    actions,
     modules: {},
 });
 

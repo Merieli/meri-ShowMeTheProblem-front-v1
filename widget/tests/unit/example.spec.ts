@@ -1,12 +1,13 @@
-import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/HelloWorld.vue";
+import { mount, VueWrapper } from '@vue/test-utils';
+import WidgetBase from '@/views/WidgetBase.vue';
 
-describe("HelloWorld.vue", () => {
-  it("renders props.msg when passed", () => {
-    const msg = "new message";
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg },
+describe('WidgetBase.vue', () => {
+    let wrapper: VueWrapper;
+    beforeEach(() => {
+        wrapper = mount(WidgetBase);
     });
-    expect(wrapper.text()).toMatch(msg);
-  });
+
+    test('Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado', () => {
+        expect(wrapper.html()).toMatchSnapshot();
+    });
 });

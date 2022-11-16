@@ -1,17 +1,8 @@
 function init(apiKey) {
     async function handleLoadWidget() {
         const page = `${window.location.origin}${window.location.pathname}`;
-        // let visitorId;
         const fp = await window.FingerprintJS.load();
         const fingerprint = await fp.get();
-
-        // const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3').then((FingerprintJS) => FingerprintJS.load());
-
-        // fpPromise
-        //     .then((fp) => fp.get())
-        //     .then((result) => {
-        //         visitorId = result.visitorId;
-        //     });
 
         const WIDGET_URL = `https://merieli-showmetheproblem-widget.netlify.app/?api_key=${apiKey}&page=${page}&fingerprint=${fingerprint.visitorId}`;
         console.log(WIDGET_URL);
@@ -53,7 +44,6 @@ function init(apiKey) {
     script.src = '//cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js';
     script.async = 'async';
     script.addEventListener('load', handleLoadWidget);
-    console.log('Script criado:', script);
 
     document.body.appendChild(script);
 }

@@ -1,9 +1,8 @@
 import { useStore } from '@/store';
 import { Mutations } from '@/store/Mutations';
+import { computed } from 'vue';
 
 export interface Navigation {
-    setError(): void;
-    setSuccess(): void;
     next(): void;
     back(): void;
 }
@@ -11,29 +10,21 @@ export interface Navigation {
 export default function useNavigation(): Navigation {
     const store = useStore();
 
-    const setError = (): void => {
-        store.commit(Mutations.SET_CURRENT_COMPONENT, 'Error');
-    };
-
-    const setSuccess = (): void => {
-        store.commit(Mutations.SET_CURRENT_COMPONENT, 'Success');
-    };
+    const currentComponent = computed(() => store.getters.currentComponent);
 
     const next = (): void => {
-        if (store.getters.currentComponent === 'SelectFeedbackType') {
+        if (currentComponent.value === 'SelectFeedbackType') {
             store.commit(Mutations.SET_CURRENT_COMPONENT, 'WriteAFeedback');
         }
     };
     const back = (): void => {
-        if (store.getters.currentComponent === 'WriteAFeedback') {
+        if (currentComponent.value === 'WriteAFeedback') {
             store.commit(Mutations.SET_CURRENT_COMPONENT, 'SelectFeedbackType');
             store.commit(Mutations.SET_FEEDBACK_TYPE, '');
         }
     };
 
     return {
-        setError,
-        setSuccess,
         next,
         back,
     };

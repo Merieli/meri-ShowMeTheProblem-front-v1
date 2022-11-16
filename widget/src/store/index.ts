@@ -5,7 +5,6 @@ import { InjectionKey } from 'vue';
 import { createStore, Store, useStore as baseUseStore } from 'vuex';
 import { Actions } from './Actions';
 import { Mutations } from './Mutations';
-import useNavigation from '@/composables/Navigation';
 
 export const state: StateStore = {
     currentComponent: 'SelectFeedbackType',
@@ -56,7 +55,6 @@ export const getters: GettersStore = {
 
 export const actions: ActionsStore = {
     async [Actions.SAVE_FEEDBACK]({ state, commit }, feedback): Promise<void> {
-        const { setError, setSuccess } = useNavigation();
         try {
             commit(Mutations.SET_MESSAGE, feedback);
             await httpClient.feedbacks.create({
@@ -67,9 +65,9 @@ export const actions: ActionsStore = {
                 device: window.navigator.userAgent,
                 fingerprint: state.fingerprint,
             });
-            setSuccess();
+            commit(Mutations.SET_CURRENT_COMPONENT, 'SuccessSave');
         } catch (error) {
-            setError();
+            commit(Mutations.SET_CURRENT_COMPONENT, 'ErrorSave');
             throw new Error('Não foi possível salvar o feedback!');
         }
     },

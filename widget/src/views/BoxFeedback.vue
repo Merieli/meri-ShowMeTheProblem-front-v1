@@ -62,17 +62,23 @@ export default defineComponent({
     setup(_, { emit }: SetupContext): SetupReturn {
         const store = useStore();
         const { back } = useNavigation();
+        const type = computed(() => {
+            return store.getters.feedbackType;
+        });
+        const component = computed(() => {
+            return store.getters.currentComponent;
+        });
 
         const label = computed<string>(() => {
-            if (store.getters.feedbackType === 'ISSUE') {
+            if (type.value === 'ISSUE') {
                 return 'Reporte um problema';
             }
 
-            if (store.getters.feedbackType === 'IDEA') {
+            if (type.value === 'IDEA') {
                 return 'Conte a sua ideia';
             }
 
-            if (store.getters.feedbackType === 'OTHER') {
+            if (type.value === 'OTHER') {
                 return 'Abra a sua mente';
             }
 
@@ -80,10 +86,10 @@ export default defineComponent({
         });
 
         const canGoBack = computed<boolean>(() => {
-            return store.getters.currentComponent === 'SelectFeedbackType';
+            return component.value === 'SelectFeedbackType';
         });
         const canShowAdditionalControlAndInfo = computed<boolean>(() => {
-            return store.getters.currentComponent !== 'Success' && store.getters.currentComponent !== 'Error';
+            return component.value !== 'SuccessSave' && component.value !== 'ErrorSave';
         });
 
         return {
@@ -99,6 +105,14 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .box {
-    width: 400px;
+    max-width: 400px;
+
+    @media screen and (min-width: 400px) {
+        min-width: 400px;
+    }
+
+    @media screen and (max-width: 400px) {
+        min-width: none;
+    }
 }
 </style>

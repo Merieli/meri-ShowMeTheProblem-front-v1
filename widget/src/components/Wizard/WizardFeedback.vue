@@ -8,7 +8,7 @@ import { Mutations } from '@/store/Mutations';
 import { computed, ComputedRef, defineComponent } from 'vue';
 import SelectFeedbackType from './SelectFeedbackType.vue';
 import WriteAFeedback from './WriteAFeedback.vue';
-import SucessSave from './SucessSave.vue';
+import SuccessSave from './SuccessSave.vue';
 import ErrorSave from './ErrorSave.vue';
 
 interface SetupReturn {
@@ -21,7 +21,7 @@ export default defineComponent({
     components: {
         SelectFeedbackType,
         WriteAFeedback,
-        SucessSave,
+        SuccessSave,
         ErrorSave,
     },
     setup(): SetupReturn {

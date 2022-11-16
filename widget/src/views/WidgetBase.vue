@@ -4,7 +4,7 @@
     </teleport>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue';
+import { defineComponent, reactive, watch } from 'vue';
 import StandbyFeedback from './StandbyFeedback.vue';
 import BoxFeedback from './BoxFeedback.vue';
 import useIframeControl from '@/hooks/Iframe';
@@ -30,9 +30,12 @@ export default defineComponent({
             currentComponent: 'StandbyFeedback',
         });
 
-        onMounted(() => {
-            iframe.updateCoreValuesOnStore();
-        });
+        watch(
+            () => state.currentComponent,
+            () => {
+                iframe.updateCoreValuesOnStore();
+            }
+        );
 
         const handleOpenBox = () => {
             iframe.notifyOpen();

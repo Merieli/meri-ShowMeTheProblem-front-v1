@@ -73,7 +73,7 @@ export default defineComponent({
     setup() {
         const store = useStore();
         const apiKey = computed(() => store.getters.getApiKey);
-        const linkScript = ref(`https://merieli-feedbacker-widget.netifly.app/init.js`);
+        const linkScript = ref(`https://merieli-showmetheproblem-widget.netlify.app/init.js`);
 
         const generateNewKey = () => {
             store.dispatch(Actions.GENERATE_NEW_KEY);

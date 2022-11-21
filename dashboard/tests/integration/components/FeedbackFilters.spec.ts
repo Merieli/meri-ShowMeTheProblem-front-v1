@@ -1,22 +1,22 @@
-import FeedbackFiltres from '@/components/Feedbacks/FeedbackFilters.vue'
-import { StateStoreShape } from '@/interfaces'
-import { key } from '@/store'
-import { Actions } from '@/store/type-actions'
-import { shallowMount, VueWrapper } from '@vue/test-utils'
-import { createStore, Store } from 'vuex'
+import FeedbackFiltres from '@/components/Feedbacks/FeedbackFilters.vue';
+import { StateStoreShape } from '@/interfaces';
+import { key } from '@/store';
+import { Actions } from '@/store/type-actions';
+import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { createStore, Store } from 'vuex';
 
 describe('FeedbackFilters.vue', () => {
     const getters = {
         isLoading: () => mockStore.state.isLoading,
         feedbackFilters: () => mockStore.state.feedbacks.filters,
-    }
+    };
 
     const actions = {
         [Actions.GET_SUMMARY_FEEDBACK]: jest.fn(),
         [Actions.CHANGE_ACTIVE_FEEDBACK]: jest.fn(),
-    }
+    };
 
-    type TStoreState = Pick<StateStoreShape, 'feedbacks' | 'filters' | 'isLoading'>
+    type TStoreState = Pick<StateStoreShape, 'feedbacks' | 'filters' | 'isLoading'>;
 
     const mockStore: Store<TStoreState> = createStore<TStoreState>({
         state: {
@@ -81,29 +81,29 @@ describe('FeedbackFilters.vue', () => {
         },
         getters,
         actions,
-    })
+    });
 
     const wrapper: VueWrapper = shallowMount(FeedbackFiltres, {
         global: {
             plugins: [[mockStore, key]],
         },
-    })
+    });
 
     describe('Integração/Componente', () => {
         describe('👀 Renderização:', () => {
             test('Dado o componente Quando renderizado Então deve possuir html equivalente ao Snapshot gravado', () => {
-                expect(wrapper.html()).toMatchSnapshot()
-            })
+                expect(wrapper.html()).toMatchSnapshot();
+            });
 
             test('Dado os filtros Quando forem renderizados Então deve exibir os filtros "Todos, Problemas, Ideias e Outros"', () => {
-                const filterLabels = wrapper.findAll('[data-filter="label"]')
+                const filterLabels = wrapper.findAll('[data-filter="label"]');
 
-                expect(filterLabels[0].text()).toBe('Todos')
-                expect(filterLabels[1].text()).toBe('Problemas')
-                expect(filterLabels[2].text()).toBe('Ideias')
-                expect(filterLabels[3].text()).toBe('Outros')
-            })
-        })
+                expect(filterLabels[0].text()).toBe('Todos');
+                expect(filterLabels[1].text()).toBe('Problemas');
+                expect(filterLabels[2].text()).toBe('Ideias');
+                expect(filterLabels[3].text()).toBe('Outros');
+            });
+        });
         // describe('🧠 Comportamento:', () => {})
-    })
-})
+    });
+});

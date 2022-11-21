@@ -6,6 +6,7 @@
     Show me the Problem
     <br>
     https://merieli-showmetheproblem-dashboard.netlify.app/
+    https://merieli-showmetheproblem-widget.netlify.app/
 </h1>
 
 <p align="center">Projeto para gerar script de captura de feedbacks para ser inserido em sites e visualizar os comentários recebidos. Desenvolvimento para estudo com base no projeto do curso da comunidade VueJS Brasil</p>
@@ -75,7 +76,7 @@ https://thirsty-clarke-9a6686.netlify.app/
 - [X] Usar Framework CSS Tailwind
 - [X] SASS
 - [X] Prettier
-- [ ] Configurar Docker
+- [X] Configurar Docker
 - [X] Documentar com JS Docs e Vue Styleguidist
 
 

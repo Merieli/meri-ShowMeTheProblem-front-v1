@@ -197,7 +197,7 @@ export const actions: ActionsStore = {
             commit(Mutations.USER_LOGGED, user);
         } catch (error) {
             commit(Mutations.TOOGLE_ERROR, error);
-            throw new Error(`Não foi possível capturar os dados do usuário.`);
+            throw new Error(`Não foi possível capturar os dados do usuário pelo token.`);
         } finally {
             commit(Mutations.TOOGLE_LOADING, false);
         }

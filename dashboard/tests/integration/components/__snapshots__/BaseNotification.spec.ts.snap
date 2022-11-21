@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BaseNotification Integração/Componente 👀 Renderização: Dado o componente Quando renderizado Então deve possuir html equivalente ao Snapshot gravado 1`] = `
-"<div class=\\"notification w-80 rounded-md\\" id=\\"notification\\">
-  <div class=\\"rounded-md p-4 m-4 notification__success\\">
-    <h6 class=\\"notification__header font-bold\\" data-test=\\"title\\">Teste</h6>
-    <p class=\\"notification__body font-normal\\">Uma notificação exibida</p>
+<div class="notification w-80 rounded-md" id="notification">
+  <div class="rounded-md p-4 m-4 notification__success">
+    <h6 class="notification__header font-bold" data-test="title">Teste</h6>
+    <p class="notification__body font-normal">Uma notificação exibida</p>
   </div>
-</div>"
+</div>
 `;

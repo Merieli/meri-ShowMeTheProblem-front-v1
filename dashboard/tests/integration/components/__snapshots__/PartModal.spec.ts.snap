@@ -1,23 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PartModal Integração/Componente Renderização: Dado o html quando renderizado então deve ter os mesmos dados do snapshot gravado 1`] = `
-"<teleport-stub>
-  <div class=\\"overlay fixed top-0 left-0 z-1 flex items-center justify-center w-full h-full bg-black bg-opacity-50\\" data-modal=\\"main\\">
+<teleport-stub>
+  <div class="overlay fixed top-0 left-0 z-1 flex items-center justify-center w-full h-full bg-black bg-opacity-50" data-modal="main">
     <transition-stub>
-      <div class=\\"fixed mx-10\\">
-        <div class=\\"modal w-96 z-10 flex flex-col overflow-hidden bg-white rounded-lg .animate__animated animate__faster animate__fadeInDown\\">
-          <div class=\\"modal__header mx-8 my-8\\">
-            <legend class=\\"font-black text-3xl\\">Crie uma conta</legend><button class=\\"modal__button\\"><svg xmlns=\\"http://www.w3.org/2000/svg\\" height=\\"24\\" width=\\"24\\">
-                <path d=\\"M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z\\"></path>
+      <div class="fixed mx-10">
+        <div class="modal w-96 z-10 flex flex-col overflow-hidden bg-white rounded-lg .animate__animated animate__faster animate__fadeInDown">
+          <div class="modal__header mx-8 my-8">
+            <legend class="font-black text-3xl">Crie uma conta</legend><button class="modal__button"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+                <path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6Z"></path>
               </svg></button>
           </div>
-          <div class=\\"modal__content\\">
-            <form id=\\"modal-create-account\\" class=\\"modal__form mx-12 my-10 mt-0\\">
-              <fieldset class=\\"flex flex-col\\"><label for=\\"name\\" class=\\"font-bold text-lg\\" id=\\"create-name\\"> Nome </label><input class=\\"bg-slate-50 p-3 text-lg border-2 border-transparent rounded\\" type=\\"text\\" name=\\"name\\" placeholder=\\"Seu Nome Aqui\\" autocomplete=\\"on\\" required=\\"\\" data-form-name=\\"\\">
-                <!--v-if--><label for=\\"email\\" class=\\"font-bold text-lg mt-6\\">E-mail</label><input class=\\"bg-slate-50 p-3 text-lg border-2 border-transparent rounded\\" type=\\"email\\" name=\\"email\\" placeholder=\\"email@exemplo.com\\" autocomplete=\\"on\\" required=\\"\\" data-form-email=\\"\\">
-                <!--v-if--><label for=\\"password\\" class=\\"font-bold text-lg mt-6\\">Senha</label><input class=\\"bg-slate-50 p-3 text-lg border-2 border-transparent rounded\\" type=\\"password\\" name=\\"password\\" placeholder=\\"******\\" required=\\"\\" data-form-password=\\"\\">
+          <div class="modal__content">
+            <form id="modal-create-account" class="modal__form mx-12 my-10 mt-0">
+              <fieldset class="flex flex-col"><label for="name" class="font-bold text-lg" id="create-name">Nome</label><input class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded" type="text" name="name" placeholder="Seu Nome Aqui" autocomplete="on" required="" data-form-name="">
+                <!--v-if--><label for="email" class="font-bold text-lg mt-6">E-mail</label><input class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded" type="email" name="email" placeholder="email@exemplo.com" autocomplete="on" required="" data-form-email="">
+                <!--v-if--><label for="password" class="font-bold text-lg mt-6">Senha</label><input class="bg-slate-50 p-3 text-lg border-2 border-transparent rounded" type="password" name="password" placeholder="******" required="" data-form-password="">
                 <!--v-if-->
-              </fieldset><button class=\\"base-button rounded-full font-bold text-xl transition-all duration-150 base-button_dark mt-6\\" type=\\"submit\\" data-button=\\"createAccount\\">
+              </fieldset><button class="base-button rounded-full font-bold text-xl transition-all duration-150 base-button_dark mt-6" type="submit" data-button="createAccount">
                 <!-- @slot Texto de conteúdo do botão --><span>Criar conta</span>
               </button>
             </form>
@@ -26,5 +26,5 @@ exports[`PartModal Integração/Componente Renderização: Dado o html quando re
       </div>
     </transition-stub>
   </div>
-</teleport-stub>"
+</teleport-stub>
 `;

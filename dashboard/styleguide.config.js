@@ -48,7 +48,7 @@ module.exports = {
                 },
                 {
                     name: 'Componentes Base:',
-                    components: 'src/components/**/+(Base|BaseButton)*.vue',
+                    components: 'src/components/**/+(BaseNotification|BaseButton)*.vue',
                 },
                 {
                     name: 'Componentes Feedbacks:',

@@ -5,7 +5,6 @@ function init(apiKey) {
         const fingerprint = await fp.get();
 
         const WIDGET_URL = `https://merieli-showmetheproblem-widget.netlify.app/?api_key=${apiKey}&page=${page}&fingerprint=${fingerprint.visitorId}`;
-        console.log(WIDGET_URL);
         const config = { method: 'HEAD' };
         const response = await fetch(
             `https://backend-show-me-the-problem-etg6ezsb2-merieli.vercel.app/apiKey/exists?apiKey=${apiKey}`,

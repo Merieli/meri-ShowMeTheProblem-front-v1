@@ -1,29 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PageFeedback.vue Integração/Componente 👀 Renderização: Dado o componente Quando renderizado Então deve possuir html equivalente ao Snapshot gravado 1`] = `
-"<div class=\\"feedbacks\\">
+<div class="feedbacks">
   <geral-header-stub></geral-header-stub>
-  <section class=\\"feedbacks__info text-brand-black\\">
-    <h2 class=\\"text-5xl font-black mb-2\\">Feedbacks</h2>
-    <p class=\\"font-normal text-base\\">Detalhes de todos os feedbacks recebidos.</p>
+  <section class="feedbacks__info text-brand-black">
+    <h2 class="text-5xl font-black mb-2">Feedbacks</h2>
+    <p class="font-normal text-base">Detalhes de todos os feedbacks recebidos.</p>
   </section>
-  <div class=\\"feedbacks__all mt-8 mx-8\\">
-    <aside class=\\"feedbacks__listing mr-16 min-w-[20%]\\">
-      <h4 class=\\"text-4xl font-black mb-9\\">Listagem</h4>
-      <div class=\\"feedbacks-filter animate__animated animate__fadeIn animate__faster\\">
-        <h5 class=\\"font-bold mb-5 text-2xl\\">Filtros</h5>
-        <ul class=\\"feedbacks-filter__items\\">
-          <li class=\\"feedbacks-filter__item animate__animated animate__fadeIn animate__faster feedbacks-filter__item--selected\\" data-filter=\\"Todos\\"><span data-filter=\\"label\\"><i class=\\"bg-info feedbacks-filter__circle\\"></i> Todos</span><span class=\\"text-info font-bold\\" data-filter=\\"amount\\">3</span></li>
-          <li class=\\"feedbacks-filter__item animate__animated animate__fadeIn animate__faster\\" data-filter=\\"Problemas\\"><span data-filter=\\"label\\"><i class=\\"bg-danger feedbacks-filter__circle\\"></i> Problemas</span><span class=\\"text-brand-graydark font-bold\\" data-filter=\\"amount\\">2</span></li>
-          <li class=\\"feedbacks-filter__item animate__animated animate__fadeIn animate__faster\\" data-filter=\\"Ideias\\"><span data-filter=\\"label\\"><i class=\\"bg-warning feedbacks-filter__circle\\"></i> Ideias</span><span class=\\"text-brand-graydark font-bold\\" data-filter=\\"amount\\">1</span></li>
-          <li class=\\"feedbacks-filter__item animate__animated animate__fadeIn animate__faster\\" data-filter=\\"Outros\\"><span data-filter=\\"label\\"><i class=\\"bg-graydark feedbacks-filter__circle\\"></i> Outros</span><span class=\\"text-brand-graydark font-bold\\" data-filter=\\"amount\\">0</span></li>
+  <div class="feedbacks__all mt-8 mx-8">
+    <aside class="feedbacks__listing mr-16 min-w-[20%]">
+      <h4 class="text-4xl font-black mb-9">Listagem</h4>
+      <div class="feedbacks-filter animate__animated animate__fadeIn animate__faster">
+        <h5 class="font-bold mb-5 text-2xl">Filtros</h5>
+        <ul class="feedbacks-filter__items">
+          <li class="feedbacks-filter__item animate__animated animate__fadeIn animate__faster feedbacks-filter__item--selected" data-filter="Todos"><span data-filter="label"><i class="bg-info feedbacks-filter__circle"></i> Todos</span><span class="text-info font-bold" data-filter="amount">3</span></li>
+          <li class="feedbacks-filter__item animate__animated animate__fadeIn animate__faster" data-filter="Problemas"><span data-filter="label"><i class="bg-danger feedbacks-filter__circle"></i> Problemas</span><span class="text-brand-graydark font-bold" data-filter="amount">2</span></li>
+          <li class="feedbacks-filter__item animate__animated animate__fadeIn animate__faster" data-filter="Ideias"><span data-filter="label"><i class="bg-warning feedbacks-filter__circle"></i> Ideias</span><span class="text-brand-graydark font-bold" data-filter="amount">1</span></li>
+          <li class="feedbacks-filter__item animate__animated animate__fadeIn animate__faster" data-filter="Outros"><span data-filter="label"><i class="bg-graydark feedbacks-filter__circle"></i> Outros</span><span class="text-brand-graydark font-bold" data-filter="amount">0</span></li>
         </ul>
       </div>
     </aside>
-    <section class=\\"feedbacks__cards mt-12\\">
-      <div class=\\"text-lg text-center text-gray-800 font-regular\\" data-feedbacks=\\"empty\\"> Ainda nenhum feedback recebido 🤓 </div>
+    <section class="feedbacks__cards mt-12">
+      <div class="text-lg text-center text-gray-800 font-regular" data-feedbacks="empty"> Ainda nenhum feedback recebido 🤓 </div>
       <!--v-if-->
     </section>
   </div>
-</div>"
+</div>
 `;

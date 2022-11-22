@@ -174,11 +174,6 @@ describe('PageFeedback.vue', () => {
 
                 expect(errorMessage.text()).toContain('Aconteceu um erro ao carregar os Feedbacks');
             });
-
-            test('Dado o carregamento dos feedbacks Quando estiver carregando Então deve exibir o loading', async () => {
-                mockStore.state.isLoading = true;
-                await nextTick();
-            });
         });
     });
 });

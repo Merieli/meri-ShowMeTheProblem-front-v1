@@ -1,26 +1,22 @@
-/**
- * @jest-environment jsdom
- */
-import { useStore } from '@/store'
-import { Mutations } from '@/store/type-mutations'
-import { createStore } from 'vuex'
+import { Context } from '@/interfaces';
+import { actions } from '@/store';
+import { Actions } from '@/store/type-actions';
 
-const store = useStore()
+describe('Actions da Store Vuex', () => {
+    const commit = jest.fn() as jest.Mock<Context['commit']>;
+    const dispatch = jest.fn() as jest.Mock<Promise<Context['dispatch']>>;
 
-const token = '123absncsdjfksasd'
-
-// const store = createStore({
-//     state: {
-//         count: 0,
-//     },
-//     mutations: {
-//         [Mutations.LOGIN_USER]: jest.fn(),
-//     },
-// })
-
-test.only('Dado um token de usuário Quando executar o Login na Store Então o usuário deve ser definido como logado e possuir um Token', async () => {
-    //     store.[Mutations.LOGIN_USER](state, token)
-    //     expect(store.commit).toHaveBeenCalled()
-    //     expect(store.state.userLogged.token).toBe(token)
-    //     expect(store.state.isLogged).toBe(true)
-})
+    describe('🧪 Unidade:', () => {
+        test.only('Dado um token de usuário Quando executar o Login na Store Então o usuário deve ser definido como logado e possuir um Token', async () => {
+            const user = {
+                name: 'Joaberson',
+                email: 'joaberson@gmail.com',
+                password: 'adaksa123',
+            };
+            await actions[Actions.LOGIN_USER]({ commit, dispatch }, user);
+            //     expect(store.commit).toHaveBeenCalled()
+            //     expect(store.state.userLogged.token).toBe(token)
+            //     expect(store.state.isLogged).toBe(true)
+        });
+    });
+});

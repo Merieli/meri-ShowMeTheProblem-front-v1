@@ -2,7 +2,7 @@ import { FeedbackTypeAndPagination, IUser, StateStoreShape, TFeedback } from '.'
 import { Actions } from '@/store/type-actions';
 import { ActionContext, ActionTree } from 'vuex';
 
-type Context = ActionContext<StateStoreShape, StateStoreShape>;
+export type Context = ActionContext<StateStoreShape, StateStoreShape>;
 
 export interface ActionsStore extends ActionTree<StateStoreShape, StateStoreShape> {
     /**
@@ -19,7 +19,7 @@ export interface ActionsStore extends ActionTree<StateStoreShape, StateStoreShap
      * para pegar os dados do usuário logado.
      * @param {IUser} user usuário com name, email e password
      */
-    [Actions.LOGIN_USER]: (context: Context, user: IUser) => Promise<void>;
+    [Actions.LOGIN_USER]: ({ commit, dispatch }: Context, user: IUser) => Promise<void>;
 
     /**
      * @name GET_USER

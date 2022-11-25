@@ -47,18 +47,9 @@ describe('Actions da Store Vuex', () => {
 
         test('Dado um usuário Quando efetuar o Login com falha Então a action deve ter o comportamento adequado', async () => {
             repositories.user.login = jest.fn().mockRejectedValue(new Error('Async error message'));
-            const user = {
-                name: 'Joaberson',
-                email: 'joaberson@gmail.com',
-                password: 'adaksa123',
-            };
 
             const result = await actions[Actions.LOGIN_USER](context, user);
             // await flushPromises();
-
-            // expect(repositories.user.login).toHaveBeenCalledTimes(1);
-            // expect(commit).toHaveBeenCalledTimes(2);
-            // expect(dispatch).toHaveBeenCalledTimes(1);
 
             await expect(result).rejects.toThrowError('Não foi possível efetuar login. Confira os dados informados');
         });

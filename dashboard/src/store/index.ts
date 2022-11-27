@@ -208,7 +208,7 @@ export const actions: ActionsStore = {
             commit(Mutations.TOOGLE_LOADING, true);
             window.localStorage.removeItem('token');
             commit(Mutations.LOGGOUT_USER);
-            router.push({ name: 'home' });
+            await router.push({ name: 'home' });
         } catch (error) {
             commit(Mutations.TOOGLE_ERROR, error);
             throw new Error(`Não foi possível efetuar o loggout do usuário.`);

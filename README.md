@@ -5,9 +5,7 @@
     <br>
     Show me the Problem
     <br>
-    https://merieli-showmetheproblem-dashboard.netlify.app/
-    <br>
-    https://merieli-showmetheproblem-widget.netlify.app/
+    <a href="https://merieli-showmetheproblem-dashboard.netlify.app/">Dashboard</a> | <a href="https://merieli-showmetheproblem-widget.netlify.app/">Widget</a>
 </h1>
 
 <p align="center">Projeto para gerar script de captura de feedbacks para ser inserido em sites e visualizar os comentários recebidos. Desenvolvimento para estudo com base no projeto do curso da comunidade VueJS Brasil</p>
